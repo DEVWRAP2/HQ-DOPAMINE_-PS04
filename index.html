@@ -1,73 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DevWrap — SC-ECE Presents</title>
-  <meta name="description" content="SC-ECE Presents DevWrap — From Sketch to Solution. A hackathon experience built for builders." />
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="src/css/styles.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TeacherFlow AI - Login</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/css/styles.css" />
 </head>
 <body>
 
-  <div id="root">
+    <!-- Background Blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
 
-    <!-- ── LOADER SCREEN ── -->
-    <div id="loader">
-      <div id="loader-title">SC-ECE<br/>PRESENTS</div>
-      <div id="loader-line"></div>
-      <div id="loader-subtitle">INNOVATION × DESIGN × ENGINEERING</div>
-      <div id="loader-hint">
-        💡 <strong>Ready to build?</strong><br/>
-        Start editing <code>index.html</code> to customize this page
-      </div>
+    <!-- Admin -->
+    <button class="admin-login" onclick="window.location.href='/admin'">Admin Login</button>
+
+    <div class="app-container">
+        <!-- Selection Panel -->
+        <div class="panel selection-panel" id="selectionPanel">
+            <div class="selection-content">
+                <h1 class="brand-title">TeacherFlow AI</h1>
+                <p class="brand-subtitle">Select your role to continue</p>
+                
+                <div class="roles-container">
+                    <div class="role-card" id="teacherCard" onclick="selectRole('teacher')">
+                        <div class="role-icon">👨‍🏫</div>
+                        <h2>Teacher</h2>
+                        <p>Access class insights and analytics</p>
+                    </div>
+
+                    <div class="role-card" id="studentCard" onclick="selectRole('student')">
+                        <div class="role-icon">🎓</div>
+                        <h2>Student</h2>
+                        <p>Track your learning and performance</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Panel -->
+        <div class="panel login-panel" id="loginPanel">
+            <div class="glass-panel">
+                <button class="back-btn" onclick="resetSelection()">← Back</button>
+                <div class="login-header">
+                    <h2 id="loginTitle">Welcome</h2>
+                    <p id="loginSubtitle">Please enter your details</p>
+                </div>
+
+                <form class="login-form" onsubmit="handleLogin(event)">
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="hello@teacherflow.ai" required />
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" placeholder="••••••••" required />
+                    </div>
+                    
+                    <div class="form-actions">
+                        <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="login-btn" id="loginBtn">Login</button>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <!-- ── DEVWRAP SCREEN ── -->
-    <div id="devwrap">
-
-      <!-- Marquee bar -->
-      <div id="marquee-bar">
-        <div id="marquee-track">
-          <span>SC-ECE PRESENTS · DEVWRAP · FROM SKETCH TO SOLUTION ·</span>
-          <span>SC-ECE PRESENTS · DEVWRAP · FROM SKETCH TO SOLUTION ·</span>
-          <span>SC-ECE PRESENTS · DEVWRAP · FROM SKETCH TO SOLUTION ·</span>
-          <span>SC-ECE PRESENTS · DEVWRAP · FROM SKETCH TO SOLUTION ·</span>
-          <span>SC-ECE PRESENTS · DEVWRAP · FROM SKETCH TO SOLUTION ·</span>
-          <span>SC-ECE PRESENTS · DEVWRAP · FROM SKETCH TO SOLUTION ·</span>
-          <span>SC-ECE PRESENTS · DEVWRAP · FROM SKETCH TO SOLUTION ·</span>
-          <span>SC-ECE PRESENTS · DEVWRAP · FROM SKETCH TO SOLUTION ·</span>
-        </div>
-      </div>
-
-      <!-- Pixel grid (populated by JS) -->
-      <div id="pixel-grid"></div>
-
-      <div id="devwrap-title">devwrap</div>
-      <div id="devwrap-tagline">From Sketch to Solution</div>
-
-      <div id="welcome-msg">
-        Welcome, Builders. 🚀<br/>
-        <span>Turn your ideas into interfaces.</span>
-      </div>
-
-      <div id="devwrap-hint">
-        💡 <strong>Ready to customize?</strong><br/>
-        Start editing <code>index.html</code> to make changes
-      </div>
-
-    </div><!-- /#devwrap -->
-
-  </div><!-- /#root -->
-
-  <!-- Scripts -->
-  <script src="src/js/main.js"></script>
-
+    <script src="src/js/main.js"></script>
 </body>
 </html>
