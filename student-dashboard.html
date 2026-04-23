@@ -268,6 +268,12 @@
       padding: 20px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     }
 
     .card-title {
@@ -398,6 +404,12 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .quick-stat-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     }
 
     .quick-stat-number {
@@ -637,12 +649,12 @@
       padding: 20px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       cursor: pointer;
-      transition: all .25s;
+      transition: all 0.3s ease;
     }
 
     .subject-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
       border-color: var(--accent);
     }
 
@@ -691,6 +703,28 @@
       background: rgba(255, 255, 255, 0.12);
     }
 
+    .back-to-dashboard {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      margin-bottom: 18px;
+      border: 1px solid #d4af37;
+      border-radius: 10px;
+      background: transparent;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .back-to-dashboard:hover {
+      background: rgba(212, 175, 55, 0.12);
+      color: #d4af37;
+    }
+
     /* CLASSES */
     .class-card {
       background: var(--card);
@@ -699,6 +733,12 @@
       border-radius: 12px;
       padding: 16px;
       margin-bottom: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .class-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     }
 
     .class-card.past {
@@ -1145,6 +1185,7 @@
       <!-- PAGE 2: SUBJECTS -->
       <div class="section" id="section-subjects">
         <div id="subjects-list-view">
+          <button type="button" class="back-to-dashboard" onclick="backToDashboard()">← Back to Dashboard</button>
           <div class="page-header">
             <div>
               <h1>Subjects</h1>
@@ -1154,6 +1195,7 @@
           <div class="subject-grid" id="subjects-grid"></div>
         </div>
         <div id="subject-detail">
+          <button type="button" class="back-to-dashboard" onclick="backToDashboard()">← Back to Dashboard</button>
           <button class="back-btn" onclick="closeSubjectDetail()">← Back to Subjects</button>
           <div class="page-header">
             <div>
@@ -1177,6 +1219,7 @@
 
       <!-- PAGE 3: CLASSES -->
       <div class="section" id="section-classes">
+        <button type="button" class="back-to-dashboard" onclick="backToDashboard()">← Back to Dashboard</button>
         <div class="page-header">
           <div>
             <h1>Classes</h1>
@@ -1335,6 +1378,12 @@
       document.getElementById('section-' + id).classList.add('active');
       if (btn) btn.classList.add('active');
       if (id === 'subjects') closeSubjectDetail(true);
+    }
+
+    function backToDashboard() {
+      closeSubjectDetail();
+      const navItems = document.querySelectorAll('.sidebar-nav .nav-item');
+      showSection('dashboard', navItems[0]);
     }
 
     // ════════════════════════════════

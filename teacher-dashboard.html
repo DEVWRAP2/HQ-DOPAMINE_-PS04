@@ -160,72 +160,11 @@
             display: block;
             font-size: 0.85rem;
             font-weight: 600;
-            color: #666;
+            color: var(--text-muted);
             margin-bottom: 6px;
         }
 
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 10px 14px;
-            border: 1px solid var(--secondary);
-            border-radius: 10px;
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.9rem;
-            color: var(--text-color);
-            background: #fff;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(176, 137, 104, 0.1);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .btn-primary {
-            padding: 10px 24px;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-primary:hover {
-            background: #9a7558;
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary {
-            padding: 10px 24px;
-            background: var(--secondary);
-            color: var(--text-color);
-            border: none;
-            border-radius: 10px;
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-left: 10px;
-        }
-
-        .btn-secondary:hover {
-            background: #d5d9dc;
-        }
+        /* Classes form fields + buttons: src/css/dashboard.css (#section-classes .classes-page) */
 
         .class-card {
             background: var(--card-bg);

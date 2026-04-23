@@ -500,6 +500,98 @@ body {
     box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
 }
 
+/* Teacher Portal — Classes section: visible form controls on dark theme */
+#section-classes .classes-page .form-group input,
+#section-classes .classes-page .form-group select,
+#section-classes .classes-page .form-group textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    color: #ffffff !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#section-classes .classes-page .form-group input::placeholder,
+#section-classes .classes-page .form-group textarea::placeholder {
+    color: #94a3b8 !important;
+}
+
+#section-classes .classes-page .form-group select {
+    color: #ffffff !important;
+    cursor: pointer;
+}
+
+#section-classes .classes-page .form-group select option {
+    background: #1e293b;
+    color: #ffffff;
+}
+
+#section-classes .classes-page .form-group input:focus,
+#section-classes .classes-page .form-group select:focus,
+#section-classes .classes-page .form-group textarea:focus {
+    border-color: #d4af37 !important;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.28) !important;
+}
+
+#section-classes .classes-page .form-group textarea {
+    resize: vertical;
+    min-height: 88px;
+}
+
+#section-classes .classes-page .form-group input[type="date"] {
+    color-scheme: dark;
+}
+
+#section-classes .classes-page .classes-grid > .card:first-child {
+    padding: 28px 26px;
+}
+
+#section-classes .classes-page .classes-grid > .card:first-child h3 {
+    margin-bottom: 20px;
+}
+
+#section-classes .classes-page .btn-primary {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #d4af37 0%, #b8962e 100%) !important;
+    color: var(--bg-color) !important;
+    box-shadow: 0 4px 18px rgba(212, 175, 55, 0.35);
+}
+
+#section-classes .classes-page .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.45);
+}
+
+#section-classes .classes-page .btn-secondary {
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: var(--text-color) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+#section-classes .classes-page .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.14) !important;
+}
+
 .tag-critical {
     animation: criticalPulse 1.4s ease-in-out infinite;
 }
