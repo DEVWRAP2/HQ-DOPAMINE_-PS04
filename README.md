@@ -64,3 +64,6 @@ git push origin feature/your-feature-name
 ✔ All teammates added as collaborators
 ✔ Code pushed to GitHub regularly
 ✔ Proper commit messages used
+
+
+For now to login as student or teacher , you can use any dummy email and password.
