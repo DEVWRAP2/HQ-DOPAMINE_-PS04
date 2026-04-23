@@ -35,7 +35,7 @@
 
         <!-- Right Action Section -->
         <div class="action-section">
-            <button class="admin-login" onclick="window.location.href='admin.html'">Admin Enter</button>
+            <button type="button" class="admin-login" onclick="showComingSoon()">Admin Enter</button>
 
             <!-- Selection Panel -->
             <div class="panel selection-panel" id="selectionPanel">
@@ -92,8 +92,24 @@
         </div>
     </div>
 
+    <div id="comingSoonOverlay" class="coming-soon-overlay" role="dialog" aria-modal="true" aria-labelledby="comingSoonTitle" onclick="if (event.target === this) hideComingSoon()">
+        <div class="coming-soon-dialog" onclick="event.stopPropagation()">
+            <h3 id="comingSoonTitle">Coming soon</h3>
+            <p>This section will be added in the future when the website is built as a full-stack application.</p>
+            <button type="button" class="coming-soon-btn" onclick="hideComingSoon()">OK</button>
+        </div>
+    </div>
+
     <script src="src/js/main.js"></script>
     <script>
+        function showComingSoon() {
+            document.getElementById('comingSoonOverlay').classList.add('is-open');
+        }
+
+        function hideComingSoon() {
+            document.getElementById('comingSoonOverlay').classList.remove('is-open');
+        }
+
         // ── TYPING EFFECT ──
         const phrases = [
             "Catching Learning Gaps Early", 
