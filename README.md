@@ -4,7 +4,7 @@ Predictive Analytics & AI-Powered Early Warning Dashboard for Educators
 ⚠️ Browser Compatibility Note: This prototype uses a mock authentication UI on a development domain. If you encounter a "Deceptive Site" warning or broken assets in Brave or Firefox due to aggressive phishing heuristics, please view the project in "*Microsoft Edge/other browsers OR The live Preview from your code editor(BEST)*", or click "Details → Visit this unsafe site" to proceed.
 
 
-(🔗 https://youtu.be/7x8H8EemHTE)
+(🔗https://youtu.be/U7i9KXs1_-c)
 
 ⚠️ The Problem
 In collaborative research and technical learning, ideas often become fragmented, and wrong assumptions can go unnoticed. A single mistake in understanding can spread through an entire project, causing long-term errors and confusion. By the time midterms arrive, the learning gap is often too wide to fix.
