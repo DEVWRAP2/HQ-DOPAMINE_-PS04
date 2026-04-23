@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TeacherFlow AI — Student Portal</title>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #f8f5f2;
+      --primary: #b08968;
+      --card: #ffffff;
+      --secondary: #e8ecef;
+      --accent: #ddb892;
+      --text: #2c2c2c;
+      --danger: #e07c7c;
+      --success: #6cb98a;
+      --warn: #e6a74a;
+      --sidebar-w: 220px;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    aside.sidebar {
+      width: var(--sidebar-w);
+      background: var(--card);
+      box-shadow: 2px 0 20px rgba(0, 0, 0, 0.06);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 100;
+    }
+
+    .sidebar-logo {
+      padding: 22px 20px 14px;
+      border-bottom: 1px solid var(--secondary);
+    }
+
+    .sidebar-logo .brand {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: .5px;
+    }
+
+    .sidebar-logo .sub {
+      font-size: 11px;
+      color: #bbb;
+      margin-top: 2px;
+    }
+
+    .sidebar-avatar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--secondary);
+    }
+
+    .avatar-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .avatar-info .name {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .avatar-info .role {
+      font-size: 11px;
+      color: #aaa;
+    }
+
+    .sidebar-nav {
+      padding: 10px 0;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .nav-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #ccc;
+      text-transform: uppercase;
+      padding: 10px 20px 4px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 20px;
+      cursor: pointer;
+      border-radius: 10px;
+      margin: 2px 8px;
+      font-size: 13.5px;
+      color: #777;
+      transition: all .2s;
+      border: none;
+      background: none;
+      width: calc(100% - 16px);
+      text-align: left;
+    }
+
+    .nav-item:hover {
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .nav-item.active {
+      background: linear-gradient(135deg, #f4ede4, #fdf8f4);
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .nav-icon {
+      font-size: 15px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .sidebar-footer {
+      padding: 14px 20px;
+      border-top: 1px solid var(--secondary);
+    }
+
+    .logout-link {
+      font-size: 12px;
+      color: #aaa;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      transition: color .2s;
+    }
+
+    .logout-link:hover {
+      color: var(--danger);
+    }
+
+    /* LOADING SCREEN */
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      font-size: 15px;
+      color: var(--primary);
+      gap: 12px;
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--secondary);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* ERROR SCREEN */
+    #error-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      gap: 14px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    #error-screen h2 {
+      color: var(--danger);
+      font-size: 1.3rem;
+    }
+
+    #error-screen p {
+      color: #888;
+      font-size: 14px;
+    }
+
+    /* MAIN */
+    main.main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      padding: 30px;
+      min-height: 100vh;
+    }
+
+    /* SECTIONS */
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+      animation: fadeIn .3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* CARD */
+    .card {
+      background: var(--card);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: #bbb;
+      margin-bottom: 16px;
+    }
+
+    /* PAGE HEADER */
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .page-header h1 {
+      font-size: 23px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .page-header .subtitle {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 3px;
+    }
+
+    /* BADGES */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .badge-warn {
+      background: #fff4e0;
+      color: var(--warn);
+    }
+
+    .badge-danger {
+      background: #fdeaea;
+      color: var(--danger);
+    }
+
+    .badge-success {
+      background: #e8f7ef;
+      color: var(--success);
+    }
+
+    .badge-primary {
+      background: #f4ede4;
+      color: var(--primary);
+    }
+
+    /* GRIDS */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    /* STAT */
+    .stat-number {
+      font-size: 34px;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 4px;
+    }
+
+    .stat-sub {
+      font-size: 11px;
+      color: #bbb;
+      margin-top: 2px;
+    }
+
+    /* PROGRESS */
+    .progress-wrap {
+      margin: 10px 0;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 5px;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: var(--secondary);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 10px;
+      transition: width .9s ease;
+    }
+
+    .fill-primary {
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+    }
+
+    .fill-danger {
+      background: linear-gradient(90deg, #e07c7c, #f4a0a0);
+    }
+
+    .fill-success {
+      background: linear-gradient(90deg, #6cb98a, #9dd4b4);
+    }
+
+    .fill-warn {
+      background: linear-gradient(90deg, #e6a74a, #f4c47a);
+    }
+
+    /* TOPIC ROW */
+    .topic-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--bg);
+    }
+
+    .topic-row:last-child {
+      border-bottom: none;
+    }
+
+    .topic-name {
+      flex: 1;
+      font-size: 13.5px;
+      font-weight: 500;
+    }
+
+    .topic-score-tag {
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      min-width: 50px;
+      text-align: center;
+    }
+
+    .score-weak {
+      background: #fdeaea;
+      color: var(--danger);
+    }
+
+    .score-ok {
+      background: #fff4e0;
+      color: var(--warn);
+    }
+
+    .score-good {
+      background: #e8f7ef;
+      color: var(--success);
+    }
+
+    /* AI INSIGHT */
+    .insight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .insight-item {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .insight-item-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      color: #ccc;
+      margin-bottom: 5px;
+    }
+
+    .insight-item-value {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .risk-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .risk-high {
+      background: #fdeaea;
+      color: var(--danger);
+    }
+
+    .risk-medium {
+      background: #fff4e0;
+      color: var(--warn);
+    }
+
+    .risk-low {
+      background: #e8f7ef;
+      color: var(--success);
+    }
+
+    .risk-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    .dot-high {
+      background: var(--danger);
+    }
+
+    .dot-medium {
+      background: var(--warn);
+    }
+
+    .dot-low {
+      background: var(--success);
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: .3;
+      }
+    }
+
+    /* SUBJECT CARDS */
+    .subject-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .subject-card {
+      background: var(--card);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+      transition: all .25s;
+      border: 2px solid transparent;
+    }
+
+    .subject-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+      border-color: var(--accent);
+    }
+
+    .subject-card.weak {
+      border-left: 4px solid var(--danger);
+    }
+
+    .subject-card.ok {
+      border-left: 4px solid var(--warn);
+    }
+
+    .subject-card.good {
+      border-left: 4px solid var(--success);
+    }
+
+    .subject-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .subject-sub {
+      font-size: 11px;
+      color: #aaa;
+      margin-bottom: 14px;
+    }
+
+    /* BACK BTN */
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      background: var(--secondary);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 20px;
+      transition: background .2s;
+    }
+
+    .back-btn:hover {
+      background: #dde2e7;
+    }
+
+    /* CLASSES */
+    .class-card {
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .class-card.past {
+      background: #f5f5f5;
+      border-left: 4px solid #ccc;
+    }
+
+    .class-card.present {
+      background: linear-gradient(135deg, #f4ede4, #fdf6f0);
+      border-left: 4px solid var(--primary);
+    }
+
+    .class-card.upcoming {
+      background: #f0f6ff;
+      border-left: 4px solid #7aaddb;
+    }
+
+    .class-subject {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .class-meta {
+      font-size: 12px;
+      color: #999;
+      margin-top: 2px;
+    }
+
+    .class-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* BUTTONS */
+    .btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: #5aab7a;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #c96060;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #9a7355;
+    }
+
+    .btn-outline {
+      background: white;
+      color: var(--text);
+      border: 1.5px solid var(--secondary);
+    }
+
+    .btn-outline:hover {
+      background: var(--bg);
+    }
+
+    /* HELP PANEL */
+    .help-panel {
+      display: none;
+      margin-top: 14px;
+      background: #fff4e5;
+      border-radius: 10px;
+      padding: 14px;
+      border: 1px solid #f5d9b0;
+    }
+
+    .help-panel.show {
+      display: block;
+      animation: fadeIn .2s ease;
+    }
+
+    .help-panel-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .help-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* CALENDAR */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+
+    .cal-header {
+      font-size: 11px;
+      font-weight: 700;
+      text-align: center;
+      color: #aaa;
+      padding: 4px;
+    }
+
+    .cal-day {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: default;
+    }
+
+    .cal-present {
+      background: #e8f7ef;
+      color: var(--success);
+    }
+
+    .cal-absent {
+      background: #fdeaea;
+      color: var(--danger);
+    }
+
+    .cal-legend {
+      display: flex;
+      gap: 16px;
+      margin-top: 14px;
+      font-size: 12px;
+      align-items: center;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 4px;
+    }
+
+    /* TEST HISTORY */
+    .test-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--bg);
+    }
+
+    .test-row:last-child {
+      border-bottom: none;
+    }
+
+    .test-name {
+      font-size: 13.5px;
+      font-weight: 500;
+    }
+
+    .test-score {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .test-weak {
+      font-size: 11px;
+      color: var(--danger);
+      margin-top: 2px;
+    }
+
+    /* EFFORT TAG */
+    .effort-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .effort-high {
+      background: #e8f7ef;
+      color: var(--success);
+    }
+
+    .effort-medium {
+      background: #fff4e0;
+      color: var(--warn);
+    }
+
+    .effort-low {
+      background: #fdeaea;
+      color: var(--danger);
+    }
+
+    /* ASSIGNMENT RING */
+    .assignment-ring {
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+
+    .ring-svg {
+      transform: rotate(-90deg);
+    }
+
+    .ring-bg {
+      fill: none;
+      stroke: var(--secondary);
+      stroke-width: 8;
+    }
+
+    .ring-fill {
+      fill: none;
+      stroke-width: 8;
+      stroke-linecap: round;
+      transition: stroke-dasharray .9s ease;
+    }
+
+    .ring-label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--primary);
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .ring-sub {
+      font-size: 9px;
+      color: #aaa;
+      font-weight: 500;
+    }
+
+    /* MINI BAR */
+    .mini-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mini-bar {
+      flex: 1;
+      height: 6px;
+      background: var(--secondary);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .mini-bar-fill {
+      height: 100%;
+      border-radius: 10px;
+    }
+
+    .mini-score-text {
+      font-size: 12px;
+      font-weight: 700;
+      width: 32px;
+      text-align: right;
+    }
+
+    #subject-detail {
+      display: none;
+    }
+
+    #subject-detail.open {
+      display: block;
+      animation: fadeIn .3s ease;
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #e0d6cc;
+      border-radius: 10px;
+    }
+
+    @media(max-width:900px) {
+
+      .grid-2,
+      .grid-3,
+      .grid-4,
+      .insight-grid,
+      .subject-grid {
+        grid-template-columns: 1fr;
+      }
+
+      aside.sidebar {
+        width: 60px;
+      }
+
+      .sidebar-logo .brand,
+      .sidebar-logo .sub,
+      .avatar-info,
+      .nav-item span:not(.nav-icon),
+      .nav-label,
+      .sidebar-footer {
+        display: none;
+      }
+
+      main.main {
+        margin-left: 60px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOADING -->
+  <div id="loading-screen">
+    <div class="spinner"></div>
+    <span>Loading your dashboard...</span>
+  </div>
+
+  <!-- ERROR (not logged in / student not found) -->
+  <div id="error-screen">
+    <h2>Access Denied</h2>
+    <p>You are not logged in or your account was not found.<br />Please log in again.</p>
+    <button class="btn btn-primary" onclick="window.location.href='index.html'">← Back to Login</button>
+  </div>
+
+  <div class="app" id="app-shell" style="display:none;">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="brand">🎓 TeacherFlow AI</div>
+        <div class="sub">Student Portal</div>
+      </div>
+      <div class="sidebar-avatar">
+        <div class="avatar-circle" id="sidebar-initials">--</div>
+        <div class="avatar-info">
+          <div class="name" id="sidebar-name">Loading...</div>
+          <div class="role" id="sidebar-roll">—</div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-label">Menu</div>
+        <button class="nav-item active" onclick="showSection('dashboard',this)"><span
+            class="nav-icon">📊</span><span>Dashboard</span></button>
+        <button class="nav-item" onclick="showSection('subjects',this)"><span
+            class="nav-icon">📚</span><span>Subjects</span></button>
+        <button class="nav-item" onclick="showSection('classes',this)"><span
+            class="nav-icon">🎥</span><span>Classes</span></button>
+        <button class="nav-item" onclick="showSection('calendar',this)"><span
+            class="nav-icon">📅</span><span>Calendar</span></button>
+      </nav>
+      <div class="sidebar-footer">
+        <a class="logout-link" onclick="doLogout()">🚪 Logout</a>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <!-- PAGE 1: DASHBOARD -->
+      <div class="section active" id="section-dashboard">
+        <div class="page-header">
+          <div>
+            <h1 id="dash-name">Dashboard</h1>
+            <div class="subtitle" id="dash-meta">Class · Subject</div>
+          </div>
+          <div id="dash-risk-badge"></div>
+        </div>
+        <div class="grid-4" style="margin-bottom:20px;" id="dash-stats"></div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">📈 Overall Performance</div>
+            <div id="dash-performance"></div>
+          </div>
+          <div class="card">
+            <div class="card-title">📋 Assignments &amp; Effort</div>
+            <div id="dash-assignments"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">🤖 AI Insights</div>
+          <div class="insight-grid" id="dash-insights"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">📘 Topic-wise Performance</div>
+          <div id="dash-topics"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">📝 Test History</div>
+          <div id="dash-tests"></div>
+        </div>
+      </div>
+
+      <!-- PAGE 2: SUBJECTS -->
+      <div class="section" id="section-subjects">
+        <div id="subjects-list-view">
+          <div class="page-header">
+            <div>
+              <h1>Subjects</h1>
+              <div class="subtitle" id="subj-meta"></div>
+            </div>
+          </div>
+          <div class="subject-grid" id="subjects-grid"></div>
+        </div>
+        <div id="subject-detail">
+          <button class="back-btn" onclick="closeSubjectDetail()">← Back to Subjects</button>
+          <div class="page-header">
+            <div>
+              <h1 id="detail-subject-name">Subject</h1>
+              <div class="subtitle" id="detail-subject-sub"></div>
+            </div>
+            <div id="detail-badge"></div>
+          </div>
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">📊 Topic Breakdown</div>
+              <div id="detail-topics"></div>
+            </div>
+            <div class="card">
+              <div class="card-title">🤖 AI Insight</div>
+              <div id="detail-ai"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 3: CLASSES -->
+      <div class="section" id="section-classes">
+        <div class="page-header">
+          <div>
+            <h1>Classes</h1>
+            <div class="subtitle" id="classes-meta">Mathematics · Class 10-A</div>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div>
+            <div class="card-title" style="margin-bottom:12px;">⏮️ Previous Classes</div>
+            <div class="class-card past">
+              <div class="class-subject">Algebra — Chapter 3</div>
+              <div class="class-meta">Mon, 16 Jun · 9:00 AM</div>
+            </div>
+            <div class="class-card past">
+              <div class="class-subject">Calculus — Limits</div>
+              <div class="class-meta">Wed, 18 Jun · 9:00 AM</div>
+            </div>
+            <div class="class-card past">
+              <div class="class-subject">Trigonometry — Identities</div>
+              <div class="class-meta">Fri, 20 Jun · 9:00 AM</div>
+            </div>
+          </div>
+          <div>
+            <div class="card-title" style="margin-bottom:12px;">🟢 Present Class</div>
+            <div class="class-card present">
+              <div class="class-subject">Calculus — Derivatives</div>
+              <div class="class-meta">Today · 9:00 AM · Live Now</div>
+              <div class="class-actions">
+                <button class="btn btn-success" onclick="markUnderstood()">✅ Understood</button>
+                <button class="btn btn-danger" onclick="markNeedHelp()">❗ Need Help</button>
+              </div>
+              <div class="help-panel" id="help-panel">
+                <div class="help-panel-title">🆘 Get Assistance</div>
+                <div class="help-actions">
+                  <button class="btn btn-primary" onclick="alert('Connecting to AI Tutor...')">🤖 Ask AI</button>
+                  <button class="btn btn-outline" onclick="alert('Message sent to teacher!')">💬 Message
+                    Teacher</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="card-title" style="margin-bottom:12px;">⏭️ Upcoming Classes</div>
+            <div class="class-card upcoming">
+              <div class="class-subject">Geometry — Circles</div>
+              <div class="class-meta">Mon, 23 Jun · 9:00 AM</div>
+            </div>
+            <div class="class-card upcoming">
+              <div class="class-subject">Algebra — Quadratics</div>
+              <div class="class-meta">Wed, 25 Jun · 9:00 AM</div>
+            </div>
+            <div class="class-card upcoming">
+              <div class="class-subject">Calculus — Integration</div>
+              <div class="class-meta">Fri, 27 Jun · 9:00 AM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 4: CALENDAR -->
+      <div class="section" id="section-calendar">
+        <div class="page-header">
+          <div>
+            <h1>Attendance Calendar</h1>
+            <div class="subtitle" id="cal-meta">June 2025</div>
+          </div>
+          <div id="cal-badge"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">📅 June 2025 — Monthly View</div>
+          <div id="calendar-render"></div>
+          <div class="cal-legend">
+            <span><span class="legend-dot" style="background:var(--success)"></span>Present</span>
+            <span><span class="legend-dot" style="background:var(--danger)"></span>Absent</span>
+            <span><span class="legend-dot" style="background:var(--secondary)"></span>Weekend</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">📊 Attendance Summary</div>
+          <div id="attendance-summary"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // ════════════════════════════════
+    // BOOT — check login, load JSON
+    // ════════════════════════════════
+    let currentStudent = null;
+
+    window.onload = async function () {
+      const roll = localStorage.getItem('studentRoll');
+      const role = localStorage.getItem('userRole');
+
+      // Guard: must be logged in as student
+      if (!roll || role !== 'student') {
+        showError();
+        return;
+      }
+
+      try {
+        const res = await fetch('src/data/students.json');
+        const data = await res.json();
+
+        const found = data.find(s => s.rollNo === roll);
+        if (!found) { showError(); return; }
+
+        // Build attendanceDays if not in JSON (generate realistic data)
+        if (!found.attendanceDays) {
+          const presentDays = [];
+          const absentDays = [];
+          const totalSchoolDays = [2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 16, 17, 18, 19, 20, 23, 24, 25, 26, 27, 30];
+          const absentCount = Math.round(totalSchoolDays.length * (1 - found.attendance / 100));
+          totalSchoolDays.forEach((d, i) => {
+            if (i < absentCount) absentDays.push(d);
+            else presentDays.push(d);
+          });
+          found.attendanceDays = { present: presentDays, absent: absentDays };
+        }
+
+        currentStudent = found;
+        initPortal(found);
+
+      } catch (e) {
+        console.error(e);
+        showError();
+      }
+    };
+
+    function showError() {
+      document.getElementById('loading-screen').style.display = 'none';
+      document.getElementById('error-screen').style.display = 'flex';
+    }
+
+    function initPortal(s) {
+      document.getElementById('loading-screen').style.display = 'none';
+      document.getElementById('app-shell').style.display = 'flex';
+
+      // Sidebar
+      const inits = s.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+      document.getElementById('sidebar-initials').textContent = inits;
+      document.getElementById('sidebar-name').textContent = s.name;
+      document.getElementById('sidebar-roll').textContent = s.rollNo;
+
+      renderDashboard(s);
+      renderSubjects(s);
+      renderCalendar(s);
+    }
+
+    function doLogout() {
+      localStorage.removeItem('studentRoll');
+      localStorage.removeItem('userRole');
+      window.location.href = 'index.html';
+    }
+
+    // ════════════════════════════════
+    // HELPERS
+    // ════════════════════════════════
+    function scoreClass(sc) { return sc >= 70 ? 'score-good' : sc >= 50 ? 'score-ok' : 'score-weak'; }
+    function fillClass(sc) { return sc >= 70 ? 'fill-success' : sc >= 50 ? 'fill-warn' : 'fill-danger'; }
+
+    function riskLevel(s) {
+      if (s.overallScore < 40 || s.attendance < 60 || s.effortLevel === 'low') return 'high';
+      if (s.overallScore < 65 || s.attendance < 75 || s.effortLevel === 'medium') return 'medium';
+      return 'low';
+    }
+    function riskLabel(r) {
+      return r === 'high' ? '⚠️ High Risk' : r === 'medium' ? '🟡 Medium Risk' : '✅ Low Risk';
+    }
+    function effortEmoji(e) { return e === 'high' ? '🔥' : e === 'medium' ? '⚡' : '😴'; }
+
+    // ════════════════════════════════
+    // NAVIGATION
+    // ════════════════════════════════
+    function showSection(id, btn) {
+      document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      document.getElementById('section-' + id).classList.add('active');
+      if (btn) btn.classList.add('active');
+      if (id === 'subjects') closeSubjectDetail(true);
+    }
+
+    // ════════════════════════════════
+    // DASHBOARD
+    // ════════════════════════════════
+    function renderDashboard(s) {
+      document.getElementById('dash-name').textContent = s.name + "'s Dashboard";
+      document.getElementById('dash-meta').textContent = s.class + ' · ' + s.subject;
+
+      const risk = riskLevel(s);
+      document.getElementById('dash-risk-badge').innerHTML =
+        `<span class="risk-indicator risk-${risk}"><span class="risk-dot dot-${risk}"></span>${riskLabel(risk)}</span>`;
+
+      // Stats
+      document.getElementById('dash-stats').innerHTML = [
+        { num: s.overallScore + '%', label: 'Overall Score', sub: 'Average across topics' },
+        { num: s.attendance + '%', label: 'Attendance', sub: 'Classes attended' },
+        { num: s.assignments.completed + '/' + s.assignments.total, label: 'Assignments', sub: 'Completed' },
+        { num: s.topics.length, label: 'Topics Covered', sub: s.needHelpTopics.length + ' need help' }
+      ].map(d => `
+    <div class="card" style="margin-bottom:0">
+      <div class="stat-number">${d.num}</div>
+      <div class="stat-label">${d.label}</div>
+      <div class="stat-sub">${d.sub}</div>
+    </div>`).join('');
+
+      // Performance bars
+      document.getElementById('dash-performance').innerHTML = s.topics.map(t => `
+    <div class="progress-wrap">
+      <div class="progress-label"><span>${t.name}</span><span>${t.score}/${t.maxScore}</span></div>
+      <div class="progress-bar"><div class="progress-fill ${fillClass(t.score)}" style="width:${t.score}%"></div></div>
+    </div>`).join('');
+
+      // Assignment ring
+      const pct = Math.round(s.assignments.completed / s.assignments.total * 100);
+      const circ = 2 * Math.PI * 32;
+      const dash = (pct / 100) * circ;
+      const effortColor = s.effortLevel === 'high' ? 'var(--success)' : s.effortLevel === 'medium' ? 'var(--warn)' : 'var(--danger)';
+      document.getElementById('dash-assignments').innerHTML = `
+    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+      <div class="assignment-ring">
+        <svg class="ring-svg" width="80" height="80" viewBox="0 0 80 80">
+          <circle class="ring-bg" cx="40" cy="40" r="32"/>
+          <circle class="ring-fill" cx="40" cy="40" r="32" stroke="${effortColor}"
+            stroke-dasharray="${dash} ${circ}" stroke-dashoffset="0"/>
+        </svg>
+        <div class="ring-label">${pct}%<div class="ring-sub">done</div></div>
+      </div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:600;margin-bottom:8px;">${s.assignments.completed} of ${s.assignments.total} assignments submitted</div>
+        <div style="margin-top:10px;">
+          <div class="insight-item-label">Effort Level</div>
+          <span class="effort-tag effort-${s.effortLevel}">${effortEmoji(s.effortLevel)} ${s.effortLevel.charAt(0).toUpperCase() + s.effortLevel.slice(1)}</span>
+        </div>
+        <div style="margin-top:10px;">
+          <div class="insight-item-label">Understanding</div>
+          <span class="effort-tag effort-${s.understandingLevel}">${s.understandingLevel.charAt(0).toUpperCase() + s.understandingLevel.slice(1)}</span>
+        </div>
+      </div>
+    </div>`;
+
+      // AI Insights
+      const insightsData = buildInsights(s);
+      document.getElementById('dash-insights').innerHTML = insightsData.map(i => `
+    <div class="insight-item">
+      <div class="insight-item-label">${i.label}</div>
+      <div class="insight-item-value">${i.value}</div>
+    </div>`).join('');
+
+      // Topics list
+      document.getElementById('dash-topics').innerHTML = s.topics.map(t => `
+    <div class="topic-row">
+      <div class="topic-name">${t.name}</div>
+      <div class="mini-bar-wrap" style="flex:2;">
+        <div class="mini-bar"><div class="mini-bar-fill ${fillClass(t.score)}" style="width:${t.score}%"></div></div>
+        <div class="mini-score-text" style="color:${t.score >= 70 ? 'var(--success)' : t.score >= 50 ? 'var(--warn)' : 'var(--danger)'}">${t.score}</div>
+      </div>
+      <span class="topic-score-tag ${scoreClass(t.score)}">${t.score >= 70 ? 'Good' : t.score >= 50 ? 'Average' : 'Weak'}</span>
+    </div>`).join('');
+
+      // Tests
+      document.getElementById('dash-tests').innerHTML = s.tests.map(t => `
+    <div class="test-row">
+      <div>
+        <div class="test-name">${t.name}</div>
+        ${t.topicsWeak.length
+          ? `<div class="test-weak">Weak in: ${t.topicsWeak.join(', ')}</div>`
+          : '<div style="font-size:11px;color:var(--success)">All topics good</div>'}
+      </div>
+      <div class="test-score" style="color:${t.score >= 70 ? 'var(--success)' : t.score >= 50 ? 'var(--warn)' : 'var(--danger)'}">${t.score}%</div>
+    </div>`).join('');
+    }
+
+    function buildInsights(s) {
+      const risk = riskLevel(s);
+      const weakTopics = s.topics.filter(t => t.score < 50).map(t => t.name);
+      const avgScore = Math.round(s.topics.reduce((a, t) => a + t.score, 0) / s.topics.length);
+      return [
+        { label: "📊 Risk Level", value: `<span class="risk-indicator risk-${risk}"><span class="risk-dot dot-${risk}"></span>${riskLabel(risk)}</span>` },
+        { label: "🎯 Average Score", value: `<strong>${avgScore}%</strong> across all topics` },
+        { label: "🔴 Weak Topics", value: weakTopics.length ? weakTopics.join(', ') : '✅ No weak topics' },
+        {
+          label: "📌 Recommendation", value: risk === 'high'
+            ? 'Urgent: Schedule remedial sessions and speak to your teacher.'
+            : risk === 'medium'
+              ? 'Focus on weak areas; practice daily for 30 minutes.'
+              : 'Keep up the great work! Try advanced problems to stay ahead.'
+        }
+      ];
+    }
+
+    // ════════════════════════════════
+    // SUBJECTS
+    // ════════════════════════════════
+    function renderSubjects(s) {
+      document.getElementById('subj-meta').textContent = s.subject + ' · ' + s.class;
+      document.getElementById('subjects-grid').innerHTML = s.topics.map((t, i) => {
+        const cls = t.score >= 70 ? 'good' : t.score >= 50 ? 'ok' : 'weak';
+        return `<div class="subject-card ${cls}" onclick="openSubjectDetail(${i})">
+      <div class="subject-title">${t.name}</div>
+      <div class="subject-sub">${s.subject} · ${s.class}</div>
+      <div class="progress-wrap">
+        <div class="progress-label"><span>Score</span><span>${t.score}/${t.maxScore}</span></div>
+        <div class="progress-bar"><div class="progress-fill ${fillClass(t.score)}" style="width:${t.score}%"></div></div>
+      </div>
+      <span class="topic-score-tag ${scoreClass(t.score)}">${t.score >= 70 ? '✅ Good' : t.score >= 50 ? '⚡ Average' : '❌ Weak'}</span>
+    </div>`;
+      }).join('');
+    }
+
+    function openSubjectDetail(idx) {
+      const s = currentStudent;
+      const t = s.topics[idx];
+      document.getElementById('subjects-list-view').style.display = 'none';
+      document.getElementById('subject-detail').classList.add('open');
+      document.getElementById('detail-subject-name').textContent = t.name;
+      document.getElementById('detail-subject-sub').textContent = s.subject + ' · ' + s.class;
+      const cls = t.score >= 70 ? 'success' : t.score >= 50 ? 'warn' : 'danger';
+      document.getElementById('detail-badge').innerHTML =
+        `<span class="badge badge-${cls}">${t.score >= 70 ? '✅ Proficient' : t.score >= 50 ? '⚡ Developing' : '❌ Needs Help'}</span>`;
+      document.getElementById('detail-topics').innerHTML = `
+    <div style="font-size:28px;font-weight:800;color:${t.score >= 70 ? 'var(--success)' : t.score >= 50 ? 'var(--warn)' : 'var(--danger)'};margin-bottom:6px;">${t.score}%</div>
+    <div style="font-size:12px;color:#aaa;margin-bottom:16px;">Your score in ${t.name}</div>
+    <div class="progress-bar" style="height:12px;margin-bottom:20px;"><div class="progress-fill ${fillClass(t.score)}" style="width:${t.score}%"></div></div>
+    <div style="font-size:12px;color:#888;margin-bottom:4px;">Compared to class average</div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>You</span><span>${t.score}%</span></div>
+      <div class="progress-bar"><div class="progress-fill ${fillClass(t.score)}" style="width:${t.score}%"></div></div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Class Avg</span><span>65%</span></div>
+      <div class="progress-bar"><div class="progress-fill fill-primary" style="width:65%"></div></div>
+    </div>`;
+      const risk = t.score >= 70 ? 'low' : t.score >= 50 ? 'medium' : 'high';
+      document.getElementById('detail-ai').innerHTML = `
+    <div class="insight-item" style="margin-bottom:10px;">
+      <div class="insight-item-label">Status</div>
+      <div class="insight-item-value"><span class="risk-indicator risk-${risk}"><span class="risk-dot dot-${risk}"></span>${risk === 'low' ? 'Performing Well' : risk === 'medium' ? 'Needs Attention' : 'Struggling'}</span></div>
+    </div>
+    <div class="insight-item" style="margin-bottom:10px;">
+      <div class="insight-item-label">AI Recommendation</div>
+      <div class="insight-item-value">${t.score >= 70
+          ? 'Excellent grasp of ' + t.name + '. Try advanced problems to challenge yourself further.'
+          : t.score >= 50
+            ? 'Moderate understanding of ' + t.name + '. Daily practice and concept revision recommended.'
+            : 'Significant gaps in ' + t.name + '. Speak to your teacher for remedial support and rebuild from basics.'
+        }</div>
+    </div>
+    <div class="insight-item">
+      <div class="insight-item-label">Suggested Resources</div>
+      <div class="insight-item-value">📹 Video lectures · 📝 Practice worksheets · 🤖 AI tutor sessions</div>
+    </div>`;
+    }
+
+    function closeSubjectDetail() {
+      document.getElementById('subjects-list-view').style.display = '';
+      document.getElementById('subject-detail').classList.remove('open');
+    }
+
+    // ════════════════════════════════
+    // CALENDAR
+    // ════════════════════════════════
+    function renderCalendar(s) {
+      document.getElementById('cal-meta').textContent = s.class + ' · June 2025';
+      const present = s.attendanceDays.present;
+      const absent = s.attendanceDays.absent;
+      const total = present.length + absent.length;
+      const pct = total ? Math.round(present.length / total * 100) : 0;
+
+      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      let html = '<div class="calendar-grid">';
+      days.forEach(d => { html += `<div class="cal-header">${d}</div>`; });
+      for (let i = 0; i < 30; i++) {
+        const day = i + 1;
+        const dow = i % 7;
+        const isWeekend = dow === 0 || dow === 6;
+        if (isWeekend) {
+          html += `<div class="cal-day" style="background:var(--secondary);color:#bbb;">${day}</div>`;
+        } else if (present.includes(day)) {
+          html += `<div class="cal-day cal-present">${day}</div>`;
+        } else if (absent.includes(day)) {
+          html += `<div class="cal-day cal-absent">${day}</div>`;
+        } else {
+          html += `<div class="cal-day" style="background:var(--bg);color:#ccc;">${day}</div>`;
+        }
+      }
+      html += '</div>';
+      document.getElementById('calendar-render').innerHTML = html;
+
+      const badgeCls = pct >= 75 ? 'badge-success' : pct >= 60 ? 'badge-warn' : 'badge-danger';
+      document.getElementById('cal-badge').innerHTML = `<span class="badge ${badgeCls}">${pct}% Attendance</span>`;
+
+      document.getElementById('attendance-summary').innerHTML = `
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Present Days</span><span>${present.length} / ${total} school days</span></div>
+      <div class="progress-bar"><div class="progress-fill ${pct >= 75 ? 'fill-success' : pct >= 60 ? 'fill-warn' : 'fill-danger'}" style="width:${pct}%"></div></div>
+    </div>
+    <div style="display:flex;gap:20px;margin-top:14px;flex-wrap:wrap;">
+      <div class="card" style="flex:1;min-width:120px;margin-bottom:0;text-align:center;">
+        <div class="stat-number" style="color:var(--success)">${present.length}</div>
+        <div class="stat-label">Present</div>
+      </div>
+      <div class="card" style="flex:1;min-width:120px;margin-bottom:0;text-align:center;">
+        <div class="stat-number" style="color:var(--danger)">${absent.length}</div>
+        <div class="stat-label">Absent</div>
+      </div>
+      <div class="card" style="flex:1;min-width:120px;margin-bottom:0;text-align:center;">
+        <div class="stat-number">${pct}%</div>
+        <div class="stat-label">Rate</div>
+      </div>
+    </div>
+    ${pct < 75 ? `<div style="margin-top:14px;padding:12px;background:#fdeaea;border-radius:10px;font-size:13px;color:var(--danger);">⚠️ Your attendance is below 75%. Please attend classes regularly to avoid issues.</div>` : ''}`;
+    }
+
+    // ════════════════════════════════
+    // CLASSES PAGE
+    // ════════════════════════════════
+    function markUnderstood() {
+      document.getElementById('help-panel').classList.remove('show');
+      alert('✅ Marked as Understood. Keep it up!');
+    }
+    function markNeedHelp() {
+      document.getElementById('help-panel').classList.toggle('show');
+    }
+  </script>
+</body>
+
+</html>
