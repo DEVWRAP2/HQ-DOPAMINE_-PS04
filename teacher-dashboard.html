@@ -332,6 +332,78 @@
             transform: translateY(0);
             opacity: 1;
         }
+
+        /* ── ACCORDION NAV ── */
+        .accordion-item {
+            margin-bottom: 8px;
+            list-style: none;
+        }
+
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            color: #ccc;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .accordion-header:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+
+        .accordion-item.active .accordion-header {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .accordion-body {
+            list-style: none;
+            padding-left: 20px;
+            margin-top: 4px;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .accordion-item.active .accordion-body {
+            display: flex;
+        }
+
+        .accordion-body li a {
+            display: block;
+            padding: 8px 16px;
+            color: #aaa;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .accordion-body li a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .accordion-body li.active a {
+            background: var(--primary);
+            color: #fff;
+            font-weight: 600;
+        }
+        
+        .arrow {
+            font-size: 0.7rem;
+            transition: transform 0.3s;
+        }
+        
+        .accordion-item.active .arrow {
+            transform: rotate(90deg);
+        }
     </style>
 </head>
 
@@ -339,13 +411,66 @@
 
     <div class="app">
         <aside class="sidebar">
-            <div class="sidebar-header">
+            <div class="sidebar-header" onclick="goToTeacherHome()" style="cursor: pointer;" title="Home">
                 <h2>TeacherFlow AI</h2>
+                <p style="font-size: 0.75rem; color: #888; margin-top: 4px;">Dashboard Home</p>
             </div>
             <ul class="nav-links" id="navLinks">
-                <li class="active"><a href="#" onclick="showSection('dashboard'); return false;">Dashboard</a></li>
-                <li><a href="#" onclick="showSection('classes'); return false;">Classes</a></li>
-                <li><a href="#" onclick="showSection('alerts'); return false;">Alerts</a></li>
+                <li class="accordion-item active" id="acc-cse">
+                    <div class="accordion-header" onclick="toggleAccordion('cse')">
+                        <span>💻 B.Tech CSE</span>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <ul class="accordion-body" id="accordion-cse">
+                        <li id="nav-cse-dashboard" class="active"><a href="#" onclick="selectClass('cse', 'dashboard'); return false;">Dashboard</a></li>
+                        <li id="nav-cse-classes"><a href="#" onclick="selectClass('cse', 'classes'); return false;">Classes</a></li>
+                        <li id="nav-cse-alerts"><a href="#" onclick="selectClass('cse', 'alerts'); return false;">Alerts</a></li>
+                    </ul>
+                </li>
+                <li class="accordion-item" id="acc-ece">
+                    <div class="accordion-header" onclick="toggleAccordion('ece')">
+                        <span>📡 B.Tech ECE</span>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <ul class="accordion-body" id="accordion-ece">
+                        <li id="nav-ece-dashboard"><a href="#" onclick="selectClass('ece', 'dashboard'); return false;">Dashboard</a></li>
+                        <li id="nav-ece-classes"><a href="#" onclick="selectClass('ece', 'classes'); return false;">Classes</a></li>
+                        <li id="nav-ece-alerts"><a href="#" onclick="selectClass('ece', 'alerts'); return false;">Alerts</a></li>
+                    </ul>
+                </li>
+                <li class="accordion-item" id="acc-aiml">
+                    <div class="accordion-header" onclick="toggleAccordion('aiml')">
+                        <span>🤖 B.Tech AIML</span>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <ul class="accordion-body" id="accordion-aiml">
+                        <li id="nav-aiml-dashboard"><a href="#" onclick="selectClass('aiml', 'dashboard'); return false;">Dashboard</a></li>
+                        <li id="nav-aiml-classes"><a href="#" onclick="selectClass('aiml', 'classes'); return false;">Classes</a></li>
+                        <li id="nav-aiml-alerts"><a href="#" onclick="selectClass('aiml', 'alerts'); return false;">Alerts</a></li>
+                    </ul>
+                </li>
+                <li class="accordion-item" id="acc-me">
+                    <div class="accordion-header" onclick="toggleAccordion('me')">
+                        <span>⚙️ B.Tech ME</span>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <ul class="accordion-body" id="accordion-me">
+                        <li id="nav-me-dashboard"><a href="#" onclick="selectClass('me', 'dashboard'); return false;">Dashboard</a></li>
+                        <li id="nav-me-classes"><a href="#" onclick="selectClass('me', 'classes'); return false;">Classes</a></li>
+                        <li id="nav-me-alerts"><a href="#" onclick="selectClass('me', 'alerts'); return false;">Alerts</a></li>
+                    </ul>
+                </li>
+                <li class="accordion-item" id="acc-ce">
+                    <div class="accordion-header" onclick="toggleAccordion('ce')">
+                        <span>🏗️ B.Tech CE</span>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <ul class="accordion-body" id="accordion-ce">
+                        <li id="nav-ce-dashboard"><a href="#" onclick="selectClass('ce', 'dashboard'); return false;">Dashboard</a></li>
+                        <li id="nav-ce-classes"><a href="#" onclick="selectClass('ce', 'classes'); return false;">Classes</a></li>
+                        <li id="nav-ce-alerts"><a href="#" onclick="selectClass('ce', 'alerts'); return false;">Alerts</a></li>
+                    </ul>
+                </li>
             </ul>
             <div class="sidebar-footer">
                 <button class="logout-btn" onclick="window.location.href='index.html'">Logout</button>
@@ -429,6 +554,7 @@
 
             <!-- ══════════ CLASSES ══════════ -->
             <div id="section-classes" class="page-section">
+                <button onclick="goBack()" style="background:none; border:none; color:var(--primary); font-weight:600; font-size:1rem; cursor:pointer; margin-bottom:20px; display:flex; align-items:center; gap:5px;">← Back</button>
                 <div class="classes-page">
                     <h2>Classes</h2>
                     <p class="page-sub">Manage class topics, add today's lesson, and schedule upcoming sessions.</p>
@@ -513,6 +639,7 @@
 
             <!-- ══════════ ALERTS ══════════ -->
             <div id="section-alerts" class="page-section">
+                <button onclick="goBack()" style="background:none; border:none; color:var(--primary); font-weight:600; font-size:1rem; cursor:pointer; margin-bottom:20px; display:flex; align-items:center; gap:5px;">← Back</button>
                 <div class="alerts-page">
                     <h2>Alerts & Messages</h2>
                     <p class="page-sub">Student help requests, performance warnings, and system notifications.</p>
@@ -663,14 +790,72 @@
 
     <script src="src/js/teacher.js"></script>
     <script>
-        // ════════ NAV ════════
+        let currentClassType = 'cse';
+        let navHistory = [];
+
+        function goToTeacherHome() {
+            selectClass('cse', 'dashboard');
+        }
+
+        function goBack() {
+            if (navHistory.length > 1) {
+                navHistory.pop();
+                const prevState = navHistory[navHistory.length - 1];
+                selectClass(prevState.classType, prevState.section, true);
+            }
+        }
+
+        function toggleAccordion(className) {
+            const isCurrentlyActive = document.getElementById('acc-' + className).classList.contains('active');
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            if (!isCurrentlyActive) {
+                document.getElementById('acc-' + className).classList.add('active');
+            }
+        }
+
+        function selectClass(className, sectionName, isBacking = false) {
+            if (currentClassType !== className || !students.length) {
+                currentClassType = className;
+                let classTitle = '';
+                if (className === 'cse') classTitle = 'B.Tech CSE - 2nd Year';
+                else if (className === 'ece') classTitle = 'B.Tech ECE - 3rd Year';
+                else if (className === 'aiml') classTitle = 'B.Tech AIML - 1st Year';
+                else if (className === 'me') classTitle = 'B.Tech ME - 2nd Year';
+                else if (className === 'ce') classTitle = 'B.Tech CE - 4th Year';
+
+                if (typeof openClass === 'function') {
+                    openClass(classTitle, className);
+                }
+            }
+            showSection(sectionName);
+
+            document.querySelectorAll('.accordion-body li').forEach(li => li.classList.remove('active'));
+            const activeNav = document.getElementById(`nav-${className}-${sectionName}`);
+            if (activeNav) activeNav.classList.add('active');
+
+            document.querySelectorAll('.accordion-item').forEach(item => item.classList.remove('active'));
+            const acc = document.getElementById('acc-' + className);
+            if (acc) acc.classList.add('active');
+
+            if (!isBacking) {
+                navHistory.push({ classType: className, section: sectionName });
+                history.pushState({ classType: className, section: sectionName }, "", `#${className}-${sectionName}`);
+            }
+        }
+
+        window.addEventListener('popstate', function(event) {
+            if (event.state && event.state.classType) {
+                if (navHistory.length > 1) navHistory.pop();
+                selectClass(event.state.classType, event.state.section, true);
+            }
+        });
+
         function showSection(name) {
             document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-            document.getElementById('section-' + name).classList.add('active');
-            const map = ['dashboard', 'classes', 'alerts'];
-            document.querySelectorAll('#navLinks li').forEach((li, i) => {
-                li.classList.toggle('active', map[i] === name);
-            });
+            const sec = document.getElementById('section-' + name);
+            if (sec) sec.classList.add('active');
             if (name === 'classes') renderClassesList();
         }
 

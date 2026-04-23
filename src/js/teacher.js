@@ -3,6 +3,8 @@
 const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY_HERE';
 
 let students = [];
+let rawStudentsData = [];
+let myChartInstance = null;
 
 // ════════════════════════════════
 // LOAD DATA FROM JSON
@@ -10,27 +12,59 @@ let students = [];
 fetch('src/data/students.json')
     .then(res => res.json())
     .then(data => {
-        students = data.map(s => ({
-            id: s.rollNo,
-            name: s.name,
-            attendance: s.attendance,
-            assignmentsDone: s.assignments.completed,
-            assignmentsTotal: s.assignments.total,
-            effort: s.effortLevel,
-            overallScore: s.overallScore,
-            needHelpTopics: s.needHelpTopics,
-            tests: s.tests,
-            topics: s.topics.reduce((acc, t) => {
-                acc[t.name] = t.score;
-                return acc;
-            }, {})
-        }));
-        initChart();
-        populateTable();
+        rawStudentsData = data;
+        if (typeof selectClass === 'function') {
+            selectClass('cse', 'dashboard');
+        }
     })
     .catch(err => {
         console.error('Failed to load student data:', err);
     });
+
+// ════════════════════════════════
+// CLASS DATA FILTERING
+// ════════════════════════════════
+function openClass(className, classType) {
+    const titleEl = document.querySelector('.dashboard-header h1');
+    const subEl = document.querySelector('.dashboard-header .subtitle');
+    if (titleEl) titleEl.innerText = 'Teacher Dashboard';
+    if (subEl) subEl.innerText = className;
+
+    let classData = JSON.parse(JSON.stringify(rawStudentsData));
+
+    if (classType === 'ece') {
+        classData = classData.slice(0, 3);
+        classData.forEach(s => { s.overallScore = Math.min(100, s.overallScore + 15); s.attendance = Math.min(100, s.attendance + 10); });
+    } else if (classType === 'aiml') {
+        classData = classData.slice(2, 5);
+        classData.forEach(s => { s.overallScore = Math.max(0, s.overallScore - 5); s.attendance = Math.max(0, s.attendance - 5); });
+    } else if (classType === 'me') {
+        classData = classData.slice(1, 4);
+        classData.forEach(s => { s.overallScore = Math.min(100, s.overallScore + 5); s.attendance = Math.min(100, s.attendance - 2); });
+    } else if (classType === 'ce') {
+        classData = classData.slice(3, 6);
+        classData.forEach(s => { s.overallScore = Math.max(0, s.overallScore - 10); s.attendance = Math.max(0, s.attendance + 5); });
+    }
+
+    students = classData.map(s => ({
+        id: s.rollNo,
+        name: s.name,
+        attendance: s.attendance,
+        assignmentsDone: s.assignments ? s.assignments.completed : 0,
+        assignmentsTotal: s.assignments ? s.assignments.total : 10,
+        effort: s.effortLevel || 'medium',
+        overallScore: s.overallScore,
+        needHelpTopics: s.needHelpTopics || [],
+        tests: s.tests || [],
+        topics: (s.topics || []).reduce((acc, t) => {
+            acc[t.name] = t.score;
+            return acc;
+        }, {})
+    }));
+
+    initChart();
+    populateTable();
+}
 
 // ════════════════════════════════
 // HELPERS
@@ -199,13 +233,17 @@ function initChart() {
     const ctx = document.getElementById('performanceChart');
     if (!ctx) return;
 
+    if (myChartInstance) {
+        myChartInstance.destroy();
+    }
+
     const topicNames = Object.keys(students[0]?.topics || {});
     const topicAverages = topicNames.map(topic => {
         const total = students.reduce((sum, s) => sum + (s.topics[topic] || 0), 0);
-        return Math.round(total / students.length);
+        return students.length ? Math.round(total / students.length) : 0;
     });
 
-    new Chart(ctx.getContext('2d'), {
+    myChartInstance = new Chart(ctx.getContext('2d'), {
         type: 'bar',
         data: {
             labels: topicNames,
