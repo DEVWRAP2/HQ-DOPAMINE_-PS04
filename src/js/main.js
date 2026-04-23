@@ -1,95 +1,92 @@
-/* ═══════════════════════════════════════════════
-   DevWrap — SC-ECE Presents
-   main.js
-   ═══════════════════════════════════════════════ */
+// src/js/main.js
 
-/* ════════════════════════════════
-   Config
-════════════════════════════════ */
+let currentRole = null;
 
-const CONFIG = {
-  grid: {
-    cols: 28,
-    rows: 10,
-    colors: ["#00C896", "#00A87A", "#006B4F", "#B8F5E0", "#00E8A8"],
-    shadeProbability: 0.4, // cells with shade > this value get a color
-    maxDelay: 1.77,
-  },
-  phases: {
-    devwrapReveal: 5200,  // ms — hide loader, show devwrap screen
-    welcome:       6500,  // ms — show welcome message
-  },
+// ════════════════════════════════
+// STUDENT CREDENTIALS
+// Maps email → rollNo from your JSON data
+// ════════════════════════════════
+const STUDENT_LOGINS = {
+    'rahul@student.edu': { password: 'rahul123', rollNo: 'CSE101' },
+    'priya@student.edu': { password: 'priya123', rollNo: 'CSE102' },
+    'arjun@student.edu': { password: 'arjun123', rollNo: 'CSE103' },
+    'sneha@student.edu': { password: 'sneha123', rollNo: 'CSE104' },
+    'amit@student.edu': { password: 'amit123', rollNo: 'CSE105' },
+    'riya@student.edu': { password: 'riya123', rollNo: 'CSE106' },
+    'vikram@student.edu': { password: 'vikram123', rollNo: 'CSE107' },
+    'pooja@student.edu': { password: 'pooja123', rollNo: 'CSE108' },
+    'suresh@student.edu': { password: 'suresh123', rollNo: 'CSE109' },
+    'neha@student.edu': { password: 'neha123', rollNo: 'CSE110' },
+    'rohan@student.edu': { password: 'rohan123', rollNo: 'CSE111' },
+    'anjali@student.edu': { password: 'anjali123', rollNo: 'CSE112' },
+    'karan@student.edu': { password: 'karan123', rollNo: 'CSE113' },
+    'divya@student.edu': { password: 'divya123', rollNo: 'CSE114' },
+    'tanmay@student.edu': { password: 'tanmay123', rollNo: 'CSE115' },
 };
 
-/* ════════════════════════════════
-   DOM References
-════════════════════════════════ */
+// Teacher credentials (for demo)
+const TEACHER_LOGINS = {
+    'teacher@school.edu': 'teacher123',
+    'anderson@school.edu': 'password123',
+};
 
-const root      = document.getElementById("root");
-const loader    = document.getElementById("loader");
-const devwrap   = document.getElementById("devwrap");
-const welcomeEl = document.getElementById("welcome-msg");
-const pixelGrid = document.getElementById("pixel-grid");
+function selectRole(role) {
+    currentRole = role;
+    const body = document.body;
+    const loginPanel = document.getElementById('loginPanel');
+    const loginTitle = document.getElementById('loginTitle');
+    const teacherCard = document.getElementById('teacherCard');
+    const studentCard = document.getElementById('studentCard');
+    const loginBtn = document.getElementById('loginBtn');
 
-/* ════════════════════════════════
-   Pixel Grid Builder
-════════════════════════════════ */
+    body.classList.remove('state-teacher', 'state-student');
 
-function buildPixelGrid() {
-  const { cols, rows, colors, shadeProbability, maxDelay } = CONFIG.grid;
-  const frag = document.createDocumentFragment();
-
-  for (let i = 0; i < cols * rows; i++) {
-    const cell  = document.createElement("div");
-    cell.className = "pixel";
-
-    const shaded = Math.random() > shadeProbability;
-    const delay  = Math.random() * maxDelay;
-    const color  = colors[Math.floor(Math.random() * colors.length)];
-
-    cell.style.background     = shaded ? color : "transparent";
-    cell.style.animation      = `pixelBlink ${1.5 + delay}s ease-in-out infinite`;
-    cell.style.animationDelay = `${delay}s`;
-
-    frag.appendChild(cell);
-  }
-
-  pixelGrid.appendChild(frag);
+    setTimeout(() => {
+        if (role === 'teacher') {
+            loginPanel.className = 'panel login-panel right-pos';
+            loginTitle.innerText = "Welcome Teacher";
+            teacherCard.classList.remove('dimmed');
+            studentCard.classList.add('dimmed');
+            loginBtn.style.background = "linear-gradient(135deg, #b5838d 0%, #9b6a72 100%)";
+            loginBtn.style.boxShadow = "0 8px 20px rgba(181, 131, 141, 0.3)";
+            requestAnimationFrame(() => body.classList.add('state-teacher'));
+        } else {
+            loginPanel.className = 'panel login-panel left-pos';
+            loginTitle.innerText = "Welcome Student";
+            studentCard.classList.remove('dimmed');
+            teacherCard.classList.add('dimmed');
+            loginBtn.style.background = "linear-gradient(135deg, #d4a373 0%, #b88a5c 100%)";
+            loginBtn.style.boxShadow = "0 8px 20px rgba(212, 163, 115, 0.3)";
+            requestAnimationFrame(() => body.classList.add('state-student'));
+        }
+    }, 50);
 }
 
-/* ════════════════════════════════
-   Phase Handlers
-════════════════════════════════ */
-
-function showDevWrap() {
-  root.style.background  = "#0A0A0A";
-  loader.style.display   = "none";
-  devwrap.style.display  = "flex";
+function resetSelection() {
+    currentRole = null;
+    const body = document.body;
+    document.getElementById('teacherCard').classList.remove('dimmed');
+    document.getElementById('studentCard').classList.remove('dimmed');
+    body.classList.remove('state-teacher', 'state-student');
 }
 
-function showWelcome() {
-  welcomeEl.style.display = "block";
+function handleLogin(e) {
+    e.preventDefault();
+
+    if (currentRole === 'teacher') {
+        // For demo: accept any teacher login
+        localStorage.setItem('userRole', 'teacher');
+        window.location.href = 'teacher-dashboard.html';
+
+    } else if (currentRole === 'student') {
+
+        // --- MODIFIED SECTION ---
+        // This bypasses the email/password check completely and forces a login
+        // as "Rahul Sharma" (Roll Number: CSE101) so you can test the dashboard.
+
+        localStorage.setItem('userRole', 'student');
+        localStorage.setItem('studentRoll', 'CSE101');
+
+        window.location.href = 'student-dashboard.html';
+    }
 }
-
-/* ════════════════════════════════
-   Phase Timeline
-════════════════════════════════
-   Mirrors the original React component phases:
-   black → sc-ece-reveal (400ms) → sc-ece-hold (2500ms)
-   → transition (4200ms) → devwrap-reveal (5200ms)
-   → welcome (6500ms) → complete (8500ms)
-════════════════════════════════ */
-
-function initTimeline() {
-  setTimeout(showDevWrap, CONFIG.phases.devwrapReveal);
-  setTimeout(showWelcome, CONFIG.phases.welcome);
-}
-
-/* ════════════════════════════════
-   Init
-════════════════════════════════ */
-
-(function init() {
-  buildPixelGrid();
-  initTimeline();
-})();

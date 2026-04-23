@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeacherFlow AI - Teacher Dashboard</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="src/css/dashboard.css">
+</head>
+<body>
+
+<div class="app">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>TeacherFlow AI</h2>
+        </div>
+        <ul class="nav-links">
+            <li class="active"><a href="#">Dashboard</a></li>
+            <li><a href="#">Classes</a></li>
+            <li><a href="#">Alerts</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <button class="logout-btn" onclick="window.location.href='index.html'">Logout</button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+        <!-- SECTION 1 - HEADER -->
+        <header class="dashboard-header">
+            <div>
+                <h1>Teacher Dashboard</h1>
+                <p class="subtitle">Class 10 - Mathematics</p>
+            </div>
+            <div class="header-profile">
+                <span>Mr. Anderson</span>
+                <div class="avatar">👨‍🏫</div>
+            </div>
+        </header>
+
+        <!-- SECTION 2 - ALERT PANEL -->
+        <section class="alert-panel">
+            <div class="alert-card danger">
+                <span class="icon">🔴</span>
+                <p>65% students weak in Calculus</p>
+            </div>
+            <div class="alert-card warning">
+                <span class="icon">🟡</span>
+                <p>3 students at risk (low score + low attendance)</p>
+            </div>
+            <div class="alert-card success">
+                <span class="icon">🟢</span>
+                <p>Top performers improving</p>
+            </div>
+        </section>
+
+        <!-- SECTION 3 - CLASS ANALYTICS -->
+        <section class="analytics-grid">
+            <div class="card chart-card">
+                <h3>Average Performance by Topic</h3>
+                <canvas id="performanceChart"></canvas>
+            </div>
+            <div class="card attendance-card">
+                <h3>Attendance Overview</h3>
+                <div class="progress-list">
+                    <div class="progress-item">
+                        <div class="progress-label"><span>Overall Attendance</span><span>88%</span></div>
+                        <div class="progress-track"><div class="progress-fill success-bg" style="width: 88%"></div></div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-label"><span>On Time Arrivals</span><span>75%</span></div>
+                        <div class="progress-track"><div class="progress-fill warning-bg" style="width: 75%"></div></div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-label"><span>Chronically Absent</span><span>12%</span></div>
+                        <div class="progress-track"><div class="progress-fill danger-bg" style="width: 12%"></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4 - STUDENT LIST -->
+        <section class="student-list-section">
+            <div class="card">
+                <h3>Student Roster</h3>
+                <table class="student-table" id="studentTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Attendance</th>
+                            <th>Avg Score</th>
+                            <th>Rating</th>
+                            <th>AI Summary</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentTableBody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- SECTION 5 - STUDENT DETAIL MODAL/OVERLAY -->
+<div class="modal-overlay" id="studentModal">
+    <div class="modal-card">
+        <button class="close-btn" onclick="closeStudentDetail()">✕</button>
+        
+        <header class="modal-header">
+            <h2 id="modalStudentName">Student Name</h2>
+            <p>Mathematics Overview</p>
+        </header>
+
+        <div class="modal-grid">
+            <!-- 1. Stats -->
+            <div class="card stat-card">
+                <h3>Quick Stats</h3>
+                <div class="stat-row">
+                    <span>Attendance</span>
+                    <strong id="modalAttendance">0%</strong>
+                </div>
+                <div class="stat-row">
+                    <span>Assignments Done</span>
+                    <strong id="modalAssignments">0/10</strong>
+                </div>
+                <div class="stat-row">
+                    <span>Average Score</span>
+                    <strong id="modalAvgScore">0%</strong>
+                </div>
+            </div>
+
+            <!-- 2. Topic Performance -->
+            <div class="card topic-card">
+                <h3>Topic Performance</h3>
+                <ul class="topic-list" id="modalTopicList">
+                    <!-- Populated by JS -->
+                </ul>
+            </div>
+
+            <!-- 3. AI Insights Panel -->
+            <div class="card ai-card">
+                <div class="ai-header">
+                    <h3>🤖 AI Insights Panel</h3>
+                </div>
+                <div class="ai-content">
+                    <p><strong>Weak Areas:</strong> <span id="aiWeakAreas"></span></p>
+                    <p><strong>Root Cause:</strong> <span id="aiRootCause"></span></p>
+                    <p><strong>Risk Level:</strong> <span id="aiRiskLevel"></span></p>
+                    <p><strong>Action Plan:</strong> <span id="aiActionPlan"></span></p>
+                    <div class="ai-recommendation">
+                        <strong>Teacher Recommendation:</strong>
+                        <p id="aiRecommendation"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="src/js/teacher.js"></script>
+</body>
+</html>

@@ -1,0 +1,332 @@
+[
+  {
+    "name": "Rahul Sharma",
+    "rollNo": "CSE101",
+    "class": "Class 10-A",
+    "subject": "Mathematics",
+    "attendance": 85,
+    "effortLevel": "high",
+    "understandingLevel": "low",
+    "overallScore": 43,
+    "topics": [
+      { "name": "Algebra", "score": 30, "maxScore": 100 },
+      { "name": "Calculus", "score": 35, "maxScore": 100 },
+      { "name": "Trigonometry", "score": 52, "maxScore": 100 },
+      { "name": "Geometry", "score": 55, "maxScore": 100 }
+    ],
+    "tests": [
+      { "name": "Test 1", "score": 38, "topicsWeak": ["Algebra", "Calculus"] },
+      { "name": "Test 2", "score": 44, "topicsWeak": ["Algebra", "Calculus"] }
+    ],
+    "assignments": { "completed": 9, "total": 10 },
+    "needHelpTopics": ["Algebra", "Calculus"]
+  },
+  {
+    "name": "Priya Das",
+    "rollNo": "CSE102",
+    "class": "Class 10-A",
+    "subject": "Mathematics",
+    "attendance": 53,
+    "effortLevel": "low",
+    "understandingLevel": "low",
+    "overallScore": 29,
+    "topics": [
+      { "name": "Algebra", "score": 28, "maxScore": 100 },
+      { "name": "Calculus", "score": 25, "maxScore": 100 },
+      { "name": "Trigonometry", "score": 32, "maxScore": 100 },
+      { "name": "Geometry", "score": 30, "maxScore": 100 }
+    ],
+    "tests": [
+      { "name": "Test 1", "score": 26, "topicsWeak": ["Calculus", "Algebra"] },
+      { "name": "Test 2", "score": 31, "topicsWeak": ["Calculus", "Trigonometry"] }
+    ],
+    "assignments": { "completed": 3, "total": 10 },
+    "needHelpTopics": ["Algebra", "Calculus", "Trigonometry", "Geometry"]
+  },
+  {
+    "name": "Arjun Mehta",
+    "rollNo": "CSE103",
+    "class": "Class 10-A",
+    "subject": "Mathematics",
+    "attendance": 95,
+    "effortLevel": "high",
+    "understandingLevel": "high",
+    "overallScore": 87,
+    "topics": [
+      { "name": "Algebra", "score": 88, "maxScore": 100 },
+      { "name": "Calculus", "score": 85, "maxScore": 100 },
+      { "name": "Trigonometry", "score": 90, "maxScore": 100 },
+      { "name": "Geometry", "score": 84, "maxScore": 100 }
+    ],
+    "tests": [
+      { "name": "Test 1", "score": 85, "topicsWeak": [] },
+      { "name": "Test 2", "score": 89, "topicsWeak": [] }
+    ],
+    "assignments": { "completed": 10, "total": 10 },
+    "needHelpTopics": []
+  },
+  {
+    "name": "Sneha Roy",
+    "rollNo": "CSE104",
+    "class": "Class 10-A",
+    "subject": "Mathematics",
+    "attendance": 75,
+    "effortLevel": "medium",
+    "understandingLevel": "medium",
+    "overallScore": 59,
+    "topics": [
+      { "name": "Algebra", "score": 60, "maxScore": 100 },
+      { "name": "Calculus", "score": 55, "maxScore": 100 },
+      { "name": "Trigonometry", "score": 62, "maxScore": 100 },
+      { "name": "Geometry", "score": 58, "maxScore": 100 }
+    ],
+    "tests": [
+      { "name": "Test 1", "score": 56, "topicsWeak": ["Calculus"] },
+      { "name": "Test 2", "score": 61, "topicsWeak": [] }
+    ],
+    "assignments": { "completed": 7, "total": 10 },
+    "needHelpTopics": []
+  },
+  {
+    "name": "Amit Kumar",
+    "rollNo": "CSE105",
+    "class": "Class 10-A",
+    "subject": "Mathematics",
+    "attendance": 88,
+    "effortLevel": "high",
+    "understandingLevel": "low",
+    "overallScore": 46,
+    "topics": [
+      { "name": "Algebra", "score": 28, "maxScore": 100 },
+      { "name": "Calculus", "score": 32, "maxScore": 100 },
+      { "name": "Trigonometry", "score": 65, "maxScore": 100 },
+      { "name": "Geometry", "score": 60, "maxScore": 100 }
+    ],
+    "tests": [
+      { "name": "Test 1", "score": 42, "topicsWeak": ["Algebra", "Calculus"] },
+      { "name": "Test 2", "score": 48, "topicsWeak": ["Algebra", "Calculus"] }
+    ],
+    "assignments": { "completed": 9, "total": 10 },
+    "needHelpTopics": ["Algebra", "Calculus"]
+  },
+  {
+    "name": "Riya Sen",
+    "rollNo": "CSE106",
+    "class": "Class 10-A",
+    "subject": "Mathematics",
+    "attendance": 56,
+    "effortLevel": "low",
+    "understandingLevel": "low",
+    "overallScore": 36,
+    "topics": [
+      { "name": "Algebra", "score": 38, "maxScore": 100 },
+      { "name": "Calculus", "score": 30, "maxScore": 100 },
+      { "name": "Trigonometry", "score": 35, "maxScore": 100 },
+      { "name": "Geometry", "score": 40, "maxScore": 100 }
+    ],
+    "tests": [
+      { "name": "Test 1", "score": 33, "topicsWeak": ["Calculus", "Trigonometry"] },
+      { "name": "Test 2", "score": 38, "topicsWeak": ["Calculus"] }
+    ],
+    "assignments": { "completed": 4, "total": 10 },
+    "needHelpTopics": ["Algebra", "Calculus", "Trigonometry", "Geometry"]
+  },
+  {
+    "name": "Vikram Nair",
+    "rollNo": "CSE107",
+    "class": "Class 10-A",
+    "subject": "Mathematics",
+    "attendance": 93,
+    "effortLevel": "high",
+    "understandingLevel": "high",
+    "overallScore": 86,
+    "topics": [
+      { "name": "Algebra", "score": 85, "maxScore": 100 },
+      { "name": "Calculus", "score": 82, "maxScore": 100 },
+      { "name": "Trigonometry", "score": 88, "maxScore": 100 },
+      { "name": "Geometry", "score": 90, "maxScore": 100 }
+    ],
+    "tests": [
+      { "name": "Test 1", "score": 83, "topicsWeak": [] },
+      { "name": "Test 2", "score": 88, "topicsWeak": [] }
+    ],
+    "assignments": { "completed": 10, "total": 10 },
+    "needHelpTopics": []
+  },
+  {
+    "name": "Pooja Ghosh",
+    "rollNo": "CSE108",
+    "class": "Class 10-A",
+    "subject": "Mathematics",
+    "attendance": 78,
+    "effortLevel": "medium",
+    "understandingLevel": "medium",
+    "overallScore": 58,
+    "topics": [
+      { "name": "Algebra", "score": 58, "maxScore": 100 },
+      { "name": "Calculus", "score": 52, "maxScore": 100 },
+      { "name": "Trigonometry", "score": 65, "maxScore": 100 },
+      { "name": "Geometry", "score": 55, "maxScore": 100 }
+    ],
+    "tests": [
+      { "name": "Test 1", "score": 55, "topicsWeak": ["Calculus"] },
+      { "name": "Test 2", "score": 60, "topicsWeak": [] }
+    ],
+    "assignments": { "completed": 7, "total": 10 },
+    "needHelpTopics": []
+  },
+  {
+    "name": "Suresh Pal",
+    "rollNo": "CSE109",
+    "class": "Class 10-A",
+    "subject": "Mathematics",
+    "attendance": 70,
+    "effortLevel": "medium",
+    "understandingLevel": "low",
+    "overallScore": 50,
+    "topics": [
+      { "name": "Algebra", "score": 32, "maxScore": 100 },
+      { "name": "Calculus", "score": 38, "maxScore": 100 },
+      { "name": "Trigonometry", "score": 68, "maxScore": 100 },
+      { "name": "Geometry", "score": 62, "maxScore": 100 }
+    ],
+    "tests": [
+      { "name": "Test 1", "score": 44, "topicsWeak": ["Algebra", "Calculus"] },
+      { "name": "Test 2", "score": 52, "topicsWeak": ["Algebra", "Calculus"] }
+    ],
+    "assignments": { "completed": 6, "total": 10 },
+    "needHelpTopics": ["Algebra", "Calculus"]
+  },
+  {
+    "name": "Neha Bose",
+    "rollNo": "CSE110",
+    "class": "Class 10-A",
+    "subject": "Mathematics",
+    "attendance": 90,
+    "effortLevel": "high",
+    "understandingLevel": "low",
+    "overallScore": 41,
+    "topics": [
+      { "name": "Algebra", "score": 42, "maxScore": 100 },
+      { "name": "Calculus", "score": 38, "maxScore": 100 },
+      { "name": "Trigonometry", "score": 45, "maxScore": 100 },
+      { "name": "Geometry", "score": 40, "maxScore": 100 }
+    ],
+    "tests": [
+      { "name": "Test 1", "score": 38, "topicsWeak": ["Calculus", "Geometry"] },
+      { "name": "Test 2", "score": 43, "topicsWeak": ["Calculus", "Algebra"] }
+    ],
+    "assignments": { "completed": 9, "total": 10 },
+    "needHelpTopics": ["Algebra", "Calculus", "Trigonometry", "Geometry"]
+  },
+  {
+    "name": "Rohan Gupta",
+    "rollNo": "CSE111",
+    "class": "Class 10-A",
+    "subject": "Mathematics",
+    "attendance": 80,
+    "effortLevel": "medium",
+    "understandingLevel": "medium",
+    "overallScore": 60,
+    "topics": [
+      { "name": "Algebra", "score": 62, "maxScore": 100 },
+      { "name": "Calculus", "score": 55, "maxScore": 100 },
+      { "name": "Trigonometry", "score": 58, "maxScore": 100 },
+      { "name": "Geometry", "score": 65, "maxScore": 100 }
+    ],
+    "tests": [
+      { "name": "Test 1", "score": 57, "topicsWeak": ["Calculus"] },
+      { "name": "Test 2", "score": 62, "topicsWeak": [] }
+    ],
+    "assignments": { "completed": 7, "total": 10 },
+    "needHelpTopics": []
+  },
+  {
+    "name": "Anjali Verma",
+    "rollNo": "CSE112",
+    "class": "Class 10-A",
+    "subject": "Mathematics",
+    "attendance": 50,
+    "effortLevel": "low",
+    "understandingLevel": "low",
+    "overallScore": 24,
+    "topics": [
+      { "name": "Algebra", "score": 22, "maxScore": 100 },
+      { "name": "Calculus", "score": 20, "maxScore": 100 },
+      { "name": "Trigonometry", "score": 28, "maxScore": 100 },
+      { "name": "Geometry", "score": 25, "maxScore": 100 }
+    ],
+    "tests": [
+      { "name": "Test 1", "score": 21, "topicsWeak": ["Algebra", "Calculus", "Geometry"] },
+      { "name": "Test 2", "score": 26, "topicsWeak": ["Algebra", "Calculus", "Trigonometry"] }
+    ],
+    "assignments": { "completed": 1, "total": 10 },
+    "needHelpTopics": ["Algebra", "Calculus", "Trigonometry", "Geometry"]
+  },
+  {
+    "name": "Karan Singh",
+    "rollNo": "CSE113",
+    "class": "Class 10-A",
+    "subject": "Mathematics",
+    "attendance": 96,
+    "effortLevel": "high",
+    "understandingLevel": "high",
+    "overallScore": 90,
+    "topics": [
+      { "name": "Algebra", "score": 92, "maxScore": 100 },
+      { "name": "Calculus", "score": 89, "maxScore": 100 },
+      { "name": "Trigonometry", "score": 88, "maxScore": 100 },
+      { "name": "Geometry", "score": 91, "maxScore": 100 }
+    ],
+    "tests": [
+      { "name": "Test 1", "score": 88, "topicsWeak": [] },
+      { "name": "Test 2", "score": 92, "topicsWeak": [] }
+    ],
+    "assignments": { "completed": 10, "total": 10 },
+    "needHelpTopics": []
+  },
+  {
+    "name": "Divya Pillai",
+    "rollNo": "CSE114",
+    "class": "Class 10-A",
+    "subject": "Mathematics",
+    "attendance": 74,
+    "effortLevel": "medium",
+    "understandingLevel": "medium",
+    "overallScore": 56,
+    "topics": [
+      { "name": "Algebra", "score": 55, "maxScore": 100 },
+      { "name": "Calculus", "score": 52, "maxScore": 100 },
+      { "name": "Trigonometry", "score": 60, "maxScore": 100 },
+      { "name": "Geometry", "score": 58, "maxScore": 100 }
+    ],
+    "tests": [
+      { "name": "Test 1", "score": 53, "topicsWeak": ["Calculus"] },
+      { "name": "Test 2", "score": 58, "topicsWeak": [] }
+    ],
+    "assignments": { "completed": 6, "total": 10 },
+    "needHelpTopics": []
+  },
+  {
+    "name": "Tanmay Das",
+    "rollNo": "CSE115",
+    "class": "Class 10-A",
+    "subject": "Mathematics",
+    "attendance": 67,
+    "effortLevel": "medium",
+    "understandingLevel": "low",
+    "overallScore": 55,
+    "topics": [
+      { "name": "Algebra", "score": 48, "maxScore": 100 },
+      { "name": "Calculus", "score": 35, "maxScore": 100 },
+      { "name": "Trigonometry", "score": 70, "maxScore": 100 },
+      { "name": "Geometry", "score": 65, "maxScore": 100 }
+    ],
+    "tests": [
+      { "name": "Test 1", "score": 50, "topicsWeak": ["Algebra", "Calculus"] },
+      { "name": "Test 2", "score": 57, "topicsWeak": ["Calculus"] }
+    ],
+    "assignments": { "completed": 5, "total": 10 },
+    "needHelpTopics": ["Algebra", "Calculus"]
+  }
+]
