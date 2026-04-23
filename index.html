@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TeacherFlow AI - Login</title>
+    <title>TeacherFlow AI - Enter</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,16 +26,16 @@
                 </div>
 
                 <div class="hero-carousel">
-                    <img class="carousel-slide active" src="https://via.placeholder.com/600x400/0f172a/f8fafc?text=Collaborative+Research" alt="Slide 1">
-                    <img class="carousel-slide" src="https://via.placeholder.com/600x400/1e293b/f8fafc?text=Error+Detection" alt="Slide 2">
-                    <img class="carousel-slide" src="https://via.placeholder.com/600x400/334155/f8fafc?text=Data+Analytics" alt="Slide 3">
+                    <img class="carousel-slide active" src="https://images.unsplash.com/photo-1551288049-bbda4833effb?auto=format&fit=crop&q=80&w=600" alt="Slide 1">
+                    <img class="carousel-slide" src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=600" alt="Slide 2">
+                    <img class="carousel-slide" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=600" alt="Slide 3">
                 </div>
             </div>
         </div>
 
         <!-- Right Action Section -->
         <div class="action-section">
-            <button class="admin-login" onclick="window.location.href='admin.html'">Admin Login</button>
+            <button class="admin-login" onclick="window.location.href='admin.html'">Admin Enter</button>
 
             <!-- Selection Panel -->
             <div class="panel selection-panel" id="selectionPanel">
@@ -45,7 +45,7 @@
                     <div class="roles-container">
                         <div class="role-card teacher-theme" id="teacherCard" onclick="selectRole('teacher')" onmouseenter="startParticles(event, '#d4af37')" onmouseleave="stopParticles()">
                             <div class="role-image-container">
-                                <img src="https://via.placeholder.com/150/d4af37/ffffff?text=Teacher+Animation" alt="Teacher" class="role-image">
+                                <img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&q=80&w=150" alt="Teacher" class="role-image">
                             </div>
                             <h3>Teacher</h3>
                             <p>Access class insights and analytics</p>
@@ -53,7 +53,7 @@
 
                         <div class="role-card student-theme" id="studentCard" onclick="selectRole('student')" onmouseenter="startParticles(event, '#64748b')" onmouseleave="stopParticles()">
                             <div class="role-image-container">
-                                <img src="https://via.placeholder.com/150/64748b/ffffff?text=Student+Animation" alt="Student" class="role-image">
+                                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=150" alt="Student" class="role-image">
                             </div>
                             <h3>Student</h3>
                             <p>Track your learning and performance</p>
@@ -63,29 +63,29 @@
             </div>
 
             <!-- Login Panel (Overlays Right Side) -->
-            <div class="panel login-panel" id="loginPanel">
+            <div class="panel login-panel" id="enterPanel">
                 <div class="glass-panel">
                     <button class="back-btn" onclick="resetSelection()">← Back</button>
                     <div class="login-header">
-                        <h2 id="loginTitle">Welcome</h2>
-                        <p id="loginSubtitle">Please enter your details</p>
+                        <h2 id="enterTitle">Welcome</h2>
+                        <p id="enterSubtitle">Please enter your details</p>
                     </div>
 
                     <div class="login-form">
                         <div class="input-group">
-                            <span class="input-label">Email</span>
+                            <span class="input-label">Identifier</span>
                             <input type="text" autocomplete="off" spellcheck="false" placeholder="hello@teacherflow.ai" />
                         </div>
                         <div class="input-group">
-                            <span class="input-label">Password</span>
+                            <span class="input-label">Passcode</span>
                             <input type="text" autocomplete="off" spellcheck="false" placeholder="••••••••" style="-webkit-text-security: disc;" />
                         </div>
                         
                         <div class="form-actions">
-                            <a href="#" class="forgot-password">Forgot Password?</a>
+                            <a href="#" class="forgot-password">Forgot Passcode?</a>
                         </div>
 
-                        <button type="button" class="login-btn" id="loginBtn" onclick="handleLogin(event)">Login</button>
+                        <button type="button" class="login-btn" id="enterBtn" onclick="handleLogin(event)">Enter</button>
                     </div>
                 </div>
             </div>

@@ -33,11 +33,11 @@ const TEACHER_LOGINS = {
 function selectRole(role) {
     currentRole = role;
     const body = document.body;
-    const loginPanel = document.getElementById('loginPanel');
-    const loginTitle = document.getElementById('loginTitle');
+    const loginPanel = document.getElementById('enterPanel');
+    const loginTitle = document.getElementById('enterTitle');
     const teacherCard = document.getElementById('teacherCard');
     const studentCard = document.getElementById('studentCard');
-    const loginBtn = document.getElementById('loginBtn');
+    const loginBtn = document.getElementById('enterBtn');
 
     body.classList.remove('state-teacher', 'state-student');
 
