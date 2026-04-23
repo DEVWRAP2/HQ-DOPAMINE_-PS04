@@ -71,22 +71,22 @@
                         <p id="loginSubtitle">Please enter your details</p>
                     </div>
 
-                    <form class="login-form" onsubmit="handleLogin(event)">
+                    <div class="login-form">
                         <div class="input-group">
-                            <label>Email</label>
-                            <input type="email" placeholder="hello@teacherflow.ai" required />
+                            <span class="input-label">Email</span>
+                            <input type="text" autocomplete="off" spellcheck="false" placeholder="hello@teacherflow.ai" />
                         </div>
                         <div class="input-group">
-                            <label>Password</label>
-                            <input type="text" placeholder="••••••••" required style="-webkit-text-security: disc;" />
+                            <span class="input-label">Password</span>
+                            <input type="text" autocomplete="off" spellcheck="false" placeholder="••••••••" style="-webkit-text-security: disc;" />
                         </div>
                         
                         <div class="form-actions">
                             <a href="#" class="forgot-password">Forgot Password?</a>
                         </div>
 
-                        <button type="submit" class="login-btn" id="loginBtn">Login</button>
-                    </form>
+                        <button type="button" class="login-btn" id="loginBtn" onclick="handleLogin(event)">Login</button>
+                    </div>
                 </div>
             </div>
         </div>

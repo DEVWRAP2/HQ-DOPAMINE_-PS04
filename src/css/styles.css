@@ -340,7 +340,7 @@ body.state-student .login-panel {
     margin-bottom: 20px;
     text-align: left;
 }
-.input-group label {
+.input-group .input-label {
     display: block;
     font-size: 0.9rem;
     color: #475569;
