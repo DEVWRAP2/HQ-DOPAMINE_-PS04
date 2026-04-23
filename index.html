@@ -26,9 +26,9 @@
                 </div>
 
                 <div class="hero-carousel">
-                    <img class="carousel-slide active" src="https://images.unsplash.com/photo-1551288049-bbda4833effb?auto=format&fit=crop&q=80&w=600" alt="Slide 1">
-                    <img class="carousel-slide" src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=600" alt="Slide 2">
-                    <img class="carousel-slide" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=600" alt="Slide 3">
+                    <img class="carousel-slide" src="https://images.unsplash.com/photo-1620712943543-bcc4638d9f8d?q=80&w=800" alt="Slide 1">
+                    <img class="carousel-slide" src="https://images.unsplash.com/photo-1551288049-bbda4833effb?q=80&w=800" alt="Slide 2">
+                    <img class="carousel-slide" src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=800" alt="Slide 3">
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@
                     <div class="roles-container">
                         <div class="role-card teacher-theme" id="teacherCard" onclick="selectRole('teacher')" onmouseenter="startParticles(event, '#d4af37')" onmouseleave="stopParticles()">
                             <div class="role-image-container">
-                                <img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&q=80&w=150" alt="Teacher" class="role-image">
+                                <img src="https://images.unsplash.com/photo-1544717297-fa154daaf76e?auto=format&fit=crop&q=80&w=400" alt="Teacher" class="role-image">
                             </div>
                             <h3>Teacher</h3>
                             <p>Access class insights and analytics</p>
@@ -53,7 +53,7 @@
 
                         <div class="role-card student-theme" id="studentCard" onclick="selectRole('student')" onmouseenter="startParticles(event, '#64748b')" onmouseleave="stopParticles()">
                             <div class="role-image-container">
-                                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=150" alt="Student" class="role-image">
+                                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=400" alt="Student" class="role-image">
                             </div>
                             <h3>Student</h3>
                             <p>Track your learning and performance</p>
@@ -133,12 +133,48 @@
         
         // ── CAROUSEL EFFECT ──
         let currentSlide = 0;
-        const slides = document.querySelectorAll('.carousel-slide');
+        const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+        const loadedSlides = new Set();
+
+        slides.forEach((slide, index) => {
+            if (slide.complete && slide.naturalWidth > 0) {
+                loadedSlides.add(index);
+            } else {
+                slide.addEventListener('load', () => {
+                    loadedSlides.add(index);
+                    if (!document.querySelector('.carousel-slide.active') && loadedSlides.has(0)) {
+                        currentSlide = 0;
+                        slides[0].classList.add('active');
+                    }
+                }, { once: true });
+
+                slide.addEventListener('error', () => {
+                    loadedSlides.add(index);
+                }, { once: true });
+            }
+        });
+
+        if (loadedSlides.has(0)) {
+            slides[0].classList.add('active');
+        }
+
         function nextSlide() {
+            if (!slides.length) return;
+            let attempts = 0;
+            let next = currentSlide;
+
+            do {
+                next = (next + 1) % slides.length;
+                attempts++;
+            } while (attempts <= slides.length && !loadedSlides.has(next));
+
+            if (!loadedSlides.has(next)) return;
+
             slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
+            currentSlide = next;
             slides[currentSlide].classList.add('active');
         }
+
         setInterval(nextSlide, 4000);
 
         // ── PARTICLE EFFECT ──

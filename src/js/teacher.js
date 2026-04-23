@@ -4,7 +4,10 @@ const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY_HERE';
 
 let students = [];
 let rawStudentsData = [];
-let myChartInstance = null;
+let currentClassLabel = 'Class 10-A';
+let performanceChartInstance = null;
+let trendChartInstance = null;
+let weaknessChartInstance = null;
 
 // ════════════════════════════════
 // LOAD DATA FROM JSON
@@ -49,6 +52,7 @@ function openClass(className, classType) {
     students = classData.map(s => ({
         id: s.rollNo,
         name: s.name,
+        className: s.class || 'Class 10-A',
         attendance: s.attendance,
         assignmentsDone: s.assignments ? s.assignments.completed : 0,
         assignmentsTotal: s.assignments ? s.assignments.total : 10,
@@ -61,8 +65,11 @@ function openClass(className, classType) {
             return acc;
         }, {})
     }));
+    currentClassLabel = students[0]?.className || 'Class 10-A';
+    window.currentClassId = classType;
 
-    initChart();
+    renderDashboardSection();
+    renderWeaknessDetection();
     populateTable();
 }
 
@@ -84,6 +91,111 @@ function getStatusClass(score) {
     if (score > 75) return "status-green";
     if (score >= 50) return "status-yellow";
     return "status-red";
+}
+
+function escapeHtml(value) {
+    if (typeof value !== 'string') return value;
+    return value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function getTrendIcon(student) {
+    const tests = student.tests || [];
+    if (tests.length < 2) return '→';
+    const first = tests[0].score || 0;
+    const last = tests[tests.length - 1].score || 0;
+    if (last > first) return '↑';
+    if (last < first) return '↓';
+    return '→';
+}
+
+function getTrendClass(icon) {
+    if (icon === '↑') return 'trend-up';
+    if (icon === '↓') return 'trend-down';
+    return 'trend-stable';
+}
+
+function buildNotifications() {
+    const alerts = [];
+    const lowScore = students.filter((s) => s.overallScore < 60).length;
+    if (lowScore > 0) {
+        alerts.push({
+            type: 'warning',
+            title: 'Low score alert',
+            detail: `${lowScore} students are currently below 60% overall score.`
+        });
+    }
+
+    const highRisk = students.filter((s) => s.overallScore < 50 && s.attendance < 70).length;
+    if (highRisk > 0) {
+        alerts.push({
+            type: 'danger',
+            title: 'At-risk students',
+            detail: `${highRisk} students have both low score and low attendance.`
+        });
+    }
+
+    const topPerformer = [...students].sort((a, b) => b.overallScore - a.overallScore)[0];
+    if (topPerformer) {
+        alerts.push({
+            type: 'info',
+            title: 'Top performer update',
+            detail: `${topPerformer.name} is leading the class at ${topPerformer.overallScore}%.`
+        });
+    }
+
+    const calcWeakCount = students.filter((s) => (s.topics.Calculus || 0) < 60).length;
+    if (calcWeakCount > 0) {
+        alerts.push({
+            type: 'warning',
+            title: 'Calculus weakness',
+            detail: `${calcWeakCount} students are struggling in Calculus.`
+        });
+    }
+
+    return alerts.slice(0, 3);
+}
+
+function renderRecentAlerts() {
+    const list = document.getElementById('recentAlertsList');
+    if (!list) return;
+    const notifications = buildNotifications();
+    list.innerHTML = notifications.map((n) => `
+        <div class="recent-alert-item ${n.type}">
+            <div>
+                <h4>${escapeHtml(n.title)}</h4>
+                <p>${escapeHtml(n.detail)}</p>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderNeedsAttention() {
+    const tbody = document.getElementById('needsAttentionTableBody');
+    if (!tbody) return;
+
+    const needsAttention = students
+        .filter((s) => s.overallScore < 60)
+        .sort((a, b) => a.overallScore - b.overallScore);
+
+    tbody.innerHTML = needsAttention.map((student) => {
+        const trendIcon = getTrendIcon(student);
+        const gapTopic = student.needHelpTopics[0] || Object.entries(student.topics)
+            .sort((a, b) => a[1] - b[1])[0]?.[0] || 'General Review';
+        return `
+            <tr onclick="openStudentModal('${student.id}')">
+                <td><strong>${escapeHtml(student.name)}</strong></td>
+                <td>${escapeHtml(student.className)}</td>
+                <td>${student.overallScore}%</td>
+                <td class="${getTrendClass(trendIcon)}">${trendIcon}</td>
+                <td>${escapeHtml(gapTopic)}</td>
+            </tr>
+        `;
+    }).join('');
 }
 
 // ════════════════════════════════
@@ -233,8 +345,8 @@ function initChart() {
     const ctx = document.getElementById('performanceChart');
     if (!ctx) return;
 
-    if (myChartInstance) {
-        myChartInstance.destroy();
+    if (performanceChartInstance) {
+        performanceChartInstance.destroy();
     }
 
     const topicNames = Object.keys(students[0]?.topics || {});
@@ -243,7 +355,7 @@ function initChart() {
         return students.length ? Math.round(total / students.length) : 0;
     });
 
-    myChartInstance = new Chart(ctx.getContext('2d'), {
+    performanceChartInstance = new Chart(ctx.getContext('2d'), {
         type: 'bar',
         data: {
             labels: topicNames,
@@ -265,6 +377,159 @@ function initChart() {
     });
 }
 
+function initTrendChart() {
+    const trendCanvas = document.getElementById('trendChart');
+    if (!trendCanvas) return;
+
+    if (trendChartInstance) {
+        trendChartInstance.destroy();
+    }
+
+    trendChartInstance = new Chart(trendCanvas.getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr'],
+            datasets: [{
+                label: 'Class Average %',
+                data: [65, 68, 62, 74],
+                borderColor: '#d4af37',
+                backgroundColor: 'rgba(212, 175, 55, 0.2)',
+                fill: true,
+                tension: 0.35,
+                pointBackgroundColor: '#d4af37',
+                pointBorderColor: '#0f172a',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: { color: '#cbd5e1' },
+                    grid: { color: 'rgba(255, 255, 255, 0.08)' }
+                },
+                x: {
+                    ticks: { color: '#cbd5e1' },
+                    grid: { color: 'rgba(255, 255, 255, 0.06)' }
+                }
+            },
+            plugins: { legend: { labels: { color: '#f8fafc' } } }
+        }
+    });
+}
+
+function getTopicAverages() {
+    if (!students.length) return [];
+    const totals = {};
+    students.forEach((student) => {
+        Object.entries(student.topics).forEach(([topic, score]) => {
+            if (!totals[topic]) totals[topic] = { sum: 0, count: 0 };
+            totals[topic].sum += score;
+            totals[topic].count += 1;
+        });
+    });
+
+    return Object.entries(totals).map(([topic, data]) => ({
+        topic,
+        avgScore: Math.round(data.sum / data.count),
+        strugglingPct: Math.round(
+            (students.filter((s) => (s.topics[topic] || 0) < 60).length / students.length) * 100
+        ),
+        affectedStudents: students.filter((s) => (s.topics[topic] || 0) < 60).length
+    }));
+}
+
+function getSeverityTag(avgScore) {
+    if (avgScore < 45) return { label: 'Critical', className: 'tag-critical' };
+    if (avgScore < 60) return { label: 'Moderate', className: 'tag-moderate' };
+    return { label: 'Watch', className: 'tag-watch' };
+}
+
+function initWeaknessChart() {
+    const weaknessCanvas = document.getElementById('weaknessChart');
+    if (!weaknessCanvas) return;
+
+    if (weaknessChartInstance) {
+        weaknessChartInstance.destroy();
+    }
+
+    const topicAverages = getTopicAverages().sort((a, b) => b.strugglingPct - a.strugglingPct);
+
+    weaknessChartInstance = new Chart(weaknessCanvas.getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: topicAverages.map((t) => t.topic),
+            datasets: [{
+                label: '% Students Struggling',
+                data: topicAverages.map((t) => t.strugglingPct),
+                backgroundColor: 'rgba(212, 175, 55, 0.75)',
+                borderColor: '#d4af37',
+                borderWidth: 1,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        color: '#cbd5e1',
+                        callback(value) {
+                            return `${value}%`;
+                        }
+                    },
+                    grid: { color: 'rgba(255, 255, 255, 0.08)' }
+                },
+                y: {
+                    ticks: { color: '#f8fafc' },
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                }
+            },
+            plugins: {
+                legend: { labels: { color: '#f8fafc' } }
+            }
+        }
+    });
+}
+
+function renderLearningGapsTable() {
+    const tbody = document.getElementById('learningGapsTableBody');
+    if (!tbody) return;
+
+    const topicAverages = getTopicAverages().sort((a, b) => a.avgScore - b.avgScore);
+    tbody.innerHTML = topicAverages.map((topic) => {
+        const severity = getSeverityTag(topic.avgScore);
+        return `
+            <tr>
+                <td><strong>${escapeHtml(topic.topic)}</strong></td>
+                <td>Mathematics</td>
+                <td>${topic.affectedStudents}</td>
+                <td>${topic.avgScore}%</td>
+                <td><span class="badge ${severity.className}">${severity.label}</span></td>
+            </tr>
+        `;
+    }).join('');
+}
+
+function renderDashboardSection() {
+    initChart();
+    initTrendChart();
+    renderRecentAlerts();
+    renderNeedsAttention();
+}
+
+function renderWeaknessDetection() {
+    initWeaknessChart();
+    renderLearningGapsTable();
+}
+
 // ════════════════════════════════
 // STUDENT TABLE
 // ════════════════════════════════
@@ -279,7 +544,7 @@ function populateTable() {
         const statusClass = getStatusClass(avgScore);
 
         const tr = document.createElement('tr');
-        tr.onclick = () => openStudentDetail(student.id);
+        tr.onclick = () => openStudentModal(student.id);
         tr.innerHTML = `
       <td><strong>${student.name}</strong></td>
       <td>${student.attendance}%</td>
@@ -329,6 +594,10 @@ function openStudentDetail(studentId) {
 
     // Call Gemini AI
     getAIInsights(student);
+}
+
+function openStudentModal(studentId) {
+    openStudentDetail(studentId);
 }
 
 function closeStudentDetail() {

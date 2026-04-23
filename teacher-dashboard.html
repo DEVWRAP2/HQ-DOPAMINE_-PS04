@@ -423,7 +423,9 @@
                     </div>
                     <ul class="accordion-body" id="accordion-cse">
                         <li id="nav-cse-dashboard" class="active"><a href="#" onclick="selectClass('cse', 'dashboard'); return false;">Dashboard</a></li>
+                        <li id="nav-cse-students"><a href="#" onclick="selectClass('cse', 'students'); return false;">Students</a></li>
                         <li id="nav-cse-classes"><a href="#" onclick="selectClass('cse', 'classes'); return false;">Classes</a></li>
+                        <li id="nav-cse-weakness"><a href="#" onclick="selectClass('cse', 'weakness'); return false;">Weakness Detection</a></li>
                         <li id="nav-cse-alerts"><a href="#" onclick="selectClass('cse', 'alerts'); return false;">Alerts</a></li>
                     </ul>
                 </li>
@@ -434,7 +436,9 @@
                     </div>
                     <ul class="accordion-body" id="accordion-ece">
                         <li id="nav-ece-dashboard"><a href="#" onclick="selectClass('ece', 'dashboard'); return false;">Dashboard</a></li>
+                        <li id="nav-ece-students"><a href="#" onclick="selectClass('ece', 'students'); return false;">Students</a></li>
                         <li id="nav-ece-classes"><a href="#" onclick="selectClass('ece', 'classes'); return false;">Classes</a></li>
+                        <li id="nav-ece-weakness"><a href="#" onclick="selectClass('ece', 'weakness'); return false;">Weakness Detection</a></li>
                         <li id="nav-ece-alerts"><a href="#" onclick="selectClass('ece', 'alerts'); return false;">Alerts</a></li>
                     </ul>
                 </li>
@@ -445,7 +449,9 @@
                     </div>
                     <ul class="accordion-body" id="accordion-aiml">
                         <li id="nav-aiml-dashboard"><a href="#" onclick="selectClass('aiml', 'dashboard'); return false;">Dashboard</a></li>
+                        <li id="nav-aiml-students"><a href="#" onclick="selectClass('aiml', 'students'); return false;">Students</a></li>
                         <li id="nav-aiml-classes"><a href="#" onclick="selectClass('aiml', 'classes'); return false;">Classes</a></li>
+                        <li id="nav-aiml-weakness"><a href="#" onclick="selectClass('aiml', 'weakness'); return false;">Weakness Detection</a></li>
                         <li id="nav-aiml-alerts"><a href="#" onclick="selectClass('aiml', 'alerts'); return false;">Alerts</a></li>
                     </ul>
                 </li>
@@ -456,7 +462,9 @@
                     </div>
                     <ul class="accordion-body" id="accordion-me">
                         <li id="nav-me-dashboard"><a href="#" onclick="selectClass('me', 'dashboard'); return false;">Dashboard</a></li>
+                        <li id="nav-me-students"><a href="#" onclick="selectClass('me', 'students'); return false;">Students</a></li>
                         <li id="nav-me-classes"><a href="#" onclick="selectClass('me', 'classes'); return false;">Classes</a></li>
+                        <li id="nav-me-weakness"><a href="#" onclick="selectClass('me', 'weakness'); return false;">Weakness Detection</a></li>
                         <li id="nav-me-alerts"><a href="#" onclick="selectClass('me', 'alerts'); return false;">Alerts</a></li>
                     </ul>
                 </li>
@@ -467,7 +475,9 @@
                     </div>
                     <ul class="accordion-body" id="accordion-ce">
                         <li id="nav-ce-dashboard"><a href="#" onclick="selectClass('ce', 'dashboard'); return false;">Dashboard</a></li>
+                        <li id="nav-ce-students"><a href="#" onclick="selectClass('ce', 'students'); return false;">Students</a></li>
                         <li id="nav-ce-classes"><a href="#" onclick="selectClass('ce', 'classes'); return false;">Classes</a></li>
+                        <li id="nav-ce-weakness"><a href="#" onclick="selectClass('ce', 'weakness'); return false;">Weakness Detection</a></li>
                         <li id="nav-ce-alerts"><a href="#" onclick="selectClass('ce', 'alerts'); return false;">Alerts</a></li>
                     </ul>
                 </li>
@@ -488,68 +498,108 @@
                     </div>
                 </header>
 
-                <section class="alert-panel">
-                    <div class="alert-card danger">
-                        <span class="icon">🔴</span>
-                        <p>65% students weak in Calculus</p>
-                    </div>
-                    <div class="alert-card warning">
-                        <span class="icon">🟡</span>
-                        <p>3 students at risk (low score + low attendance)</p>
-                    </div>
-                    <div class="alert-card success">
-                        <span class="icon">🟢</span>
-                        <p>Top performers improving</p>
-                    </div>
-                </section>
+                <div class="sub-nav-tabs">
+                    <button class="sub-nav-tab active" onclick="selectClass(currentClassId, 'dashboard')">Dashboard</button>
+                    <button class="sub-nav-tab" onclick="selectClass(currentClassId, 'weakness')">Weakness Detection</button>
+                    <button class="sub-nav-tab" onclick="selectClass(currentClassId, 'students')">Students</button>
+                </div>
 
                 <section class="analytics-grid">
                     <div class="card chart-card">
                         <h3>Average Performance by Topic</h3>
                         <canvas id="performanceChart"></canvas>
                     </div>
-                    <div class="card attendance-card">
-                        <h3>Attendance Overview</h3>
-                        <div class="progress-list">
-                            <div class="progress-item">
-                                <div class="progress-label"><span>Overall Attendance</span><span>88%</span></div>
-                                <div class="progress-track">
-                                    <div class="progress-fill success-bg" style="width: 88%"></div>
-                                </div>
-                            </div>
-                            <div class="progress-item">
-                                <div class="progress-label"><span>On Time Arrivals</span><span>75%</span></div>
-                                <div class="progress-track">
-                                    <div class="progress-fill warning-bg" style="width: 75%"></div>
-                                </div>
-                            </div>
-                            <div class="progress-item">
-                                <div class="progress-label"><span>Chronically Absent</span><span>12%</span></div>
-                                <div class="progress-track">
-                                    <div class="progress-fill danger-bg" style="width: 12%"></div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="card chart-card">
+                        <h3>Class Performance Trend</h3>
+                        <canvas id="trendChart"></canvas>
                     </div>
                 </section>
 
-                <section class="student-list-section">
+                <section class="dashboard-bottom-grid">
                     <div class="card">
-                        <h3>Student Roster</h3>
+                        <h3>Recent Alerts</h3>
+                        <div class="recent-alerts-list" id="recentAlertsList">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Students Needing Attention</h3>
                         <table class="student-table">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Attendance</th>
-                                    <th>Avg Score</th>
-                                    <th>Rating</th>
-                                    <th>AI Summary</th>
+                                    <th>Student</th>
+                                    <th>Class</th>
+                                    <th>Score</th>
+                                    <th>Trend</th>
+                                    <th>Gap Topic</th>
                                 </tr>
                             </thead>
-                            <tbody id="studentTableBody"></tbody>
+                            <tbody id="needsAttentionTableBody">
+                                <!-- Populated via JS -->
+                            </tbody>
                         </table>
                     </div>
                 </section>
+            </div>
+
+            <!-- ══════════ WEAKNESS DETECTION ══════════ -->
+            <div id="section-weakness" class="page-section">
+                <button onclick="goBack()" style="background:none; border:none; color:var(--primary); font-weight:600; font-size:1rem; cursor:pointer; margin-bottom:20px; display:flex; align-items:center; gap:5px;">← Back</button>
+                <div class="alerts-page">
+                    <h2>Weakness Detection</h2>
+                    <p class="page-sub">Analyze class-wide learning gaps and topics requiring review.</p>
+                </div>
+
+                <div class="analytics-grid" style="grid-template-columns: 1fr;">
+                    <div class="card chart-card" style="margin-bottom: 20px;">
+                        <h3>Top Weakness Heatmap</h3>
+                        <canvas id="weaknessChart" style="max-height: 300px;"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Detected Learning Gaps</h3>
+                    <table class="student-table">
+                        <thead>
+                            <tr>
+                                <th>Topic</th>
+                                <th>Subject</th>
+                                <th>Students Affected</th>
+                                <th>Avg Score</th>
+                                <th>Severity</th>
+                            </tr>
+                        </thead>
+                        <tbody id="learningGapsTableBody">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ══════════ STUDENTS ══════════ -->
+            <div id="section-students" class="page-section">
+                <button onclick="goBack()" style="background:none; border:none; color:var(--primary); font-weight:600; font-size:1rem; cursor:pointer; margin-bottom:20px; display:flex; align-items:center; gap:5px;">← Back</button>
+                <div class="alerts-page">
+                    <h2>Student Roster</h2>
+                    <p class="page-sub">Select any student to view their detailed performance and AI insights.</p>
+                </div>
+                
+                <div class="card">
+                    <table class="student-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Attendance</th>
+                                <th>Avg Score</th>
+                                <th>Rating</th>
+                                <th>AI Summary</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentTableBody">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <!-- ══════════ CLASSES ══════════ -->
