@@ -1,167 +1,759 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TeacherFlow AI - Teacher Dashboard</title>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="src/css/dashboard.css">
+    <style>
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* ── ALERTS PAGE ── */
+        .alerts-page h2 {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+        }
+
+        .alerts-page .page-sub {
+            color: #888;
+            margin-bottom: 24px;
+            font-size: 0.95rem;
+        }
+
+        .alert-messages-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .alert-msg {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 18px 20px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            border-left: 5px solid transparent;
+            transition: transform 0.2s;
+        }
+
+        .alert-msg:hover {
+            transform: translateX(4px);
+        }
+
+        .alert-msg.msg-danger {
+            border-left-color: var(--danger);
+        }
+
+        .alert-msg.msg-warning {
+            border-left-color: var(--warning);
+        }
+
+        .alert-msg.msg-info {
+            border-left-color: #4a90e2;
+        }
+
+        .alert-msg.msg-success {
+            border-left-color: var(--success);
+        }
+
+        .alert-msg-icon {
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .alert-msg-body {
+            flex: 1;
+        }
+
+        .alert-msg-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .alert-msg-detail {
+            font-size: 0.88rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .alert-msg-meta {
+            font-size: 0.78rem;
+            color: #bbb;
+            margin-top: 6px;
+        }
+
+        .alert-msg-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .tag-danger {
+            background: rgba(208, 0, 0, 0.1);
+            color: var(--danger);
+        }
+
+        .tag-warning {
+            background: rgba(255, 183, 3, 0.15);
+            color: #b58200;
+        }
+
+        .tag-info {
+            background: rgba(74, 144, 226, 0.1);
+            color: #4a90e2;
+        }
+
+        .tag-success {
+            background: rgba(124, 181, 24, 0.12);
+            color: var(--success);
+        }
+
+        .alert-section-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #bbb;
+            margin: 24px 0 10px;
+        }
+
+        /* ── CLASSES PAGE ── */
+        .classes-page h2 {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+        }
+
+        .classes-page .page-sub {
+            color: #888;
+            margin-bottom: 24px;
+            font-size: 0.95rem;
+        }
+
+        .classes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--secondary);
+            border-radius: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            background: #fff;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(176, 137, 104, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn-primary {
+            padding: 10px 24px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #9a7558;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            padding: 10px 24px;
+            background: var(--secondary);
+            color: var(--text-color);
+            border: none;
+            border-radius: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-left: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: #d5d9dc;
+        }
+
+        .class-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px 20px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+            margin-bottom: 12px;
+            border-left: 4px solid var(--accent);
+            transition: transform 0.2s;
+        }
+
+        .class-card:hover {
+            transform: translateX(4px);
+        }
+
+        .class-card.upcoming {
+            border-left-color: #4a90e2;
+            background: linear-gradient(to right, #f0f6ff, #fff);
+        }
+
+        .class-card.today {
+            border-left-color: var(--success);
+            background: linear-gradient(to right, #f3faed, #fff);
+        }
+
+        .class-card.past {
+            border-left-color: #ddd;
+            opacity: 0.85;
+        }
+
+        .class-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .class-card-title {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .class-card-badge {
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .badge-upcoming {
+            background: rgba(74, 144, 226, 0.12);
+            color: #4a90e2;
+        }
+
+        .badge-today {
+            background: rgba(124, 181, 24, 0.15);
+            color: var(--success);
+        }
+
+        .badge-past {
+            background: var(--secondary);
+            color: #888;
+        }
+
+        .class-card-meta {
+            font-size: 0.82rem;
+            color: #888;
+            margin-bottom: 6px;
+        }
+
+        .class-card-desc {
+            font-size: 0.88rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .class-section-label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #bbb;
+            margin: 20px 0 8px;
+        }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #2c2c2c;
+            color: #fff;
+            padding: 14px 22px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="app">
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <h2>TeacherFlow AI</h2>
-        </div>
-        <ul class="nav-links">
-            <li class="active"><a href="#">Dashboard</a></li>
-            <li><a href="#">Classes</a></li>
-            <li><a href="#">Alerts</a></li>
-        </ul>
-        <div class="sidebar-footer">
-            <button class="logout-btn" onclick="window.location.href='index.html'">Logout</button>
-        </div>
-    </aside>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>TeacherFlow AI</h2>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li class="active"><a href="#" onclick="showSection('dashboard'); return false;">Dashboard</a></li>
+                <li><a href="#" onclick="showSection('classes'); return false;">Classes</a></li>
+                <li><a href="#" onclick="showSection('alerts'); return false;">Alerts</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="window.location.href='index.html'">Logout</button>
+            </div>
+        </aside>
 
-    <!-- MAIN CONTENT -->
-    <main class="main">
-        <!-- SECTION 1 - HEADER -->
-        <header class="dashboard-header">
-            <div>
-                <h1>Teacher Dashboard</h1>
-                <p class="subtitle">Class 10 - Mathematics</p>
-            </div>
-            <div class="header-profile">
-                <span>Mr. Anderson</span>
-                <div class="avatar">👨‍🏫</div>
-            </div>
-        </header>
+        <main class="main">
 
-        <!-- SECTION 2 - ALERT PANEL -->
-        <section class="alert-panel">
-            <div class="alert-card danger">
-                <span class="icon">🔴</span>
-                <p>65% students weak in Calculus</p>
-            </div>
-            <div class="alert-card warning">
-                <span class="icon">🟡</span>
-                <p>3 students at risk (low score + low attendance)</p>
-            </div>
-            <div class="alert-card success">
-                <span class="icon">🟢</span>
-                <p>Top performers improving</p>
-            </div>
-        </section>
-
-        <!-- SECTION 3 - CLASS ANALYTICS -->
-        <section class="analytics-grid">
-            <div class="card chart-card">
-                <h3>Average Performance by Topic</h3>
-                <canvas id="performanceChart"></canvas>
-            </div>
-            <div class="card attendance-card">
-                <h3>Attendance Overview</h3>
-                <div class="progress-list">
-                    <div class="progress-item">
-                        <div class="progress-label"><span>Overall Attendance</span><span>88%</span></div>
-                        <div class="progress-track"><div class="progress-fill success-bg" style="width: 88%"></div></div>
+            <!-- ══════════ DASHBOARD ══════════ -->
+            <div id="section-dashboard" class="page-section active">
+                <header class="dashboard-header">
+                    <div>
+                        <h1>Teacher Dashboard</h1>
+                        <p class="subtitle">Class 10 - Mathematics</p>
                     </div>
-                    <div class="progress-item">
-                        <div class="progress-label"><span>On Time Arrivals</span><span>75%</span></div>
-                        <div class="progress-track"><div class="progress-fill warning-bg" style="width: 75%"></div></div>
+                </header>
+
+                <section class="alert-panel">
+                    <div class="alert-card danger">
+                        <span class="icon">🔴</span>
+                        <p>65% students weak in Calculus</p>
                     </div>
-                    <div class="progress-item">
-                        <div class="progress-label"><span>Chronically Absent</span><span>12%</span></div>
-                        <div class="progress-track"><div class="progress-fill danger-bg" style="width: 12%"></div></div>
+                    <div class="alert-card warning">
+                        <span class="icon">🟡</span>
+                        <p>3 students at risk (low score + low attendance)</p>
+                    </div>
+                    <div class="alert-card success">
+                        <span class="icon">🟢</span>
+                        <p>Top performers improving</p>
+                    </div>
+                </section>
+
+                <section class="analytics-grid">
+                    <div class="card chart-card">
+                        <h3>Average Performance by Topic</h3>
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                    <div class="card attendance-card">
+                        <h3>Attendance Overview</h3>
+                        <div class="progress-list">
+                            <div class="progress-item">
+                                <div class="progress-label"><span>Overall Attendance</span><span>88%</span></div>
+                                <div class="progress-track">
+                                    <div class="progress-fill success-bg" style="width: 88%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label"><span>On Time Arrivals</span><span>75%</span></div>
+                                <div class="progress-track">
+                                    <div class="progress-fill warning-bg" style="width: 75%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label"><span>Chronically Absent</span><span>12%</span></div>
+                                <div class="progress-track">
+                                    <div class="progress-fill danger-bg" style="width: 12%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="student-list-section">
+                    <div class="card">
+                        <h3>Student Roster</h3>
+                        <table class="student-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Attendance</th>
+                                    <th>Avg Score</th>
+                                    <th>Rating</th>
+                                    <th>AI Summary</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentTableBody"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <!-- ══════════ CLASSES ══════════ -->
+            <div id="section-classes" class="page-section">
+                <div class="classes-page">
+                    <h2>Classes</h2>
+                    <p class="page-sub">Manage class topics, add today's lesson, and schedule upcoming sessions.</p>
+
+                    <div class="classes-grid">
+                        <div class="card">
+                            <h3 style="margin-bottom:16px;">📝 Add Class / Topic</h3>
+                            <div class="form-group">
+                                <label>Topic Title</label>
+                                <input type="text" id="classTopicTitle"
+                                    placeholder="e.g. Introduction to Derivatives" />
+                            </div>
+                            <div class="form-group">
+                                <label>Subject</label>
+                                <select id="classSubject">
+                                    <option>Mathematics</option>
+                                    <option>Algebra</option>
+                                    <option>Calculus</option>
+                                    <option>Trigonometry</option>
+                                    <option>Geometry</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="date" id="classDate" />
+                            </div>
+                            <div class="form-group">
+                                <label>Type</label>
+                                <select id="classType">
+                                    <option value="today">Today's Class</option>
+                                    <option value="upcoming">Upcoming Class</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Notes / Description</label>
+                                <textarea id="classNotes"
+                                    placeholder="What will be covered? Any homework or reminders for students..."></textarea>
+                            </div>
+                            <button class="btn-primary" onclick="addClass()">➕ Add Class</button>
+                            <button class="btn-secondary" onclick="clearForm()">Clear</button>
+                        </div>
+
+                        <div class="card">
+                            <h3 style="margin-bottom:16px;">📊 Class Summary</h3>
+                            <div style="display:flex;flex-direction:column;gap:0;">
+                                <div
+                                    style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--secondary);">
+                                    <span style="font-size:0.9rem;color:#666;">Total Classes Held</span>
+                                    <strong id="totalClassCount">6</strong>
+                                </div>
+                                <div
+                                    style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--secondary);">
+                                    <span style="font-size:0.9rem;color:#666;">Upcoming Scheduled</span>
+                                    <strong id="upcomingCount">2</strong>
+                                </div>
+                                <div
+                                    style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--secondary);">
+                                    <span style="font-size:0.9rem;color:#666;">Topics Covered</span>
+                                    <strong style="font-size:0.82rem;">Algebra, Calculus, Trig, Geometry</strong>
+                                </div>
+                                <div style="display:flex;justify-content:space-between;padding:12px 0;">
+                                    <span style="font-size:0.9rem;color:#666;">Next Class</span>
+                                    <strong id="nextClassDate" style="color:var(--primary);">Apr 25, 2026</strong>
+                                </div>
+                            </div>
+                            <div
+                                style="margin-top:20px;padding:14px;background:linear-gradient(135deg,#fdf6ef,#fff);border-radius:10px;border-left:4px solid var(--accent);">
+                                <div style="font-size:0.8rem;font-weight:700;color:var(--primary);margin-bottom:4px;">💡
+                                    REMINDER</div>
+                                <div style="font-size:0.85rem;color:#666;line-height:1.5;">Students can mark topics as
+                                    "Understood" or "Need Help" from their portal. Check Alerts for help requests.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="margin-bottom:4px;">📅 Class Schedule</h3>
+                        <div id="classesListContainer"></div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- SECTION 4 - STUDENT LIST -->
-        <section class="student-list-section">
-            <div class="card">
-                <h3>Student Roster</h3>
-                <table class="student-table" id="studentTable">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Attendance</th>
-                            <th>Avg Score</th>
-                            <th>Rating</th>
-                            <th>AI Summary</th>
-                        </tr>
-                    </thead>
-                    <tbody id="studentTableBody">
-                        <!-- Populated by JS -->
-                    </tbody>
-                </table>
+            <!-- ══════════ ALERTS ══════════ -->
+            <div id="section-alerts" class="page-section">
+                <div class="alerts-page">
+                    <h2>Alerts & Messages</h2>
+                    <p class="page-sub">Student help requests, performance warnings, and system notifications.</p>
+
+                    <div class="alert-section-title">🔴 Critical — Requires Attention</div>
+                    <div class="alert-messages-list">
+                        <div class="alert-msg msg-danger">
+                            <div class="alert-msg-icon">⚠️</div>
+                            <div class="alert-msg-body">
+                                <div class="alert-msg-title">Anjali Verma — Very Low Performance <span
+                                        class="alert-msg-tag tag-danger">Critical</span></div>
+                                <div class="alert-msg-detail">Anjali scored 24% overall with only 50% attendance. She
+                                    has completed just 1 of 10 assignments. Immediate intervention recommended — contact
+                                    parents and schedule a counseling session.</div>
+                                <div class="alert-msg-meta">Triggered automatically · Today, 9:00 AM</div>
+                            </div>
+                        </div>
+                        <div class="alert-msg msg-danger">
+                            <div class="alert-msg-icon">📉</div>
+                            <div class="alert-msg-body">
+                                <div class="alert-msg-title">Priya Das — At Risk <span
+                                        class="alert-msg-tag tag-danger">At Risk</span></div>
+                                <div class="alert-msg-detail">Priya's attendance dropped to 53% this month and her
+                                    average score is 29%. She has missed 7 of 10 assignments. Low effort level detected
+                                    across all topics.</div>
+                                <div class="alert-msg-meta">Triggered automatically · Today, 9:00 AM</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert-section-title">💬 Student Help Requests</div>
+                    <div class="alert-messages-list">
+                        <div class="alert-msg msg-warning">
+                            <div class="alert-msg-icon">🙋</div>
+                            <div class="alert-msg-body">
+                                <div class="alert-msg-title">Rahul Sharma needs help with Calculus <span
+                                        class="alert-msg-tag tag-warning">Help Request</span></div>
+                                <div class="alert-msg-detail">"Sir, I've been attending all classes but I still can't
+                                    understand derivatives. Can we have an extra session or practice problems? I'm
+                                    trying hard but it's not clicking."</div>
+                                <div class="alert-msg-meta">Sent by Rahul Sharma (CSE101) · Today, 8:32 AM</div>
+                            </div>
+                        </div>
+                        <div class="alert-msg msg-warning">
+                            <div class="alert-msg-icon">🙋</div>
+                            <div class="alert-msg-body">
+                                <div class="alert-msg-title">Neha Bose marked all topics as "Need Help" <span
+                                        class="alert-msg-tag tag-warning">Help Request</span></div>
+                                <div class="alert-msg-detail">"I'm really struggling with everything — Algebra,
+                                    Calculus, Trig, and Geometry. I feel like I've missed some basics. Please help me
+                                    understand where to start."</div>
+                                <div class="alert-msg-meta">Sent by Neha Bose (CSE110) · Yesterday, 6:15 PM</div>
+                            </div>
+                        </div>
+                        <div class="alert-msg msg-warning">
+                            <div class="alert-msg-icon">🙋</div>
+                            <div class="alert-msg-body">
+                                <div class="alert-msg-title">Amit Kumar — Algebra doubt <span
+                                        class="alert-msg-tag tag-warning">Help Request</span></div>
+                                <div class="alert-msg-detail">"I got 28% in Algebra but 65% in Trigonometry. I think I
+                                    need more practice with algebraic expressions. Could you share some extra
+                                    worksheets?"</div>
+                                <div class="alert-msg-meta">Sent by Amit Kumar (CSE105) · Yesterday, 4:45 PM</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert-section-title">📢 Notifications</div>
+                    <div class="alert-messages-list">
+                        <div class="alert-msg msg-info">
+                            <div class="alert-msg-icon">📋</div>
+                            <div class="alert-msg-body">
+                                <div class="alert-msg-title">3 Students marked Trigonometry as "Understood" <span
+                                        class="alert-msg-tag tag-info">Update</span></div>
+                                <div class="alert-msg-detail">Arjun Mehta, Vikram Nair, and Karan Singh have marked last
+                                    week's Trigonometry topic as understood from their student portals.</div>
+                                <div class="alert-msg-meta">System notification · Apr 22, 2026, 3:00 PM</div>
+                            </div>
+                        </div>
+                        <div class="alert-msg msg-success">
+                            <div class="alert-msg-icon">🏆</div>
+                            <div class="alert-msg-body">
+                                <div class="alert-msg-title">Karan Singh — Top Performer <span
+                                        class="alert-msg-tag tag-success">Achievement</span></div>
+                                <div class="alert-msg-detail">Karan scored 90% overall with 96% attendance and 10/10
+                                    assignments completed. He is the top performer in Class 10-A this term. Consider
+                                    nominating him for a merit award.</div>
+                                <div class="alert-msg-meta">System notification · Apr 21, 2026, 11:00 AM</div>
+                            </div>
+                        </div>
+                        <div class="alert-msg msg-info">
+                            <div class="alert-msg-icon">📅</div>
+                            <div class="alert-msg-body">
+                                <div class="alert-msg-title">Upcoming: Test 3 scheduled for Apr 28 <span
+                                        class="alert-msg-tag tag-info">Reminder</span></div>
+                                <div class="alert-msg-detail">Test 3 covering Calculus and Algebra is scheduled for
+                                    April 28, 2026. Based on current performance data, 65% of students may need
+                                    additional preparation for Calculus.</div>
+                                <div class="alert-msg-meta">System reminder · Apr 20, 2026, 9:00 AM</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
-    </main>
-</div>
 
-<!-- SECTION 5 - STUDENT DETAIL MODAL/OVERLAY -->
-<div class="modal-overlay" id="studentModal">
-    <div class="modal-card">
-        <button class="close-btn" onclick="closeStudentDetail()">✕</button>
-        
-        <header class="modal-header">
-            <h2 id="modalStudentName">Student Name</h2>
-            <p>Mathematics Overview</p>
-        </header>
+        </main>
+    </div>
 
-        <div class="modal-grid">
-            <!-- 1. Stats -->
-            <div class="card stat-card">
-                <h3>Quick Stats</h3>
-                <div class="stat-row">
-                    <span>Attendance</span>
-                    <strong id="modalAttendance">0%</strong>
+    <!-- STUDENT DETAIL MODAL -->
+    <div class="modal-overlay" id="studentModal">
+        <div class="modal-card">
+            <button class="close-btn" onclick="closeStudentDetail()">✕</button>
+            <header class="modal-header">
+                <h2 id="modalStudentName">Student Name</h2>
+                <p>Mathematics Overview</p>
+            </header>
+            <div class="modal-grid">
+                <div class="card stat-card">
+                    <h3>Quick Stats</h3>
+                    <div class="stat-row"><span>Attendance</span><strong id="modalAttendance">0%</strong></div>
+                    <div class="stat-row"><span>Assignments Done</span><strong id="modalAssignments">0/10</strong></div>
+                    <div class="stat-row"><span>Average Score</span><strong id="modalAvgScore">0%</strong></div>
                 </div>
-                <div class="stat-row">
-                    <span>Assignments Done</span>
-                    <strong id="modalAssignments">0/10</strong>
+                <div class="card topic-card">
+                    <h3>Topic Performance</h3>
+                    <ul class="topic-list" id="modalTopicList"></ul>
                 </div>
-                <div class="stat-row">
-                    <span>Average Score</span>
-                    <strong id="modalAvgScore">0%</strong>
-                </div>
-            </div>
-
-            <!-- 2. Topic Performance -->
-            <div class="card topic-card">
-                <h3>Topic Performance</h3>
-                <ul class="topic-list" id="modalTopicList">
-                    <!-- Populated by JS -->
-                </ul>
-            </div>
-
-            <!-- 3. AI Insights Panel -->
-            <div class="card ai-card">
-                <div class="ai-header">
-                    <h3>🤖 AI Insights Panel</h3>
-                </div>
-                <div class="ai-content">
-                    <p><strong>Weak Areas:</strong> <span id="aiWeakAreas"></span></p>
-                    <p><strong>Root Cause:</strong> <span id="aiRootCause"></span></p>
-                    <p><strong>Risk Level:</strong> <span id="aiRiskLevel"></span></p>
-                    <p><strong>Action Plan:</strong> <span id="aiActionPlan"></span></p>
-                    <div class="ai-recommendation">
-                        <strong>Teacher Recommendation:</strong>
-                        <p id="aiRecommendation"></p>
+                <div class="card ai-card">
+                    <div class="ai-header">
+                        <h3>🤖 AI Insights Panel</h3>
+                    </div>
+                    <div class="ai-content">
+                        <p><strong>Weak Areas:</strong> <span id="aiWeakAreas"></span></p>
+                        <p><strong>Root Cause:</strong> <span id="aiRootCause"></span></p>
+                        <p><strong>Risk Level:</strong> <span id="aiRiskLevel"></span></p>
+                        <p><strong>Action Plan:</strong> <span id="aiActionPlan"></span></p>
+                        <div class="ai-recommendation">
+                            <strong>Teacher Recommendation:</strong>
+                            <p id="aiRecommendation"></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="src/js/teacher.js"></script>
+    <div class="toast" id="toast"></div>
+
+    <script src="src/js/teacher.js"></script>
+    <script>
+        // ════════ NAV ════════
+        function showSection(name) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('section-' + name).classList.add('active');
+            const map = ['dashboard', 'classes', 'alerts'];
+            document.querySelectorAll('#navLinks li').forEach((li, i) => {
+                li.classList.toggle('active', map[i] === name);
+            });
+            if (name === 'classes') renderClassesList();
+        }
+
+        // ════════ CLASSES DATA ════════
+        let classesData = [
+            { id: 1, title: "Introduction to Algebra", subject: "Algebra", date: "2026-04-05", type: "past", notes: "Covered variables, expressions, and simple equations. Homework: Worksheet 1A." },
+            { id: 2, title: "Algebraic Equations & Word Problems", subject: "Algebra", date: "2026-04-08", type: "past", notes: "Solved linear equations and word problems. Students struggled with multi-step problems — extra practice assigned." },
+            { id: 3, title: "Introduction to Calculus — Limits", subject: "Calculus", date: "2026-04-12", type: "past", notes: "Introduced the concept of limits. Many students found this challenging. Will revise at start of next class." },
+            { id: 4, title: "Derivatives & Differentiation", subject: "Calculus", date: "2026-04-17", type: "past", notes: "Covered basic differentiation rules. Rahul and Neha requested extra help — scheduled remedial session." },
+            { id: 5, title: "Trigonometry Basics", subject: "Trigonometry", date: "2026-04-21", type: "past", notes: "Sin, Cos, Tan ratios and applications. Most students performed well. Arjun and Karan excelled." },
+            { id: 6, title: "Geometry — Lines & Angles", subject: "Geometry", date: "2026-04-23", type: "today", notes: "Today's class: Properties of parallel lines, transversals, and angle relationships. Bring protractors." },
+            { id: 7, title: "Calculus — Integration Basics", subject: "Calculus", date: "2026-04-25", type: "upcoming", notes: "Will introduce antiderivatives and basic integration. Prepare by reviewing differentiation rules." },
+            { id: 8, title: "Revision & Test 3 Preparation", subject: "Mathematics", date: "2026-04-28", type: "upcoming", notes: "Full revision of Algebra and Calculus before Test 3. Practice test will be distributed." }
+        ];
+
+        function renderClassesList() {
+            const container = document.getElementById('classesListContainer');
+            if (!container) return;
+            const upcoming = classesData.filter(c => c.type === 'upcoming');
+            const today = classesData.filter(c => c.type === 'today');
+            const past = classesData.filter(c => c.type === 'past').reverse();
+
+            let html = '';
+            if (today.length) { html += `<div class="class-section-label">📌 Today's Class</div>`; today.forEach(c => html += buildClassCard(c)); }
+            if (upcoming.length) { html += `<div class="class-section-label">🗓 Upcoming Classes</div>`; upcoming.forEach(c => html += buildClassCard(c)); }
+            if (past.length) { html += `<div class="class-section-label">📂 Previous Classes</div>`; past.forEach(c => html += buildClassCard(c)); }
+            container.innerHTML = html;
+
+            document.getElementById('totalClassCount').textContent = past.length + today.length;
+            document.getElementById('upcomingCount').textContent = upcoming.length;
+            if (upcoming.length) {
+                const d = new Date(upcoming[0].date);
+                document.getElementById('nextClassDate').textContent = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            }
+        }
+
+        function buildClassCard(c) {
+            const d = new Date(c.date);
+            const dateStr = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+            const map = { today: ['badge-today', '✅ Today', 'today'], upcoming: ['badge-upcoming', '🗓 Upcoming', 'upcoming'], past: ['badge-past', 'Completed', 'past'] };
+            const [badgeClass, badgeText, cardClass] = map[c.type] || map.past;
+            return `<div class="class-card ${cardClass}">
+        <div class="class-card-header">
+            <div class="class-card-title">${c.title}</div>
+            <span class="class-card-badge ${badgeClass}">${badgeText}</span>
+        </div>
+        <div class="class-card-meta">📚 ${c.subject} &nbsp;·&nbsp; 📅 ${dateStr}</div>
+        <div class="class-card-desc">${c.notes}</div>
+    </div>`;
+        }
+
+        function addClass() {
+            const title = document.getElementById('classTopicTitle').value.trim();
+            const subject = document.getElementById('classSubject').value;
+            const date = document.getElementById('classDate').value;
+            const type = document.getElementById('classType').value;
+            const notes = document.getElementById('classNotes').value.trim();
+            if (!title) { showToast('⚠️ Please enter a topic title.'); return; }
+            if (!date) { showToast('⚠️ Please select a date.'); return; }
+            classesData.push({ id: Date.now(), title, subject, date, type, notes: notes || 'No additional notes.' });
+            renderClassesList();
+            clearForm();
+            showToast('✅ Class added successfully!');
+        }
+
+        function clearForm() {
+            document.getElementById('classTopicTitle').value = '';
+            document.getElementById('classNotes').value = '';
+            document.getElementById('classType').value = 'today';
+            document.getElementById('classDate').value = new Date().toISOString().split('T')[0];
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2800);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('classDate').value = new Date().toISOString().split('T')[0];
+        });
+    </script>
 </body>
+
 </html>
