@@ -21,13 +21,13 @@ if (teacherData.subject) {
         .then(data => {
             rawStudentsData = data;
             console.log('Fetched subject-specific data from backend:', data);
-            
+
             students = mapClassData(data);
-            
+
             if (typeof renderDashboardSection === 'function') renderDashboardSection();
             if (typeof renderWeaknessDetection === 'function') renderWeaknessDetection();
             if (typeof populateTable === 'function') populateTable();
-            
+
             if (typeof selectClass === 'function') {
                 const firstClass = teacherData.classes && teacherData.classes.length > 0 ? teacherData.classes[0] : '10-A';
                 selectClass(firstClass, 'dashboard');
@@ -74,7 +74,7 @@ async function openClass(className, classType) {
     try {
         const res = await fetch(API_BASE + '/students-by-class/' + classType);
         const classData = await res.json();
-        
+
         const subjectMap = {
             "Mathematics": "Math",
             "Chemistry": "Chemistry",
@@ -85,7 +85,7 @@ async function openClass(className, classType) {
         const filteredData = classData.filter(s => s.subject === mappedSubject);
 
         students = mapClassData(filteredData);
-        
+
         currentClassLabel = students[0]?.className || 'Class ' + classType;
         window.currentClassId = classType;
 
