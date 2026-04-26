@@ -1380,8 +1380,9 @@
       }
 
       try {
-        const res = await fetch('src/data/students.json');
+        const res = await fetch('http://localhost:3000/students');
         const data = await res.json();
+        console.log('Fetched student data from backend:', data);
 
         const found = data.find(s => s.rollNo === roll);
         if (!found) { showError(); return; }

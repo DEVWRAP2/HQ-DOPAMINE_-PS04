@@ -70,7 +70,7 @@ function resetSelection() {
     body.classList.remove('state-teacher', 'state-student');
 }
 
-function handleLogin(e) {
+async function handleLogin(e) {
     e.preventDefault();
 
     if (currentRole === 'teacher') {
@@ -79,14 +79,38 @@ function handleLogin(e) {
         window.location.href = 'teacher-dashboard.html';
 
     } else if (currentRole === 'student') {
+        const emailInput = document.getElementById('emailInput');
+        const userEmail = emailInput ? emailInput.value.trim().toLowerCase() : '';
 
-        // --- MODIFIED SECTION ---
-        // This bypasses the email/password check completely and forces a login
-        // as "Rahul Sharma" (Roll Number: CSE101) so you can test the dashboard.
+        if (!userEmail) {
+            alert('Please enter your email.');
+            return;
+        }
 
-        localStorage.setItem('userRole', 'student');
-        localStorage.setItem('studentRoll', 'CSE101');
+        try {
+            const response = await fetch("http://localhost:3000/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email: userEmail })
+            });
 
-        window.location.href = 'student-dashboard.html';
+            const result = await response.json();
+
+            if (result.success) {
+                console.log("Login successful:", result.student);
+                localStorage.setItem('userRole', 'student');
+                localStorage.setItem('studentRoll', result.student.rollNo);
+                
+                window.location.href = 'student-dashboard.html';
+            } else {
+                console.log("Login failed:", result.message);
+                alert("No account found");
+            }
+        } catch (error) {
+            console.error("Login error:", error);
+            alert("Error connecting to server.");
+        }
     }
 }

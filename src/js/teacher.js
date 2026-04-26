@@ -12,16 +12,17 @@ let weaknessChartInstance = null;
 // ════════════════════════════════
 // LOAD DATA FROM JSON
 // ════════════════════════════════
-fetch('src/data/students.json')
+fetch('http://localhost:3000/students')
     .then(res => res.json())
     .then(data => {
         rawStudentsData = data;
+        console.log('Fetched student data from backend:', data);
         if (typeof selectClass === 'function') {
             selectClass('cse', 'dashboard');
         }
     })
     .catch(err => {
-        console.error('Failed to load student data:', err);
+        console.error('Failed to load student data from backend:', err);
     });
 
 // ════════════════════════════════

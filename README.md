@@ -1,8 +1,7 @@
 🎓 TeacherFlow AI
 Predictive Analytics & AI-Powered Early Warning Dashboard for Educators
 
-⚠️ Browser Compatibility Note: This prototype uses a mock authentication UI on a development domain. If you encounter a "Deceptive Site" warning or broken assets in Brave or Firefox due to aggressive phishing heuristics, please view the project in "*Microsoft Edge/other browsers OR The live Preview from your code editor(BEST)*", or click "Details → Visit this unsafe site" to proceed.
-
+(Deployed link: https://hq-dopamine-ps-04-43c3.vercel.app/ )
 
 (🔗Video link: https://youtu.be/zlMhlh8inEs )
 
