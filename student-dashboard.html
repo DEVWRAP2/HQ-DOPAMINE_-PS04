@@ -1358,11 +1358,62 @@
   <script>
     const API_BASE = "https://hq-dopamine-ps-04-undt.vercel.app";
 
-    const role = localStorage.getItem('userRole');
-    const roll = localStorage.getItem('studentRoll');
-    if (!role || role !== 'student' || !roll) {
-        window.location.href = 'index.html';
+    let currentStudent = null;
+
+    async function fetchWithRetry(url, retries = 3) {
+        for (let i = 0; i < retries; i++) {
+            try {
+                const res = await fetch(url);
+                if (res.ok) return res;
+                throw new Error('Not ok');
+            } catch (err) {
+                if (i === retries - 1) throw err;
+                await new Promise(resolve => setTimeout(resolve, 2000));
+            }
+        }
     }
+
+    async function loadStudentData() {
+        const roll = localStorage.getItem('studentRoll');
+        const role = localStorage.getItem('userRole');
+        
+        // Route guard
+        if (!role || role !== 'student' || !roll) {
+            window.location.href = 'index.html';
+            return;
+        }
+        
+        try {
+            const res = await fetchWithRetry(`${API_BASE}/student/${roll}`);
+            
+            const student = await res.json();
+            
+            if (!student || student.error) {
+                throw new Error('Invalid student data');
+            }
+            
+            currentStudent = student;
+            // Call the existing render/init function with this student data
+            initPortal(student);
+            
+        } catch (err) {
+            console.error('Failed to load student data:', err);
+            document.body.innerHTML = `
+                <div style="display:flex; align-items:center; justify-content:center; 
+                height:100vh; background:#0f172a; color:#fff; flex-direction:column; gap:20px;">
+                    <h2 style="color:#ef4444;">Something went wrong</h2>
+                    <p>Unable to load your dashboard. Please try again.</p>
+                    <button onclick="window.location.href='index.html'" 
+                    style="padding:12px 24px; background:#d4af37; border:none; 
+                    border-radius:8px; cursor:pointer; font-size:1rem;">
+                        ← Back to Login
+                    </button>
+                </div>
+            `;
+        }
+    }
+
+    window.onload = loadStudentData;
 
     function showComingSoon() {
       document.getElementById('comingSoonOverlay').classList.add('is-open');
@@ -1371,28 +1422,6 @@
     function hideComingSoon() {
       document.getElementById('comingSoonOverlay').classList.remove('is-open');
     }
-
-    // ════════════════════════════════
-    // BOOT — no auth required, works with any login
-    // ════════════════════════════════
-    let currentStudent = null;
-
-    window.onload = async function () {
-      try {
-        const res = await fetch(`${API_BASE}/student/${roll}`);
-        const student = res.ok ? await res.json() : null;
-        if (!student) { 
-            window.location.href = 'index.html'; 
-            return;
-        }
-
-        currentStudent = student;
-        initPortal(student);
-      } catch (err) {
-        console.error("Failed to load student data:", err);
-        showError();
-      }
-    };
 
     function showError() {
       document.getElementById('loading-screen').style.display = 'none';
