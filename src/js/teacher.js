@@ -12,13 +12,13 @@ let weaknessChartInstance = null;
 // ════════════════════════════════
 // LOAD DATA FROM JSON
 // ════════════════════════════════
-fetch('http://localhost:3000/students')
+fetch('http://localhost:3001/students')
     .then(res => res.json())
     .then(data => {
         rawStudentsData = data;
         console.log('Fetched student data from backend:', data);
         if (typeof selectClass === 'function') {
-            selectClass('cse', 'dashboard');
+            selectClass('10-A', 'dashboard');
         }
     })
     .catch(err => {
@@ -34,21 +34,8 @@ function openClass(className, classType) {
     if (titleEl) titleEl.innerText = 'Teacher Dashboard';
     if (subEl) subEl.innerText = className;
 
-    let classData = JSON.parse(JSON.stringify(rawStudentsData));
+    let classData = rawStudentsData.filter(s => s.class === classType);
 
-    if (classType === 'ece') {
-        classData = classData.slice(0, 3);
-        classData.forEach(s => { s.overallScore = Math.min(100, s.overallScore + 15); s.attendance = Math.min(100, s.attendance + 10); });
-    } else if (classType === 'aiml') {
-        classData = classData.slice(2, 5);
-        classData.forEach(s => { s.overallScore = Math.max(0, s.overallScore - 5); s.attendance = Math.max(0, s.attendance - 5); });
-    } else if (classType === 'me') {
-        classData = classData.slice(1, 4);
-        classData.forEach(s => { s.overallScore = Math.min(100, s.overallScore + 5); s.attendance = Math.min(100, s.attendance - 2); });
-    } else if (classType === 'ce') {
-        classData = classData.slice(3, 6);
-        classData.forEach(s => { s.overallScore = Math.max(0, s.overallScore - 10); s.attendance = Math.max(0, s.attendance + 5); });
-    }
 
     students = classData.map(s => ({
         id: s.rollNo,

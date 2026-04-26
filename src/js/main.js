@@ -2,33 +2,7 @@
 
 let currentRole = null;
 
-// ════════════════════════════════
-// STUDENT CREDENTIALS
-// Maps email → rollNo from your JSON data
-// ════════════════════════════════
-const STUDENT_LOGINS = {
-    'rahul@student.edu': { password: 'rahul123', rollNo: 'CSE101' },
-    'priya@student.edu': { password: 'priya123', rollNo: 'CSE102' },
-    'arjun@student.edu': { password: 'arjun123', rollNo: 'CSE103' },
-    'sneha@student.edu': { password: 'sneha123', rollNo: 'CSE104' },
-    'amit@student.edu': { password: 'amit123', rollNo: 'CSE105' },
-    'riya@student.edu': { password: 'riya123', rollNo: 'CSE106' },
-    'vikram@student.edu': { password: 'vikram123', rollNo: 'CSE107' },
-    'pooja@student.edu': { password: 'pooja123', rollNo: 'CSE108' },
-    'suresh@student.edu': { password: 'suresh123', rollNo: 'CSE109' },
-    'neha@student.edu': { password: 'neha123', rollNo: 'CSE110' },
-    'rohan@student.edu': { password: 'rohan123', rollNo: 'CSE111' },
-    'anjali@student.edu': { password: 'anjali123', rollNo: 'CSE112' },
-    'karan@student.edu': { password: 'karan123', rollNo: 'CSE113' },
-    'divya@student.edu': { password: 'divya123', rollNo: 'CSE114' },
-    'tanmay@student.edu': { password: 'tanmay123', rollNo: 'CSE115' },
-};
 
-// Teacher credentials (for demo)
-const TEACHER_LOGINS = {
-    'teacher@school.edu': 'teacher123',
-    'anderson@school.edu': 'password123',
-};
 
 function selectRole(role) {
     currentRole = role;
@@ -88,7 +62,7 @@ async function handleLogin(e) {
         }
 
         try {
-            const response = await fetch("http://localhost:3000/login", {
+            const response = await fetch("http://localhost:3001/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -106,11 +80,13 @@ async function handleLogin(e) {
                 window.location.href = 'student-dashboard.html';
             } else {
                 console.log("Login failed:", result.message);
-                alert("No account found");
+                const errorEl = document.getElementById('loginError');
+                if (errorEl) errorEl.textContent = "No account found";
             }
         } catch (error) {
             console.error("Login error:", error);
-            alert("Error connecting to server.");
+            const errorEl = document.getElementById('loginError');
+            if (errorEl) errorEl.textContent = "Error connecting to server.";
         }
     }
 }

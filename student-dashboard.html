@@ -1380,11 +1380,9 @@
       }
 
       try {
-        const res = await fetch('http://localhost:3000/students');
-        const data = await res.json();
-        console.log('Fetched student data from backend:', data);
-
-        const found = data.find(s => s.rollNo === roll);
+        const res = await fetch(`http://localhost:3001/student/${roll}`);
+        const found = res.ok ? await res.json() : null;
+        console.log('Fetched student data from backend:', found);
         if (!found) { showError(); return; }
 
         // Build attendanceDays if not in JSON (generate realistic data)
