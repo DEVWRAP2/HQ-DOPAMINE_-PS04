@@ -425,9 +425,9 @@
                 <p style="font-size: 0.75rem; color: #888; margin-top: 4px;">Dashboard Home</p>
             </div>
             <ul class="nav-links" id="navLinks">
-                <li onclick="selectClass('10-A', '10-A')">Class 10-A</li>
-                <li onclick="selectClass('10-B', '10-B')">Class 10-B</li>
-                <li onclick="selectClass('10-C', '10-C')">Class 10-C</li>
+                <li onclick="selectClass('10-A')">Class 10-A</li>
+                <li onclick="selectClass('10-B')">Class 10-B</li>
+                <li onclick="selectClass('10-C')">Class 10-C</li>
             </ul>
             <div class="sidebar-footer">
                 <button class="logout-btn" onclick="logout()">Logout</button>
@@ -446,9 +446,9 @@
                 </header>
 
                 <div class="sub-nav-tabs">
-                    <button class="sub-nav-tab active" onclick="selectClass(currentClassId, 'dashboard')">Dashboard</button>
-                    <button class="sub-nav-tab" onclick="selectClass(currentClassId, 'weakness')">Weakness Detection</button>
-                    <button class="sub-nav-tab" onclick="selectClass(currentClassId, 'students')">Students</button>
+                    <button class="sub-nav-tab active" onclick="selectClass(currentClassId || (teacherData.classes && teacherData.classes[0]), 'dashboard')">Dashboard</button>
+                    <button class="sub-nav-tab" onclick="selectClass(currentClassId || (teacherData.classes && teacherData.classes[0]), 'weakness')">Weakness Detection</button>
+                    <button class="sub-nav-tab" onclick="selectClass(currentClassId || (teacherData.classes && teacherData.classes[0]), 'students')">Students</button>
                 </div>
 
                 <section class="analytics-grid">
@@ -457,7 +457,7 @@
                         <canvas id="performanceChart"></canvas>
                     </div>
                     <div class="card chart-card">
-                        <h3>Class Performance Trend</h3>
+                        <h3>Weekly Attendance Trend — April</h3>
                         <canvas id="trendChart"></canvas>
                     </div>
                 </section>
@@ -810,16 +810,19 @@
             const navLinks = document.getElementById('navLinks');
             if (teacherData.classes && teacherData.classes.length > 0) {
                 navLinks.innerHTML = teacherData.classes.map(c => 
-                    `<li onclick="selectClass('${c}', '${c}')">Class ${c}</li>`
+                    `<li onclick="selectClass('${c}')">Class ${c}</li>`
                 ).join('');
+                selectClass(teacherData.classes[0]);
             }
         });
 
-        let currentClassType = 'cse';
+        let currentClassType = null;
         let navHistory = [];
 
         function goToTeacherHome() {
-            selectClass('cse', 'dashboard');
+            if (teacherData.classes && teacherData.classes.length > 0) {
+                selectClass(teacherData.classes[0], 'dashboard');
+            }
         }
 
         function goBack() {
@@ -840,21 +843,18 @@
             }
         }
 
-        function selectClass(className, sectionName, isBacking = false) {
+        function selectClass(className, sectionName = 'dashboard', isBacking = false) {
+            if (!className) return;
             if (currentClassType !== className || !students.length) {
                 currentClassType = className;
-                let classTitle = '';
-                if (className === 'cse') classTitle = 'B.Tech CSE - 2nd Year';
-                else if (className === 'ece') classTitle = 'B.Tech ECE - 3rd Year';
-                else if (className === 'aiml') classTitle = 'B.Tech AIML - 1st Year';
-                else if (className === 'me') classTitle = 'B.Tech ME - 2nd Year';
-                else if (className === 'ce') classTitle = 'B.Tech CE - 4th Year';
+                const classTitle = `Class ${className}`;
 
                 if (typeof openClass === 'function') {
                     openClass(classTitle, className);
                 }
             }
             showSection(sectionName);
+            updateClassTabHighlight(className);
 
             document.querySelectorAll('.accordion-body li').forEach(li => li.classList.remove('active'));
             const activeNav = document.getElementById(`nav-${className}-${sectionName}`);
@@ -868,6 +868,23 @@
                 navHistory.push({ classType: className, section: sectionName });
                 history.pushState({ classType: className, section: sectionName }, "", `#${className}-${sectionName}`);
             }
+        }
+
+        function updateClassTabHighlight(className) {
+            const navItems = document.querySelectorAll('#navLinks li');
+            navItems.forEach((li) => {
+                li.classList.remove('active');
+                li.style.background = '';
+                li.style.color = '';
+                li.style.fontWeight = '';
+                if (li.textContent.trim() === `Class ${className}`) {
+                    li.classList.add('active');
+                    li.style.background = 'rgba(212, 175, 55, 0.2)';
+                    li.style.color = '#fff';
+                    li.style.fontWeight = '600';
+                    li.style.borderRadius = '8px';
+                }
+            });
         }
 
         window.addEventListener('popstate', function(event) {
@@ -967,33 +984,72 @@
 <script>
 /* ── teacher.js inlined ── */
 let students = [];
-let currentClassId = 'cse';
+let currentClassId = null;
 
-const studentPool = [
-  { name:'Arjun Mehta',   roll:'CSE101', attendance:92, avgScore:82, effort:'high',   trend:'up',     weakTopic:'Calculus',   topics:[{n:'Algebra',s:78},{n:'Calculus',s:55},{n:'Trigonometry',s:90},{n:'Geometry',s:82}] },
-  { name:'Priya Das',     roll:'CSE102', attendance:53, avgScore:29, effort:'low',    trend:'down',   weakTopic:'All Topics', topics:[{n:'Algebra',s:22},{n:'Calculus',s:18},{n:'Trigonometry',s:30},{n:'Geometry',s:28}] },
-  { name:'Rahul Sharma',  roll:'CSE103', attendance:88, avgScore:58, effort:'medium', trend:'stable', weakTopic:'Calculus',   topics:[{n:'Algebra',s:65},{n:'Calculus',s:38},{n:'Trigonometry',s:70},{n:'Geometry',s:62}] },
-  { name:'Neha Bose',     roll:'CSE104', attendance:78, avgScore:44, effort:'low',    trend:'down',   weakTopic:'Multiple',   topics:[{n:'Algebra',s:35},{n:'Calculus',s:42},{n:'Trigonometry',s:48},{n:'Geometry',s:40}] },
-  { name:'Amit Kumar',    roll:'CSE105', attendance:85, avgScore:63, effort:'medium', trend:'up',     weakTopic:'Algebra',    topics:[{n:'Algebra',s:28},{n:'Calculus',s:72},{n:'Trigonometry',s:65},{n:'Geometry',s:70}] },
-  { name:'Vikram Nair',   roll:'CSE106', attendance:96, avgScore:78, effort:'high',   trend:'up',     weakTopic:'',          topics:[{n:'Algebra',s:80},{n:'Calculus',s:72},{n:'Trigonometry',s:82},{n:'Geometry',s:75}] },
-  { name:'Anjali Verma',  roll:'CSE107', attendance:50, avgScore:24, effort:'low',    trend:'down',   weakTopic:'All Topics', topics:[{n:'Algebra',s:20},{n:'Calculus',s:15},{n:'Trigonometry',s:28},{n:'Geometry',s:22}] },
-  { name:'Karan Singh',   roll:'CSE108', attendance:96, avgScore:90, effort:'high',   trend:'up',     weakTopic:'',          topics:[{n:'Algebra',s:92},{n:'Calculus',s:88},{n:'Trigonometry',s:95},{n:'Geometry',s:90}] },
-  { name:'Sanya Gupta',   roll:'CSE109', attendance:74, avgScore:55, effort:'medium', trend:'stable', weakTopic:'Calculus',   topics:[{n:'Algebra',s:60},{n:'Calculus',s:40},{n:'Trigonometry',s:58},{n:'Geometry',s:62}] },
-  { name:'Dev Malhotra',  roll:'CSE110', attendance:82, avgScore:68, effort:'medium', trend:'up',     weakTopic:'Algebra',    topics:[{n:'Algebra',s:50},{n:'Calculus',s:75},{n:'Trigonometry',s:72},{n:'Geometry',s:68}] },
-];
+const SUBJECT_TOPICS = {
+  'Math': ['Algebra', 'Trigonometry', 'Calculus', 'Statistics', 'Geometry', 'Probability'],
+  'Chemistry': ['Periodic Table', 'Atomic Structure', 'Organic Chemistry', 'Chemical Bonding', 'Acids & Bases', 'Solutions'],
+  'Physics': ['Mechanics', 'Motion', 'Electricity', 'Magnetism', 'Optics', 'Waves']
+};
 
-function openClass(title, classId) {
+function getTeacherTopics() {
+  const subjectMap = { Mathematics: 'Math' };
+  const normalizedSubject = subjectMap[teacherData.subject] || teacherData.subject;
+  return SUBJECT_TOPICS[normalizedSubject] || [];
+}
+
+function getRawAttendance(student) {
+  const candidates = [student.rawAttendance, student.attendanceRecords, student.attendanceHistory, student.attendanceData];
+  const found = candidates.find(Array.isArray);
+  return found || [];
+}
+
+async function openClass(title, classId) {
   currentClassId = classId;
-  students = studentPool.map(s => ({...s, roll: s.roll.replace('CSE', classId.toUpperCase())}));
+  const teacherTopics = getTeacherTopics();
+  try {
+    const response = await fetch(`${API_BASE}/students-by-class/${classId}`);
+    const classStudents = await response.json();
+    students = (Array.isArray(classStudents) ? classStudents : []).map((student) => {
+      const filteredTopics = (student.topics || []).filter((topic) => teacherTopics.includes(topic.name));
+      const topicsObj = {};
+      filteredTopics.forEach((topic) => {
+        topicsObj[topic.name] = topic.score;
+      });
+      const subjectAvg = filteredTopics.length
+        ? Math.round((filteredTopics.reduce((sum, topic) => sum + topic.score, 0) / filteredTopics.length) * 10) / 10
+        : 0;
+      const weakestTopic = filteredTopics.length
+        ? [...filteredTopics].sort((a, b) => a.score - b.score)[0].name
+        : '—';
+      return {
+        name: student.name,
+        roll: student.rollNo,
+        attendance: student.attendance || 0,
+        effort: student.effortLevel || 'medium',
+        assignmentsDone: student.assignments?.completed || 0,
+        assignmentsTotal: student.assignments?.total || 0,
+        avgScore: subjectAvg,
+        overallScore: subjectAvg,
+        className: classId,
+        weakTopic: weakestTopic,
+        topics: filteredTopics.map((topic) => ({ n: topic.name, s: topic.score })),
+        topicsObj,
+        rawAttendance: getRawAttendance(student)
+      };
+    });
+  } catch (error) {
+    students = [];
+    console.error('Failed to fetch class data:', error);
+  }
+
   const h1 = document.querySelector('.dashboard-header h1');
   const sub = document.querySelector('.dashboard-header .subtitle');
   if (h1) h1.textContent = 'Teacher Dashboard';
-  if (sub) sub.textContent = title + ' — Mathematics';
-  renderStudentTable();
-  renderNeedsAttention();
+  if (sub) sub.textContent = `${teacherData.subject} — ${title}`;
+  renderDashboardSection();
+  populateTable();
   renderLearningGaps();
-  renderAlerts();
-  renderCharts();
 }
 
 function riskBadge(score) {
@@ -1018,24 +1074,28 @@ function renderStudentTable() {
 function renderNeedsAttention() {
   const tbody = document.getElementById('needsAttentionTableBody');
   if (!tbody) return;
-  const atRisk = students.filter(s => s.avgScore < 60).sort((a,b) => a.avgScore - b.avgScore).slice(0,5);
+  const atRisk = students.filter(s => s.overallScore < 50).sort((a,b) => a.overallScore - b.overallScore);
+  if (!atRisk.length) {
+    tbody.innerHTML = `<tr><td colspan="5" style="color:#6b7280;">All students performing above 50%</td></tr>`;
+    return;
+  }
   tbody.innerHTML = atRisk.map(s => `
     <tr onclick="openStudentDetail('${s.name}')" style="cursor:pointer;">
       <td><strong>${s.name}</strong></td>
-      <td>${s.roll}</td>
-      <td style="color:${s.avgScore<50?'#ef4444':'#f59e0b'}">${s.avgScore}%</td>
-      <td>${s.trend==='down'?'📉':s.trend==='up'?'📈':'➡️'}</td>
-      <td style="color:#ef4444;font-size:0.85rem">${s.weakTopic||'—'}</td>
+      <td>${s.className}</td>
+      <td style="color:#ef4444">${s.overallScore}%</td>
+      <td>↘</td>
+      <td style="color:#ef4444;font-size:0.85rem">${s.weakTopic || '—'}</td>
     </tr>`).join('');
 }
 
 function renderLearningGaps() {
   const tbody = document.getElementById('learningGapsTableBody');
   if (!tbody) return;
-  const topics = ['Algebra','Calculus','Trigonometry','Geometry'];
+  const topics = getTeacherTopics();
   const gaps = topics.map(topic => {
-    const scores = students.map(s => { const t = s.topics.find(t => t.n === topic); return t ? t.s : 0; });
-    const avg = Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
+    const scores = students.map(s => s.topicsObj[topic]).filter((score) => typeof score === 'number');
+    const avg = scores.length ? Math.round(scores.reduce((a,b)=>a+b,0)/scores.length) : 0;
     const affected = scores.filter(s => s < 50).length;
     const sev = avg<40?'<span style="color:#ef4444;font-weight:700">Critical</span>':avg<60?'<span style="color:#f59e0b;font-weight:700">High</span>':'<span style="color:#22c55e;font-weight:700">Moderate</span>';
     return {topic, avg, affected, sev};
@@ -1053,24 +1113,24 @@ function renderLearningGaps() {
 function renderAlerts() {
   const el = document.getElementById('recentAlertsList');
   if (!el) return;
-  const atRisk = students.filter(s => s.avgScore < 50);
+  const atRisk = students.filter(s => s.overallScore < 50);
   el.innerHTML = atRisk.map(s => `
     <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #e5e7eb;">
       <span style="font-size:1.2rem">⚠️</span>
       <div>
         <div style="font-size:0.9rem;font-weight:600">${s.name} — Low Performance</div>
-        <div style="font-size:0.8rem;color:#888">Avg: ${s.avgScore}% · Attendance: ${s.attendance}%</div>
+        <div style="font-size:0.8rem;color:#888">Avg: ${s.overallScore}% · Attendance: ${s.attendance}%</div>
       </div>
     </div>`).join('') || '<p style="color:#888;font-size:0.9rem;padding:12px 0;">No critical alerts.</p>';
 }
 
 let perfChart = null, trendChart = null, weakChart = null;
-
-function renderCharts() {
-  const topicLabels = ['Algebra','Calculus','Trigonometry','Geometry'];
+function initChart() {
+  const topicLabels = getTeacherTopics();
   const topicAvgs = topicLabels.map(topic => {
-    const scores = students.map(s => { const t = s.topics.find(t=>t.n===topic); return t?t.s:0; });
-    return Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
+    const scores = students.map(s => s.topicsObj[topic]).filter((score) => typeof score === 'number');
+    if (!scores.length) return 0;
+    return Math.round((scores.reduce((a,b)=>a+b,0)/scores.length) * 10) / 10;
   });
 
   const pCtx = document.getElementById('performanceChart');
@@ -1082,15 +1142,45 @@ function renderCharts() {
       options:{ plugins:{legend:{display:false}}, scales:{ y:{beginAtZero:true,max:100}, x:{grid:{display:false}} } }
     });
   }
+}
+
+function initTrendChart() {
+  const weeklyRanges = [
+    ['2026-04-01', '2026-04-02', '2026-04-03'],
+    ['2026-04-06', '2026-04-07', '2026-04-08', '2026-04-09', '2026-04-10'],
+    ['2026-04-13', '2026-04-14', '2026-04-15', '2026-04-16', '2026-04-17'],
+    ['2026-04-20', '2026-04-21', '2026-04-22', '2026-04-23', '2026-04-24']
+  ];
+  const weeklyAttendance = weeklyRanges.map((weekDates) => {
+    let presentCount = 0;
+    let totalCount = 0;
+    students.forEach((student) => {
+      (student.rawAttendance || []).forEach((entry) => {
+        if (weekDates.some((date) => String(entry.date || '').startsWith(date))) {
+          totalCount += 1;
+          if (entry.status === 'present') {
+            presentCount += 1;
+          }
+        }
+      });
+    });
+    if (!totalCount) return 0;
+    return Math.round(((presentCount / totalCount) * 100) * 10) / 10;
+  });
+
   const tCtx = document.getElementById('trendChart');
   if (tCtx) {
     if (trendChart) trendChart.destroy();
     trendChart = new Chart(tCtx, {
       type:'line',
-      data:{ labels:['Jan','Feb','Mar','Apr'], datasets:[{ label:'Class Avg', data:[58,62,60,65], borderColor:'#d4af37', backgroundColor:'rgba(212,175,55,0.1)', tension:0.4, fill:true, pointBackgroundColor:'#d4af37' }] },
+      data:{ labels:['Week 1','Week 2','Week 3','Week 4'], datasets:[{ label:'Weekly Attendance Trend — April', data:weeklyAttendance, borderColor:'#d4af37', backgroundColor:'rgba(212,175,55,0.1)', tension:0.4, fill:true, pointBackgroundColor:'#d4af37' }] },
       options:{ plugins:{legend:{display:false}}, scales:{ y:{min:40,max:100}, x:{grid:{display:false}} } }
     });
   }
+}
+
+function renderCharts() {
+  const topicLabels = getTeacherTopics();
   const wCtx = document.getElementById('weaknessChart');
   if (wCtx) {
     if (weakChart) weakChart.destroy();
@@ -1100,6 +1190,18 @@ function renderCharts() {
       options:{ plugins:{legend:{display:false}}, scales:{ y:{beginAtZero:true,ticks:{stepSize:1}}, x:{grid:{display:false}} } }
     });
   }
+  initChart();
+  initTrendChart();
+}
+
+function renderDashboardSection() {
+  renderNeedsAttention();
+  renderAlerts();
+  renderCharts();
+}
+
+function populateTable() {
+  renderStudentTable();
 }
 
 function openStudentDetail(name) {
@@ -1107,7 +1209,7 @@ function openStudentDetail(name) {
   if (!s) return;
   document.getElementById('modalStudentName').textContent = s.name;
   document.getElementById('modalAttendance').textContent = s.attendance + '%';
-  document.getElementById('modalAssignments').textContent = Math.round(s.avgScore/10) + '/10';
+  document.getElementById('modalAssignments').textContent = `${s.assignmentsDone}/${s.assignmentsTotal || 0}`;
   document.getElementById('modalAvgScore').textContent = s.avgScore + '%';
   document.getElementById('modalTopicList').innerHTML = s.topics.map(t =>
     `<li style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:0.9rem"><span>${t.n}</span><strong style="color:${t.s>=70?'#22c55e':t.s>=50?'#f59e0b':'#ef4444'}">${t.s}%</strong></li>`).join('');
@@ -1125,7 +1227,9 @@ function closeStudentDetail() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  openClass('B.Tech CSE — 2nd Year', 'cse');
+  if (teacherData.classes && teacherData.classes.length > 0) {
+    selectClass(teacherData.classes[0]);
+  }
 });
 </script>
 </body>

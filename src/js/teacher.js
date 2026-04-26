@@ -11,47 +11,42 @@ let currentClassLabel = 'Class 10-A';
 let performanceChartInstance = null;
 let trendChartInstance = null;
 let weaknessChartInstance = null;
+let currentClassId = null;
 
-// ════════════════════════════════
-// LOAD DATA FROM JSON
-// ════════════════════════════════
-if (teacherData.subject) {
-    fetch(API_BASE + '/students-by-subject/' + teacherData.subject)
-        .then(res => res.json())
-        .then(data => {
-            rawStudentsData = data;
-            console.log('Fetched subject-specific data from backend:', data);
+const SUBJECT_TOPICS = {
+    Math: ['Algebra', 'Trigonometry', 'Calculus', 'Statistics', 'Geometry', 'Probability'],
+    Chemistry: ['Periodic Table', 'Atomic Structure', 'Organic Chemistry', 'Chemical Bonding', 'Acids & Bases', 'Solutions'],
+    Physics: ['Mechanics', 'Motion', 'Electricity', 'Magnetism', 'Optics', 'Waves']
+};
 
-            students = mapClassData(data);
-
-            if (typeof renderDashboardSection === 'function') renderDashboardSection();
-            if (typeof renderWeaknessDetection === 'function') renderWeaknessDetection();
-            if (typeof populateTable === 'function') populateTable();
-
-            if (typeof selectClass === 'function') {
-                const firstClass = teacherData.classes && teacherData.classes.length > 0 ? teacherData.classes[0] : '10-A';
-                selectClass(firstClass, 'dashboard');
-            }
-        })
-        .catch(err => {
-            console.error('Failed to load student data from backend:', err);
-        });
+function getTeacherTopics() {
+    const subjectMap = { Mathematics: 'Math' };
+    const normalized = subjectMap[teacherData.subject] || teacherData.subject;
+    return SUBJECT_TOPICS[normalized] || [];
 }
 
-function mapClassData(classData) {
+function mapClassData(classData, className) {
+    const teacherTopics = getTeacherTopics();
     return classData.map(s => ({
         id: s.rollNo,
         name: s.name,
-        className: s.class || 'Class 10-A',
+        className: className,
         attendance: s.attendance,
         assignmentsDone: s.assignments ? s.assignments.completed : 0,
         assignmentsTotal: s.assignments ? s.assignments.total : 10,
         effort: s.effortLevel || 'medium',
-        overallScore: s.overallScore,
+        overallScore: (() => {
+            const filtered = (s.topics || []).filter((t) => teacherTopics.includes(t.name));
+            if (!filtered.length) return 0;
+            return Math.round((filtered.reduce((sum, t) => sum + t.score, 0) / filtered.length) * 10) / 10;
+        })(),
         needHelpTopics: s.needHelpTopics || [],
         tests: s.tests || [],
+        rawAttendance: s.rawAttendance || s.attendanceRecords || s.attendanceHistory || s.attendanceData || [],
         topics: (s.topics || []).reduce((acc, t) => {
-            acc[t.name] = t.score;
+            if (teacherTopics.includes(t.name)) {
+                acc[t.name] = t.score;
+            }
             return acc;
         }, {})
     }));
@@ -60,6 +55,25 @@ function mapClassData(classData) {
 // ════════════════════════════════
 // CLASS DATA FILTERING
 // ════════════════════════════════
+async function selectClass(className) {
+    if (teacherData.classes && !teacherData.classes.includes(className)) {
+        console.warn('Teacher does not have access to ' + className);
+        return;
+    }
+    currentClassId = className;
+    try {
+        const res = await fetch(API_BASE + '/students-by-class/' + className);
+        const classData = await res.json();
+        rawStudentsData = classData;
+        students = mapClassData(Array.isArray(classData) ? classData : [], className);
+        currentClassLabel = 'Class ' + className;
+        renderDashboardSection();
+        populateTable();
+    } catch (err) {
+        console.error('Failed to fetch class data:', err);
+    }
+}
+
 async function openClass(className, classType) {
     if (teacherData.classes && !teacherData.classes.includes(classType)) {
         console.warn('Teacher does not have access to ' + classType);
@@ -71,30 +85,7 @@ async function openClass(className, classType) {
     if (titleEl) titleEl.innerText = teacherData.name ? `Teacher Dashboard - ${teacherData.name}` : 'Teacher Dashboard';
     if (subEl) subEl.innerText = `${teacherData.subject || 'Subject'} · ${className}`;
 
-    try {
-        const res = await fetch(API_BASE + '/students-by-class/' + classType);
-        const classData = await res.json();
-
-        const subjectMap = {
-            "Mathematics": "Math",
-            "Chemistry": "Chemistry",
-            "Physics": "Physics"
-        };
-        const mappedSubject = subjectMap[teacherData.subject] || teacherData.subject;
-
-        const filteredData = classData.filter(s => s.subject === mappedSubject);
-
-        students = mapClassData(filteredData);
-
-        currentClassLabel = students[0]?.className || 'Class ' + classType;
-        window.currentClassId = classType;
-
-        renderDashboardSection();
-        renderWeaknessDetection();
-        populateTable();
-    } catch (err) {
-        console.error('Failed to fetch class data:', err);
-    }
+    await selectClass(classType);
 }
 
 // ════════════════════════════════
@@ -203,19 +194,23 @@ function renderNeedsAttention() {
     if (!tbody) return;
 
     const needsAttention = students
-        .filter((s) => s.overallScore < 60)
+        .filter((s) => s.overallScore < 50)
         .sort((a, b) => a.overallScore - b.overallScore);
 
+    if (!needsAttention.length) {
+        tbody.innerHTML = '<tr><td colspan="5">All students performing above 50%</td></tr>';
+        return;
+    }
+
     tbody.innerHTML = needsAttention.map((student) => {
-        const trendIcon = getTrendIcon(student);
-        const gapTopic = student.needHelpTopics[0] || Object.entries(student.topics)
+        const gapTopic = Object.entries(student.topics)
             .sort((a, b) => a[1] - b[1])[0]?.[0] || 'General Review';
         return `
             <tr onclick="openStudentModal('${student.id}')">
                 <td><strong>${escapeHtml(student.name)}</strong></td>
                 <td>${escapeHtml(student.className)}</td>
-                <td>${student.overallScore}%</td>
-                <td class="${getTrendClass(trendIcon)}">${trendIcon}</td>
+                <td style="color:#ef4444;">${student.overallScore}%</td>
+                <td>↘</td>
                 <td>${escapeHtml(gapTopic)}</td>
             </tr>
         `;
@@ -373,10 +368,11 @@ function initChart() {
         performanceChartInstance.destroy();
     }
 
-    const topicNames = Object.keys(students[0]?.topics || {});
+    const topicNames = getTeacherTopics();
     const topicAverages = topicNames.map(topic => {
-        const total = students.reduce((sum, s) => sum + (s.topics[topic] || 0), 0);
-        return students.length ? Math.round(total / students.length) : 0;
+        const validScores = students.map((s) => s.topics[topic]).filter((s) => typeof s === 'number');
+        if (!validScores.length) return 0;
+        return Math.round((validScores.reduce((sum, score) => sum + score, 0) / validScores.length) * 10) / 10;
     });
 
     performanceChartInstance = new Chart(ctx.getContext('2d'), {
@@ -412,10 +408,31 @@ function initTrendChart() {
     trendChartInstance = new Chart(trendCanvas.getContext('2d'), {
         type: 'line',
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr'],
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
             datasets: [{
-                label: 'Class Average %',
-                data: [65, 68, 62, 74],
+                label: 'Weekly Attendance Trend — April',
+                data: (() => {
+                    const weekDates = [
+                        ['2026-04-01', '2026-04-02', '2026-04-03'],
+                        ['2026-04-06', '2026-04-07', '2026-04-08', '2026-04-09', '2026-04-10'],
+                        ['2026-04-13', '2026-04-14', '2026-04-15', '2026-04-16', '2026-04-17'],
+                        ['2026-04-20', '2026-04-21', '2026-04-22', '2026-04-23', '2026-04-24']
+                    ];
+                    return weekDates.map((week) => {
+                        let present = 0;
+                        let total = 0;
+                        students.forEach((student) => {
+                            (student.rawAttendance || []).forEach((entry) => {
+                                if (week.some((date) => String(entry.date || '').startsWith(date))) {
+                                    total += 1;
+                                    if (entry.status === 'present') present += 1;
+                                }
+                            });
+                        });
+                        if (!total) return 0;
+                        return Math.round(((present / total) * 100) * 10) / 10;
+                    });
+                })(),
                 borderColor: '#d4af37',
                 backgroundColor: 'rgba(212, 175, 55, 0.2)',
                 fill: true,
@@ -629,5 +646,11 @@ function closeStudentDetail() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Data loads via fetch above, chart and table render after
+    const titleEl = document.querySelector('.dashboard-header h1');
+    const subEl = document.querySelector('.dashboard-header .subtitle');
+    if (titleEl && teacherData.name) titleEl.textContent = teacherData.name;
+    if (subEl && teacherData.subject) subEl.textContent = teacherData.subject;
+    if (teacherData.classes && teacherData.classes.length > 0) {
+        selectClass(teacherData.classes[0]);
+    }
 });
