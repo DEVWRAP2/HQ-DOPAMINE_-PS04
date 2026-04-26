@@ -1,0 +1,35 @@
+[
+    {
+        "id": "t1",
+        "name": "Mr. Raj Kumar",
+        "email": "raj.kumar@teacherflow.edu",
+        "password": "raj123",
+        "subject": "Mathematics",
+        "classes": [
+            "10-A",
+            "10-B"
+        ]
+    },
+    {
+        "id": "t2",
+        "name": "Ms. Priya Nair",
+        "email": "priya.nair@teacherflow.edu",
+        "password": "priya123",
+        "subject": "Chemistry",
+        "classes": [
+            "10-A",
+            "10-C"
+        ]
+    },
+    {
+        "id": "t3",
+        "name": "Mr. Arun Mehta",
+        "email": "arun.mehta@teacherflow.edu",
+        "password": "arun123",
+        "subject": "Physics",
+        "classes": [
+            "10-B",
+            "10-C"
+        ]
+    }
+]

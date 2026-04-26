@@ -1,8 +1,7 @@
 // src/js/main.js
+const API_BASE = "https://hq-dopamine-ps-04-undt.vercel.app";
 
 let currentRole = null;
-
-
 
 function selectRole(role) {
     currentRole = role;
@@ -48,26 +47,48 @@ async function handleLogin(e) {
     e.preventDefault();
 
     if (currentRole === 'teacher') {
-        // For demo: accept any teacher login
-        localStorage.setItem('userRole', 'teacher');
-        window.location.href = 'teacher-dashboard.html';
-
+        const email = document.getElementById('emailInput').value.trim().toLowerCase();
+        const password = document.getElementById('passwordInput').value.trim();
+        
+        if (!email || !password) {
+            document.getElementById('loginError').textContent = 'Please fill all fields.';
+            return;
+        }
+        
+        try {
+            const response = await fetch(`${API_BASE}/teacher-login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            const result = await response.json();
+            
+            if (result.success) {
+                localStorage.setItem('userRole', 'teacher');
+                localStorage.setItem('teacherData', JSON.stringify(result.teacher));
+                window.location.href = 'teacher-dashboard.html';
+            } else {
+                document.getElementById('loginError').textContent = result.message;
+            }
+        } catch (err) {
+            document.getElementById('loginError').textContent = 'Error connecting to server.';
+        }
     } else if (currentRole === 'student') {
-        const emailInput = document.getElementById('emailInput');
-        const userEmail = emailInput ? emailInput.value.trim().toLowerCase() : '';
-
-        if (!userEmail) {
-            alert('Please enter your email.');
+        const userEmail = document.getElementById('emailInput').value.trim().toLowerCase();
+        const userPassword = document.getElementById('passwordInput').value.trim();
+        
+        if (!userEmail || !userPassword) {
+            document.getElementById('loginError').textContent = 'Please enter email and password.';
             return;
         }
 
         try {
-            const response = await fetch("http://localhost:3001/login", {
+            const response = await fetch(`${API_BASE}/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ email: userEmail })
+                body: JSON.stringify({ email: userEmail, password: userPassword })
             });
 
             const result = await response.json();
@@ -81,7 +102,7 @@ async function handleLogin(e) {
             } else {
                 console.log("Login failed:", result.message);
                 const errorEl = document.getElementById('loginError');
-                if (errorEl) errorEl.textContent = "No account found";
+                if (errorEl) errorEl.textContent = result.message;
             }
         } catch (error) {
             console.error("Login error:", error);

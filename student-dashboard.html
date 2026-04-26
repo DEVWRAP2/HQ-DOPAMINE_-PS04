@@ -1195,7 +1195,7 @@
             class="nav-icon">🎥</span><span>Classes</span></button>
       </nav>
       <div class="sidebar-footer">
-        <a class="logout-link" onclick="doLogout()">🚪 Logout</a>
+        <a class="logout-link" onclick="logout()">🚪 Logout</a>
       </div>
     </aside>
 
@@ -1356,6 +1356,14 @@
   </div>
 
   <script>
+    const API_BASE = "https://hq-dopamine-ps-04-undt.vercel.app";
+
+    const role = localStorage.getItem('userRole');
+    const roll = localStorage.getItem('studentRoll');
+    if (!role || role !== 'student' || !roll) {
+        window.location.href = 'index.html';
+    }
+
     function showComingSoon() {
       document.getElementById('comingSoonOverlay').classList.add('is-open');
     }
@@ -1369,52 +1377,21 @@
     // ════════════════════════════════
     let currentStudent = null;
 
-    // Mock student data — loaded regardless of credentials
-    const mockStudentData = {
-      name: "Arjun Mehta",
-      rollNo: "CSE2024-101",
-      class: "B.Tech CSE — 2nd Year",
-      subject: "Mathematics",
-      overallScore: 72,
-      attendance: 88,
-      effortLevel: "high",
-      understandingLevel: "medium",
-      assignments: { completed: 8, total: 10 },
-      needHelpTopics: ["Calculus", "Geometry"],
-      topics: [
-        { name: "Algebra",       score: 78, maxScore: 100 },
-        { name: "Calculus",      score: 52, maxScore: 100 },
-        { name: "Trigonometry",  score: 85, maxScore: 100 },
-        { name: "Geometry",      score: 61, maxScore: 100 },
-        { name: "Statistics",    score: 74, maxScore: 100 }
-      ],
-      tests: [
-        { name: "Test 1 — Algebra & Trig",     score: 80, topicsWeak: [] },
-        { name: "Test 2 — Calculus",           score: 54, topicsWeak: ["Calculus"] },
-        { name: "Test 3 — Geometry & Stats",   score: 68, topicsWeak: ["Geometry"] }
-      ],
-      attendanceDays: {
-        present: [2,3,5,6,9,10,11,13,16,17,18,19,20,23,24,25,27,30],
-        absent:  [4,12,26]
-      }
-    };
+    window.onload = async function () {
+      try {
+        const res = await fetch(`${API_BASE}/student/${roll}`);
+        const student = res.ok ? await res.json() : null;
+        if (!student) { 
+            window.location.href = 'index.html'; 
+            return;
+        }
 
-    window.onload = function () {
-      // Use name from login if stored, otherwise default
-      const storedName = sessionStorage.getItem('tf_username') || localStorage.getItem('tf_username');
-      if (storedName && storedName.trim()) {
-        // Derive a display name from whatever email/text they typed
-        const displayName = storedName.includes('@')
-          ? storedName.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
-          : storedName.trim().replace(/\b\w/g, c => c.toUpperCase());
-        mockStudentData.name = displayName;
+        currentStudent = student;
+        initPortal(student);
+      } catch (err) {
+        console.error("Failed to load student data:", err);
+        showError();
       }
-
-      // Small simulated loading delay for UX polish
-      setTimeout(() => {
-        currentStudent = mockStudentData;
-        initPortal(mockStudentData);
-      }, 800);
     };
 
     function showError() {
@@ -1437,9 +1414,9 @@
       renderMiniCalendar(s);
     }
 
-    function doLogout() {
-      localStorage.removeItem('studentRoll');
+    function logout() {
       localStorage.removeItem('userRole');
+      localStorage.removeItem('studentRoll');
       window.location.href = 'index.html';
     }
 

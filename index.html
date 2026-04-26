@@ -502,7 +502,7 @@
                         </div>
                         <div class="input-group">
                             <span class="input-label">Passcode</span>
-                            <input type="text" autocomplete="off" spellcheck="false" placeholder="••••••••"
+                            <input type="text" id="passwordInput" autocomplete="off" spellcheck="false" placeholder="••••••••"
                                 style="-webkit-text-security: disc;" />
                         </div>
                         <div class="form-actions">
@@ -510,6 +510,7 @@
                         </div>
                         <button type="button" class="login-btn" id="enterBtn"
                             onclick="handleLogin(event)">Enter</button>
+                        <p id="loginError" style="color: #ef4444; text-align: center; margin-top: 10px; font-size: 0.9rem;"></p>
                     </div>
                 </div>
             </div>
@@ -548,26 +549,67 @@
             document.getElementById('selectionPanel').classList.add('visible');
         }
 
-        function handleLogin(e) {
-            const identifier = document.getElementById('emailInput').value.trim();
-            if (!identifier) {
-                document.getElementById('emailInput').focus();
+        async function handleLogin(e) {
+            if (e) e.preventDefault();
+            const identifier = document.getElementById('emailInput').value.trim().toLowerCase();
+            const passcode = document.getElementById('passwordInput').value.trim();
+            if (!identifier || !passcode) {
+                document.getElementById('loginError').textContent = 'Please fill all fields.';
                 return;
             }
+
             const btn = document.getElementById('enterBtn');
             btn.textContent = 'Entering…';
             btn.style.opacity = '0.75';
             btn.disabled = true;
-            setTimeout(() => {
-                // Store identifier so dashboards can personalise the greeting
-                sessionStorage.setItem('tf_username', identifier);
-                localStorage.setItem('tf_username', identifier);
+
+            const API_BASE = "https://hq-dopamine-ps-04-undt.vercel.app";
+
+            try {
                 if (selectedRole === 'teacher') {
-                    window.location.href = 'teacher-dashboard.html';
+                    const response = await fetch(API_BASE + '/teacher-login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: identifier, password: passcode })
+                    });
+                    const result = await response.json();
+
+                    if (result.success) {
+                        localStorage.setItem('userRole', 'teacher');
+                        localStorage.setItem('teacherData', JSON.stringify(result.teacher));
+                        window.location.href = 'teacher-dashboard.html';
+                    } else {
+                        btn.textContent = 'Enter';
+                        btn.style.opacity = '1';
+                        btn.disabled = false;
+                        document.getElementById('loginError').textContent = result.message;
+                    }
                 } else if (selectedRole === 'student') {
-                    window.location.href = 'student-dashboard.html';
+                    const response = await fetch(API_BASE + '/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: identifier, password: passcode })
+                    });
+                    const result = await response.json();
+
+                    if (result.success) {
+                        localStorage.setItem('userRole', 'student');
+                        localStorage.setItem('studentRoll', result.student.rollNo);
+                        window.location.href = 'student-dashboard.html';
+                    } else {
+                        btn.textContent = 'Enter';
+                        btn.style.opacity = '1';
+                        btn.disabled = false;
+                        document.getElementById('loginError').textContent = result.message;
+                    }
                 }
-            }, 800);
+            } catch (err) {
+                console.error("Login error:", err);
+                btn.textContent = 'Enter';
+                btn.style.opacity = '1';
+                btn.disabled = false;
+                document.getElementById('loginError').textContent = 'Error connecting to server.';
+            }
         }
 
         // ── COMING SOON ──

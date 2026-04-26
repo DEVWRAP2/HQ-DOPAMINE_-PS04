@@ -425,74 +425,12 @@
                 <p style="font-size: 0.75rem; color: #888; margin-top: 4px;">Dashboard Home</p>
             </div>
             <ul class="nav-links" id="navLinks">
-                <li class="accordion-item active" id="acc-cse">
-                    <div class="accordion-header" onclick="toggleAccordion('cse')">
-                        <span>💻 B.Tech CSE</span>
-                        <span class="arrow">▶</span>
-                    </div>
-                    <ul class="accordion-body" id="accordion-cse">
-                        <li id="nav-cse-dashboard" class="active"><a href="#" onclick="selectClass('cse', 'dashboard'); return false;">Dashboard</a></li>
-                        <li id="nav-cse-students"><a href="#" onclick="selectClass('cse', 'students'); return false;">Students</a></li>
-                        <li id="nav-cse-classes"><a href="#" onclick="selectClass('cse', 'classes'); return false;">Classes</a></li>
-                        <li id="nav-cse-weakness"><a href="#" onclick="selectClass('cse', 'weakness'); return false;">Weakness Detection</a></li>
-                        <li id="nav-cse-alerts"><a href="#" onclick="selectClass('cse', 'alerts'); return false;">Alerts</a></li>
-                    </ul>
-                </li>
-                <li class="accordion-item" id="acc-ece">
-                    <div class="accordion-header" onclick="toggleAccordion('ece')">
-                        <span>📡 B.Tech ECE</span>
-                        <span class="arrow">▶</span>
-                    </div>
-                    <ul class="accordion-body" id="accordion-ece">
-                        <li id="nav-ece-dashboard"><a href="#" onclick="selectClass('ece', 'dashboard'); return false;">Dashboard</a></li>
-                        <li id="nav-ece-students"><a href="#" onclick="selectClass('ece', 'students'); return false;">Students</a></li>
-                        <li id="nav-ece-classes"><a href="#" onclick="selectClass('ece', 'classes'); return false;">Classes</a></li>
-                        <li id="nav-ece-weakness"><a href="#" onclick="selectClass('ece', 'weakness'); return false;">Weakness Detection</a></li>
-                        <li id="nav-ece-alerts"><a href="#" onclick="selectClass('ece', 'alerts'); return false;">Alerts</a></li>
-                    </ul>
-                </li>
-                <li class="accordion-item" id="acc-aiml">
-                    <div class="accordion-header" onclick="toggleAccordion('aiml')">
-                        <span>🤖 B.Tech AIML</span>
-                        <span class="arrow">▶</span>
-                    </div>
-                    <ul class="accordion-body" id="accordion-aiml">
-                        <li id="nav-aiml-dashboard"><a href="#" onclick="selectClass('aiml', 'dashboard'); return false;">Dashboard</a></li>
-                        <li id="nav-aiml-students"><a href="#" onclick="selectClass('aiml', 'students'); return false;">Students</a></li>
-                        <li id="nav-aiml-classes"><a href="#" onclick="selectClass('aiml', 'classes'); return false;">Classes</a></li>
-                        <li id="nav-aiml-weakness"><a href="#" onclick="selectClass('aiml', 'weakness'); return false;">Weakness Detection</a></li>
-                        <li id="nav-aiml-alerts"><a href="#" onclick="selectClass('aiml', 'alerts'); return false;">Alerts</a></li>
-                    </ul>
-                </li>
-                <li class="accordion-item" id="acc-me">
-                    <div class="accordion-header" onclick="toggleAccordion('me')">
-                        <span>⚙️ B.Tech ME</span>
-                        <span class="arrow">▶</span>
-                    </div>
-                    <ul class="accordion-body" id="accordion-me">
-                        <li id="nav-me-dashboard"><a href="#" onclick="selectClass('me', 'dashboard'); return false;">Dashboard</a></li>
-                        <li id="nav-me-students"><a href="#" onclick="selectClass('me', 'students'); return false;">Students</a></li>
-                        <li id="nav-me-classes"><a href="#" onclick="selectClass('me', 'classes'); return false;">Classes</a></li>
-                        <li id="nav-me-weakness"><a href="#" onclick="selectClass('me', 'weakness'); return false;">Weakness Detection</a></li>
-                        <li id="nav-me-alerts"><a href="#" onclick="selectClass('me', 'alerts'); return false;">Alerts</a></li>
-                    </ul>
-                </li>
-                <li class="accordion-item" id="acc-ce">
-                    <div class="accordion-header" onclick="toggleAccordion('ce')">
-                        <span>🏗️ B.Tech CE</span>
-                        <span class="arrow">▶</span>
-                    </div>
-                    <ul class="accordion-body" id="accordion-ce">
-                        <li id="nav-ce-dashboard"><a href="#" onclick="selectClass('ce', 'dashboard'); return false;">Dashboard</a></li>
-                        <li id="nav-ce-students"><a href="#" onclick="selectClass('ce', 'students'); return false;">Students</a></li>
-                        <li id="nav-ce-classes"><a href="#" onclick="selectClass('ce', 'classes'); return false;">Classes</a></li>
-                        <li id="nav-ce-weakness"><a href="#" onclick="selectClass('ce', 'weakness'); return false;">Weakness Detection</a></li>
-                        <li id="nav-ce-alerts"><a href="#" onclick="selectClass('ce', 'alerts'); return false;">Alerts</a></li>
-                    </ul>
-                </li>
+                <li onclick="selectClass('10-A', '10-A')">Class 10-A</li>
+                <li onclick="selectClass('10-B', '10-B')">Class 10-B</li>
+                <li onclick="selectClass('10-C', '10-C')">Class 10-C</li>
             </ul>
             <div class="sidebar-footer">
-                <button class="logout-btn" onclick="window.location.href='index.html'">Logout</button>
+                <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
         </aside>
 
@@ -502,8 +440,8 @@
             <div id="section-dashboard" class="page-section active">
                 <header class="dashboard-header">
                     <div>
-                        <h1>Teacher Dashboard</h1>
-                        <p class="subtitle">Class 10 - Mathematics</p>
+                        <h1 id="teacher-name">Teacher Dashboard</h1>
+                        <p class="subtitle" id="teacher-subject">Class 10 - Mathematics</p>
                     </div>
                 </header>
 
@@ -849,6 +787,34 @@
 
     
     <script>
+        const API_BASE = "https://hq-dopamine-ps-04-undt.vercel.app";
+
+        const teacherRaw = localStorage.getItem('teacherData');
+        if (!localStorage.getItem('userRole') || 
+            localStorage.getItem('userRole') !== 'teacher' || 
+            !teacherRaw) {
+            window.location.href = 'index.html';
+        }
+        const teacherData = JSON.parse(teacherRaw);
+
+        function logout() {
+            localStorage.removeItem('userRole');
+            localStorage.removeItem('teacherData');
+            window.location.href = 'index.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('teacher-name').textContent = teacherData.name;
+            document.getElementById('teacher-subject').textContent = teacherData.subject;
+
+            const navLinks = document.getElementById('navLinks');
+            if (teacherData.classes && teacherData.classes.length > 0) {
+                navLinks.innerHTML = teacherData.classes.map(c => 
+                    `<li onclick="selectClass('${c}', '${c}')">Class ${c}</li>`
+                ).join('');
+            }
+        });
+
         let currentClassType = 'cse';
         let navHistory = [];
 

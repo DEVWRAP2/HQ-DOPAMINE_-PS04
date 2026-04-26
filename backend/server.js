@@ -65,7 +65,7 @@ function transformStudentData(rawStudent) {
 
 // Define the /login endpoint
 app.post('/login', (req, res) => {
-    const { email } = req.body;
+    const { email, password } = req.body;
     console.log(`Login attempt for email: ${email}`);
 
     const dataPath = path.join(__dirname, 'data', 'students.json');
@@ -78,14 +78,14 @@ app.post('/login', (req, res) => {
 
         try {
             const students = JSON.parse(data);
-            const student = students.find(s => s.email === email);
+            const student = students.find(s => s.email === email && s.password === password);
 
             if (student) {
                 console.log(`Student found: ${student.name}`);
                 res.json({ success: true, student: transformStudentData(student) });
             } else {
                 console.log(`No account found for: ${email}`);
-                res.json({ success: false, message: "No account found" });
+                res.json({ success: false, message: "Invalid email or password" });
             }
         } catch (parseErr) {
             console.error("Error parsing JSON:", parseErr);
@@ -136,6 +136,87 @@ app.get('/student/:rollNo', (req, res) => {
             } else {
                 res.status(404).json({ error: "Not found" });
             }
+        } catch (parseErr) {
+            console.error("Error parsing JSON:", parseErr);
+            res.status(500).json({ error: "Internal server error" });
+        }
+    });
+});
+
+// Define the /teacher-login endpoint
+app.post('/teacher-login', (req, res) => {
+    const { email, password } = req.body;
+    const dataPath = path.join(__dirname, 'data', 'teachers.json');
+
+    fs.readFile(dataPath, 'utf8', (err, data) => {
+        if (err) {
+            console.error("Error reading file:", err);
+            return res.status(500).json({ success: false, message: "Internal server error" });
+        }
+
+        try {
+            const teachers = JSON.parse(data);
+            const teacher = teachers.find(t => t.email === email && t.password === password);
+
+            if (teacher) {
+                res.json({ success: true, teacher: { id: teacher.id, name: teacher.name, email: teacher.email, subject: teacher.subject, classes: teacher.classes } });
+            } else {
+                res.json({ success: false, message: "Invalid teacher credentials" });
+            }
+        } catch (parseErr) {
+            console.error("Error parsing JSON:", parseErr);
+            res.status(500).json({ success: false, message: "Internal server error" });
+        }
+    });
+});
+
+// Define the /students-by-class/:className endpoint
+app.get('/students-by-class/:className', (req, res) => {
+    const dataPath = path.join(__dirname, 'data', 'students.json');
+
+    fs.readFile(dataPath, 'utf8', (err, data) => {
+        if (err) {
+            console.error("Error reading file:", err);
+            return res.status(500).json({ error: "Internal server error" });
+        }
+
+        try {
+            const students = JSON.parse(data);
+            const filteredStudents = students.filter(s => s.class === req.params.className);
+            const transformedStudents = filteredStudents.map(transformStudentData);
+            res.json(transformedStudents);
+        } catch (parseErr) {
+            console.error("Error parsing JSON:", parseErr);
+            res.status(500).json({ error: "Internal server error" });
+        }
+    });
+});
+
+// Define the /students-by-subject/:subject endpoint
+app.get('/students-by-subject/:subject', (req, res) => {
+    const dataPath = path.join(__dirname, 'data', 'students.json');
+    const teacherSubject = req.params.subject;
+    
+    const subjectMap = {
+        "Mathematics": "Math",
+        "Chemistry": "Chemistry",
+        "Physics": "Physics"
+    };
+    const mappedSubject = subjectMap[teacherSubject] || teacherSubject;
+
+    fs.readFile(dataPath, 'utf8', (err, data) => {
+        if (err) {
+            console.error("Error reading file:", err);
+            return res.status(500).json({ error: "Internal server error" });
+        }
+
+        try {
+            const students = JSON.parse(data);
+            const filteredStudents = students.filter(s => 
+                s.scores && s.scores.some(score => score.subject === mappedSubject)
+            );
+            const transformedStudents = filteredStudents.map(transformStudentData);
+            res.json(transformedStudents);
         } catch (parseErr) {
             console.error("Error parsing JSON:", parseErr);
             res.status(500).json({ error: "Internal server error" });

@@ -1,5 +1,8 @@
 // src/js/teacher.js
 
+const API_BASE = "https://hq-dopamine-ps-04-undt.vercel.app";
+const teacherData = JSON.parse(localStorage.getItem('teacherData') || '{}');
+
 const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY_HERE';
 
 let students = [];
@@ -12,32 +15,31 @@ let weaknessChartInstance = null;
 // ════════════════════════════════
 // LOAD DATA FROM JSON
 // ════════════════════════════════
-fetch('http://localhost:3001/students')
-    .then(res => res.json())
-    .then(data => {
-        rawStudentsData = data;
-        console.log('Fetched student data from backend:', data);
-        if (typeof selectClass === 'function') {
-            selectClass('10-A', 'dashboard');
-        }
-    })
-    .catch(err => {
-        console.error('Failed to load student data from backend:', err);
-    });
+if (teacherData.subject) {
+    fetch(API_BASE + '/students-by-subject/' + teacherData.subject)
+        .then(res => res.json())
+        .then(data => {
+            rawStudentsData = data;
+            console.log('Fetched subject-specific data from backend:', data);
+            
+            students = mapClassData(data);
+            
+            if (typeof renderDashboardSection === 'function') renderDashboardSection();
+            if (typeof renderWeaknessDetection === 'function') renderWeaknessDetection();
+            if (typeof populateTable === 'function') populateTable();
+            
+            if (typeof selectClass === 'function') {
+                const firstClass = teacherData.classes && teacherData.classes.length > 0 ? teacherData.classes[0] : '10-A';
+                selectClass(firstClass, 'dashboard');
+            }
+        })
+        .catch(err => {
+            console.error('Failed to load student data from backend:', err);
+        });
+}
 
-// ════════════════════════════════
-// CLASS DATA FILTERING
-// ════════════════════════════════
-function openClass(className, classType) {
-    const titleEl = document.querySelector('.dashboard-header h1');
-    const subEl = document.querySelector('.dashboard-header .subtitle');
-    if (titleEl) titleEl.innerText = 'Teacher Dashboard';
-    if (subEl) subEl.innerText = className;
-
-    let classData = rawStudentsData.filter(s => s.class === classType);
-
-
-    students = classData.map(s => ({
+function mapClassData(classData) {
+    return classData.map(s => ({
         id: s.rollNo,
         name: s.name,
         className: s.class || 'Class 10-A',
@@ -53,12 +55,46 @@ function openClass(className, classType) {
             return acc;
         }, {})
     }));
-    currentClassLabel = students[0]?.className || 'Class 10-A';
-    window.currentClassId = classType;
+}
 
-    renderDashboardSection();
-    renderWeaknessDetection();
-    populateTable();
+// ════════════════════════════════
+// CLASS DATA FILTERING
+// ════════════════════════════════
+async function openClass(className, classType) {
+    if (teacherData.classes && !teacherData.classes.includes(classType)) {
+        console.warn('Teacher does not have access to ' + classType);
+        return; // Only show classes that are in teacherData.classes array
+    }
+
+    const titleEl = document.querySelector('.dashboard-header h1');
+    const subEl = document.querySelector('.dashboard-header .subtitle');
+    if (titleEl) titleEl.innerText = teacherData.name ? `Teacher Dashboard - ${teacherData.name}` : 'Teacher Dashboard';
+    if (subEl) subEl.innerText = `${teacherData.subject || 'Subject'} · ${className}`;
+
+    try {
+        const res = await fetch(API_BASE + '/students-by-class/' + classType);
+        const classData = await res.json();
+        
+        const subjectMap = {
+            "Mathematics": "Math",
+            "Chemistry": "Chemistry",
+            "Physics": "Physics"
+        };
+        const mappedSubject = subjectMap[teacherData.subject] || teacherData.subject;
+
+        const filteredData = classData.filter(s => s.subject === mappedSubject);
+
+        students = mapClassData(filteredData);
+        
+        currentClassLabel = students[0]?.className || 'Class ' + classType;
+        window.currentClassId = classType;
+
+        renderDashboardSection();
+        renderWeaknessDetection();
+        populateTable();
+    } catch (err) {
+        console.error('Failed to fetch class data:', err);
+    }
 }
 
 // ════════════════════════════════
