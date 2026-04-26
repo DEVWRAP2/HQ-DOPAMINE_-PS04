@@ -42,6 +42,7 @@ function mapClassData(classData, className) {
         })(),
         needHelpTopics: s.needHelpTopics || [],
         tests: s.tests || [],
+        rawScores: s.scores || [],
         rawAttendance: s.rawAttendance || s.attendanceRecords || s.attendanceHistory || s.attendanceData || [],
         topics: (s.topics || []).reduce((acc, t) => {
             if (teacherTopics.includes(t.name)) {
@@ -405,34 +406,43 @@ function initTrendChart() {
         trendChartInstance.destroy();
     }
 
+    const subjectMap = {
+        Math: 'Math',
+        Chemistry: 'Chemistry',
+        Physics: 'Physics',
+        Mathematics: 'Math'
+    };
+    const targetSubject = subjectMap[teacherData.subject] || teacherData.subject;
+    const weekDateGroups = [
+        ['2026-04-01', '2026-04-02'],
+        ['2026-04-07', '2026-04-08'],
+        ['2026-04-14'],
+        ['2026-04-21']
+    ];
+    const weeklyAverages = weekDateGroups.map((weekDates) => {
+        const weekMarks = [];
+        students.forEach((student) => {
+            (student.rawScores || []).forEach((score) => {
+                if (
+                    weekDates.includes(score.date) &&
+                    score.subject === targetSubject
+                ) {
+                    weekMarks.push(score.marks);
+                }
+            });
+        });
+        if (!weekMarks.length) return 0;
+        const avg = weekMarks.reduce((sum, mark) => sum + mark, 0) / weekMarks.length;
+        return Math.round(avg * 10) / 10;
+    });
+
     trendChartInstance = new Chart(trendCanvas.getContext('2d'), {
         type: 'line',
         data: {
             labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
             datasets: [{
-                label: 'Weekly Attendance Trend — April',
-                data: (() => {
-                    const weekDates = [
-                        ['2026-04-01', '2026-04-02', '2026-04-03'],
-                        ['2026-04-06', '2026-04-07', '2026-04-08', '2026-04-09', '2026-04-10'],
-                        ['2026-04-13', '2026-04-14', '2026-04-15', '2026-04-16', '2026-04-17'],
-                        ['2026-04-20', '2026-04-21', '2026-04-22', '2026-04-23', '2026-04-24']
-                    ];
-                    return weekDates.map((week) => {
-                        let present = 0;
-                        let total = 0;
-                        students.forEach((student) => {
-                            (student.rawAttendance || []).forEach((entry) => {
-                                if (week.some((date) => String(entry.date || '').startsWith(date))) {
-                                    total += 1;
-                                    if (entry.status === 'present') present += 1;
-                                }
-                            });
-                        });
-                        if (!total) return 0;
-                        return Math.round(((present / total) * 100) * 10) / 10;
-                    });
-                })(),
+                label: 'Weekly Avg Score — April',
+                data: weeklyAverages,
                 borderColor: '#d4af37',
                 backgroundColor: 'rgba(212, 175, 55, 0.2)',
                 fill: true,
