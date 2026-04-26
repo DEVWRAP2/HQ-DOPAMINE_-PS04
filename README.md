@@ -1,64 +1,101 @@
-🎓 TeacherFlow AI
-Predictive Analytics & AI-Powered Early Warning Dashboard for Educators
+# TeacherFlow AI
 
-(Deployed link: https://hq-dopamine-ps-04-43c3.vercel.app/ )
+> AI-powered classroom intelligence — detect learning gaps early, act before students fall behind.
 
-(🔗Video link: https://youtu.be/zlMhlh8inEs )
+## What It Does
 
-⚠️ The Problem
-In collaborative research and technical learning, ideas often become fragmented, and wrong assumptions can go unnoticed. A single mistake in understanding can spread through an entire project, causing long-term errors and confusion. By the time midterms arrive, the learning gap is often too wide to fix.
+TeacherFlow AI gives teachers real-time visibility into every student's performance across subjects and topics, automatically flagging struggling students and generating Gemini-powered insights. Students get a personal dashboard showing their scores, attendance, weak areas, and AI-generated action plans.
 
-💡 Our Solution
-TeacherFlow AI is an EdTech system that helps educators monitor student performance and detect learning gaps early. By tracking granular topic progress and identifying weak areas, it ensures misconceptions are caught quickly. The integrated AI engine provides targeted, actionable micro-interventions, improving learning outcomes and keeping students on the right track.
+## Live Demo
 
-✨ Key Features
-👨‍🏫 Teacher Portal
-Multi-Class Management: Isolated contexts for handling multiple college branches (e.g., B.Tech CSE, ECE, AIML) efficiently from a single sidebar.
+- **Frontend:** https://hq-dopamine-ps-04-43c3.vercel.app
+- **Backend API:** https://hq-dopamine-ps-04-undt.vercel.app
 
-Insight Dashboard UI: Visualizes class averages, attendance, and overall progress through interactive charts (Powered by Chart.js).
+## Test Credentials
 
-Weakness Detection Engine: Accurately identifies struggling topics across the entire classroom.
+| Role | Email | Password |
+|---|---|---|
+| Teacher (Math) | raj.kumar@teacherflow.edu | raj123 |
+| Teacher (Chemistry) | priya.nair@teacherflow.edu | priya123 |
+| Teacher (Physics) | arun.mehta@teacherflow.edu | arun123 |
+| Student | aarav.sharma@gmail.com | aarav.123 |
+| student | sneha.kapoor@gmail.com | sneha.123 |
+| student | priya.vermar@gmail.com | priya.123 |
 
-AI Teaching Suggestions Engine: Generates targeted, actionable improvement strategies (remedial worksheets, 1-on-1 focus areas) for individual students based on their unique data.
+## Features
 
-Performance Alert System: Triggers notifications when students fall below defined attendance or grade thresholds.
+**Teacher Dashboard**
+- Subject-specific class analytics (Math / Chemistry / Physics)
+- Average performance by topic — bar chart from real data
+- Students needing attention (score below 50%)
+- Weakness detection heatmap
+- AI insights per student via Gemini API
 
-🎒 Student Portal
-Personalized Dashboard: A private view for students to track their assignments, attendance, and overall score.
+**Student Dashboard**
+- Personal performance tracking across all subjects
+- Topic-wise score breakdown with progress bars
+- Attendance calendar
+- Assignment completion tracking
+- AI-generated weak areas, root cause, and action plan
 
-Topic-by-Topic Breakdown: Shows students exactly where they are excelling and where they need to request help.
+## Tech Stack
 
-Effort & Gamification Tracking: Tracks student effort and assignment completion rates.
+| Layer | Technology |
+|---|---|
+| Frontend | HTML, CSS, Vanilla JS, Chart.js |
+| Backend | Node.js, Express 4 |
+| AI | Google Gemini 1.5 Flash |
+| Data | JSON (students.json, teachers.json) |
+| Deployment | Vercel (frontend + backend) |
 
-Interactive Calendar: Visual attendance tracking mapping out present and absent days.
+## Project Structure
 
-🛠️ Tech Stack
-This MVP was built for speed, UI/UX presentation, and workflow demonstration:
+```
+HQ-DOPAMINE_-PS04/
+├── index.html                  ← Login page
+├── student-dashboard.html      ← Student portal
+├── teacher-dashboard.html      ← Teacher portal
+├── src/
+│   ├── css/
+│   │   ├── styles.css
+│   │   └── dashboard.css
+│   └── js/
+│       ├── main.js             ← Login logic
+│       └── teacher.js          ← Teacher dashboard logic
+└── backend/
+    ├── server.js               ← Express API
+    ├── vercel.json
+    └── data/
+        ├── students.json       ← 30 students, 18 scores each
+        └── teachers.json       ← 3 teachers with subject/class assignments
+```
 
-Frontend: HTML5, CSS3 (Vanilla / Custom Variables)
+## API Routes
 
-Logic & Flow: Vanilla JavaScript (ES6)
+| Method | Route | Description |
+|---|---|---|
+| POST | /login | Student authentication |
+| POST | /teacher-login | Teacher authentication |
+| GET | /students | All students |
+| GET | /student/:rollNo | Single student |
+| GET | /students-by-class/:className | Filter by 10-A, 10-B, 10-C |
+| GET | /students-by-subject/:subject | Filter by Math, Chemistry, Physics |
+| POST | /ai-insight | Gemini AI analysis for a student |
 
-Data Visualization: Chart.js
+## Setup
 
-Backend/Data: Local JSON (students.json) to simulate a live database environment.
+```bash
+# Clone
+git clone https://github.com/DEVWRAP2/HQ-DOPAMINE_-PS04.git
 
-AI Integration: Simulated LLM endpoints for immediate hackathon demonstration (Ready for Gemini API integration).
+# Backend
+cd backend
+npm install
+node server.js
 
-🚀 How to Run the Project (Local Setup)
-Because this is a frontend MVP designed for a hackathon presentation, there is no complex backend server to configure.
+# Frontend — open index.html in browser
 
-Clone or Download this repository to your local machine.
-
-Unzip the folder if necessary.
-
-Open the index.html file in any modern web browser (Chrome, Firefox, Edge, Safari).
-
-🔑 Login Instructions (IMPORTANT)
-To make judging and testing as frictionless as possible:
-
-You can use ANY email and ANY password to log in. > The system is currently designed to bypass authentication so judges can freely explore both the Teacher and Student portals without needing specific credentials. Just click a role, type any text into the inputs, and hit Login!
-
+Built for Devwrap 2.0 — Open Innovation Track
 👥 The Team
 Built with ❤️ during DevWrap2.0 by: SC ECE @ AOT
 
