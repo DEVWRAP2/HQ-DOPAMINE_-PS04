@@ -1633,9 +1633,20 @@
     // ════════════════════════════════
     // QUICK GLANCE MINI-CALENDAR
     // ════════════════════════════════
-    function renderMiniCalendar(s) {
-      const present = s.attendanceDays.present;
-      const absent = s.attendanceDays.absent;
+    function renderMiniCalendar(attendanceData) {
+      // Handle case where attendanceData is a number (percentage)
+      if (typeof attendanceData === 'number' || !Array.isArray(attendanceData)) {
+          attendanceData = []; // treat as empty, just show plain calendar
+      }
+
+      let present = [];
+      let absent = [];
+      if (attendanceData.length > 0) {
+          attendanceData.forEach((item, index) => {
+              if (item.status === 'present') present.push(index + 1);
+              if (item.status === 'absent') absent.push(index + 1);
+          });
+      }
 
       const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
       let html = '<div class="calendar-grid">';
