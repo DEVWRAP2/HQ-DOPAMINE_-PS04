@@ -1,3 +1,6 @@
+require('dotenv').config();
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
@@ -225,9 +228,42 @@ app.get('/students-by-subject/:subject', (req, res) => {
 });
 
 // Start the server
-// app.listen(PORT, () => {
-//     console.log(`Server is running on http://localhost:${PORT}`);
-//     console.log(`View students data at: http://localhost:${PORT}/students`);
-// });
+app.post('/ai-insight', async (req, res) => {
+    try {
+        const { student } = req.body;
+        const prompt = `
+            You are an AI education assistant for TeacherFlow.
+            Analyze this student's performance data and respond 
+            in pure JSON only, no extra text, no markdown:
+            ${JSON.stringify(student)}
+            Return EXACTLY this JSON structure:
+            {
+                "weakAreas": "list the weak topics here",
+                "rootCause": "explain why student struggles",
+                "actionPlan": "what student should do next",
+                "teacherNote": "what teacher should do"
+            }
+        `;
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const result = await model.generateContent(prompt);
+        const text = result.response.text();
+        const clean = text.replace(/```json|```/g, "").trim();
+        res.json(JSON.parse(clean));
+    } catch (err) {
+        console.error("Gemini error:", err);
+        res.status(500).json({ 
+            weakAreas: "Unable to analyze",
+            rootCause: "AI service unavailable",
+            actionPlan: "Please try again later",
+            teacherNote: "AI service unavailable"
+        });
+    }
+});
 
 module.exports = app;
+
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Server running on http://localhost:${PORT}`);
+    });
+}
