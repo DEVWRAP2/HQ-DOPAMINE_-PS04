@@ -79,40 +79,112 @@
     ],
     "scores": [
       {
-        "subject": "Chemistry",
-        "topic": "Periodic Table",
-        "marks": 90,
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 84,
         "date": "2026-04-01"
-      },
-      {
-        "subject": "Chemistry",
-        "topic": "Organic Chemistry",
-        "marks": 86,
-        "date": "2026-04-02"
       },
       {
         "subject": "Math",
         "topic": "Trigonometry",
         "marks": 88,
-        "date": "2026-04-03"
+        "date": "2026-04-01"
       },
       {
-        "subject": "Physics",
-        "topic": "Mechanics",
-        "marks": 88,
-        "date": "2026-04-06"
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 83,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 80,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 86,
+        "date": "2026-04-01"
       },
       {
         "subject": "Math",
         "topic": "Probability",
-        "marks": 89,
-        "date": "2026-04-07"
+        "marks": 95,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 78,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 95,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 92,
+        "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Magnetism",
-        "marks": 90,
-        "date": "2026-04-08"
+        "marks": 78,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 89,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 93,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 84,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 79,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 85,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 78,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 76,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Solutions",
+        "marks": 92,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -226,40 +298,112 @@
     ],
     "scores": [
       {
-        "subject": "Chemistry",
-        "topic": "Atomic Structure",
-        "marks": 23,
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 76,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 78,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 77,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 68,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 80,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 63,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 71,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 72,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 78,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 82,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 79,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 81,
         "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Periodic Table",
-        "marks": 28,
-        "date": "2026-04-02"
+        "marks": 84,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
-        "topic": "Chemical Bonding",
-        "marks": 23,
-        "date": "2026-04-03"
-      },
-      {
-        "subject": "Physics",
-        "topic": "Motion",
-        "marks": 25,
-        "date": "2026-04-06"
-      },
-      {
-        "subject": "Physics",
-        "topic": "Mechanics",
-        "marks": 28,
-        "date": "2026-04-07"
+        "topic": "Atomic Structure",
+        "marks": 76,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Organic Chemistry",
-        "marks": 36,
-        "date": "2026-04-08"
+        "marks": 85,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 44,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 68,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Solutions",
+        "marks": 76,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -373,40 +517,112 @@
     ],
     "scores": [
       {
-        "subject": "Chemistry",
-        "topic": "Acids & Bases",
-        "marks": 80,
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 64,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 64,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 83,
         "date": "2026-04-01"
       },
       {
         "subject": "Math",
         "topic": "Statistics",
-        "marks": 72,
-        "date": "2026-04-02"
+        "marks": 66,
+        "date": "2026-04-01"
       },
       {
         "subject": "Math",
-        "topic": "Trigonometry",
-        "marks": 65,
-        "date": "2026-04-03"
+        "topic": "Geometry",
+        "marks": 70,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Chemistry",
-        "topic": "Periodic Table",
-        "marks": 58,
-        "date": "2026-04-06"
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 42,
+        "date": "2026-04-01"
       },
       {
         "subject": "Physics",
-        "topic": "Optics",
-        "marks": 50,
-        "date": "2026-04-07"
+        "topic": "Mechanics",
+        "marks": 74,
+        "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Motion",
-        "marks": 45,
-        "date": "2026-04-08"
+        "marks": 63,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 77,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 74,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 85,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 74,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 67,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 64,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 80,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 73,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 68,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Solutions",
+        "marks": 61,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -522,38 +738,110 @@
       {
         "subject": "Math",
         "topic": "Algebra",
-        "marks": 40,
+        "marks": 44,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 79,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 72,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 63,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 64,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 73,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 74,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 75,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 66,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 68,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 73,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 83,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 84,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 80,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 41,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 84,
         "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Acids & Bases",
-        "marks": 48,
-        "date": "2026-04-02"
+        "marks": 73,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
-        "topic": "Periodic Table",
-        "marks": 56,
-        "date": "2026-04-03"
-      },
-      {
-        "subject": "Math",
-        "topic": "Algebra",
-        "marks": 64,
-        "date": "2026-04-06"
-      },
-      {
-        "subject": "Chemistry",
-        "topic": "Atomic Structure",
-        "marks": 72,
-        "date": "2026-04-07"
-      },
-      {
-        "subject": "Math",
-        "topic": "Algebra",
-        "marks": 80,
-        "date": "2026-04-08"
+        "topic": "Solutions",
+        "marks": 73,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -667,40 +955,112 @@
     ],
     "scores": [
       {
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 92,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 87,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 85,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 90,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 95,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 75,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 79,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 84,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 95,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 94,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 90,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 92,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 95,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 89,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 78,
+        "date": "2026-04-01"
+      },
+      {
         "subject": "Chemistry",
         "topic": "Chemical Bonding",
-        "marks": 51,
+        "marks": 84,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 77,
         "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Solutions",
-        "marks": 53,
-        "date": "2026-04-02"
-      },
-      {
-        "subject": "Chemistry",
-        "topic": "Acids & Bases",
-        "marks": 53,
-        "date": "2026-04-03"
-      },
-      {
-        "subject": "Math",
-        "topic": "Algebra",
-        "marks": 65,
-        "date": "2026-04-06"
-      },
-      {
-        "subject": "Physics",
-        "topic": "Electricity",
-        "marks": 46,
-        "date": "2026-04-07"
-      },
-      {
-        "subject": "Math",
-        "topic": "Geometry",
-        "marks": 49,
-        "date": "2026-04-08"
+        "marks": 88,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -814,40 +1174,112 @@
     ],
     "scores": [
       {
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 65,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 50,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 42,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 50,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 61,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 61,
+        "date": "2026-04-01"
+      },
+      {
         "subject": "Physics",
-        "topic": "Electricity",
-        "marks": 54,
+        "topic": "Mechanics",
+        "marks": 63,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 65,
         "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Electricity",
-        "marks": 82,
-        "date": "2026-04-02"
+        "marks": 63,
+        "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Magnetism",
-        "marks": 84,
-        "date": "2026-04-03"
-      },
-      {
-        "subject": "Physics",
-        "topic": "Mechanics",
-        "marks": 57,
-        "date": "2026-04-06"
+        "marks": 63,
+        "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Optics",
-        "marks": 66,
-        "date": "2026-04-07"
+        "marks": 49,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Math",
-        "topic": "Algebra",
-        "marks": 77,
-        "date": "2026-04-08"
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 63,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 59,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 61,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 65,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 60,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 65,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Solutions",
+        "marks": 63,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -962,39 +1394,111 @@
     "scores": [
       {
         "subject": "Math",
-        "topic": "Calculus",
-        "marks": 59,
+        "topic": "Algebra",
+        "marks": 72,
         "date": "2026-04-01"
       },
       {
         "subject": "Math",
-        "topic": "Algebra",
-        "marks": 65,
-        "date": "2026-04-02"
+        "topic": "Trigonometry",
+        "marks": 67,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 72,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 79,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 75,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 68,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 58,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 60,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 70,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 67,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 69,
+        "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Waves",
-        "marks": 54,
-        "date": "2026-04-03"
+        "marks": 72,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Physics",
-        "topic": "Motion",
-        "marks": 62,
-        "date": "2026-04-06"
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 55,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 67,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 81,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 78,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 70,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Solutions",
-        "marks": 74,
-        "date": "2026-04-07"
-      },
-      {
-        "subject": "Physics",
-        "topic": "Motion",
-        "marks": 65,
-        "date": "2026-04-08"
+        "marks": 58,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -1108,40 +1612,112 @@
     ],
     "scores": [
       {
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 62,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 73,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 83,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 68,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 83,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 75,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 72,
+        "date": "2026-04-01"
+      },
+      {
         "subject": "Physics",
         "topic": "Motion",
-        "marks": 76,
+        "marks": 60,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 85,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 74,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 72,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 56,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 80,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 71,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 78,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 60,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 65,
         "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Solutions",
-        "marks": 84,
-        "date": "2026-04-02"
-      },
-      {
-        "subject": "Chemistry",
-        "topic": "Organic Chemistry",
-        "marks": 81,
-        "date": "2026-04-03"
-      },
-      {
-        "subject": "Math",
-        "topic": "Geometry",
-        "marks": 77,
-        "date": "2026-04-06"
-      },
-      {
-        "subject": "Physics",
-        "topic": "Mechanics",
-        "marks": 74,
-        "date": "2026-04-07"
-      },
-      {
-        "subject": "Physics",
-        "topic": "Magnetism",
-        "marks": 75,
-        "date": "2026-04-08"
+        "marks": 76,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -1255,40 +1831,112 @@
     ],
     "scores": [
       {
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 75,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 92,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 94,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 93,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 48,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 92,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 82,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 84,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 81,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 77,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 85,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 87,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 84,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 89,
+        "date": "2026-04-01"
+      },
+      {
         "subject": "Chemistry",
         "topic": "Organic Chemistry",
-        "marks": 54,
+        "marks": 85,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 92,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 76,
         "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Solutions",
-        "marks": 65,
-        "date": "2026-04-02"
-      },
-      {
-        "subject": "Math",
-        "topic": "Trigonometry",
-        "marks": 69,
-        "date": "2026-04-03"
-      },
-      {
-        "subject": "Chemistry",
-        "topic": "Periodic Table",
-        "marks": 57,
-        "date": "2026-04-06"
-      },
-      {
-        "subject": "Chemistry",
-        "topic": "Atomic Structure",
-        "marks": 72,
-        "date": "2026-04-07"
-      },
-      {
-        "subject": "Chemistry",
-        "topic": "Acids & Bases",
-        "marks": 73,
-        "date": "2026-04-08"
+        "marks": 95,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -1402,40 +2050,112 @@
     ],
     "scores": [
       {
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 84,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 68,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 79,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 83,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 65,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 59,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 61,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 79,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 83,
+        "date": "2026-04-01"
+      },
+      {
         "subject": "Physics",
         "topic": "Magnetism",
-        "marks": 73,
+        "marks": 77,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 61,
         "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Waves",
-        "marks": 83,
-        "date": "2026-04-02"
+        "marks": 75,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Physics",
-        "topic": "Motion",
-        "marks": 85,
-        "date": "2026-04-03"
-      },
-      {
-        "subject": "Physics",
-        "topic": "Electricity",
-        "marks": 79,
-        "date": "2026-04-06"
-      },
-      {
-        "subject": "Physics",
-        "topic": "Electricity",
-        "marks": 66,
-        "date": "2026-04-07"
-      },
-      {
-        "subject": "Math",
-        "topic": "Algebra",
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
         "marks": 62,
-        "date": "2026-04-08"
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 60,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 70,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 57,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 69,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Solutions",
+        "marks": 83,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -1549,40 +2269,112 @@
     ],
     "scores": [
       {
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 59,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 53,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 64,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 62,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 61,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 62,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 41,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 62,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 43,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 41,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 64,
+        "date": "2026-04-01"
+      },
+      {
         "subject": "Physics",
         "topic": "Waves",
-        "marks": 53,
+        "marks": 63,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 60,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 64,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 63,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 58,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 57,
         "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Solutions",
-        "marks": 56,
-        "date": "2026-04-02"
-      },
-      {
-        "subject": "Math",
-        "topic": "Trigonometry",
-        "marks": 63,
-        "date": "2026-04-03"
-      },
-      {
-        "subject": "Physics",
-        "topic": "Magnetism",
-        "marks": 55,
-        "date": "2026-04-06"
-      },
-      {
-        "subject": "Math",
-        "topic": "Calculus",
-        "marks": 61,
-        "date": "2026-04-07"
-      },
-      {
-        "subject": "Chemistry",
-        "topic": "Atomic Structure",
-        "marks": 60,
-        "date": "2026-04-08"
+        "marks": 43,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -1697,39 +2489,111 @@
     "scores": [
       {
         "subject": "Math",
+        "topic": "Algebra",
+        "marks": 67,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 62,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 67,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
         "topic": "Statistics",
+        "marks": 55,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 82,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 73,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
         "marks": 77,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 74,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 67,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 77,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 71,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 85,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 60,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 68,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 81,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 72,
         "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Acids & Bases",
-        "marks": 55,
-        "date": "2026-04-02"
-      },
-      {
-        "subject": "Physics",
-        "topic": "Electricity",
-        "marks": 76,
-        "date": "2026-04-03"
-      },
-      {
-        "subject": "Physics",
-        "topic": "Electricity",
-        "marks": 56,
-        "date": "2026-04-06"
-      },
-      {
-        "subject": "Math",
-        "topic": "Geometry",
-        "marks": 76,
-        "date": "2026-04-07"
+        "marks": 59,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
-        "topic": "Acids & Bases",
-        "marks": 68,
-        "date": "2026-04-08"
+        "topic": "Solutions",
+        "marks": 50,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -1844,39 +2708,111 @@
     "scores": [
       {
         "subject": "Math",
+        "topic": "Algebra",
+        "marks": 79,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 85,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 94,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
         "topic": "Statistics",
-        "marks": 82,
+        "marks": 93,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 76,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 85,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 84,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 87,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 90,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 87,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 77,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 87,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 84,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 89,
         "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Organic Chemistry",
-        "marks": 54,
-        "date": "2026-04-02"
-      },
-      {
-        "subject": "Physics",
-        "topic": "Motion",
-        "marks": 71,
-        "date": "2026-04-03"
+        "marks": 76,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Chemical Bonding",
-        "marks": 50,
-        "date": "2026-04-06"
-      },
-      {
-        "subject": "Physics",
-        "topic": "Magnetism",
-        "marks": 69,
-        "date": "2026-04-07"
+        "marks": 88,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
-        "topic": "Periodic Table",
+        "topic": "Acids & Bases",
         "marks": 81,
-        "date": "2026-04-08"
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Solutions",
+        "marks": 89,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -1990,40 +2926,112 @@
     ],
     "scores": [
       {
-        "subject": "Chemistry",
-        "topic": "Atomic Structure",
-        "marks": 77,
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 74,
         "date": "2026-04-01"
       },
       {
         "subject": "Math",
         "topic": "Trigonometry",
-        "marks": 56,
-        "date": "2026-04-02"
-      },
-      {
-        "subject": "Physics",
-        "topic": "Optics",
-        "marks": 69,
-        "date": "2026-04-03"
+        "marks": 60,
+        "date": "2026-04-01"
       },
       {
         "subject": "Math",
-        "topic": "Algebra",
-        "marks": 70,
-        "date": "2026-04-06"
+        "topic": "Calculus",
+        "marks": 66,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 61,
+        "date": "2026-04-01"
       },
       {
         "subject": "Math",
         "topic": "Geometry",
-        "marks": 72,
-        "date": "2026-04-07"
+        "marks": 83,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 77,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 69,
+        "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Motion",
-        "marks": 59,
-        "date": "2026-04-08"
+        "marks": 68,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 61,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 76,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 60,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 67,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 74,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 68,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 43,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 67,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 69,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Solutions",
+        "marks": 75,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -2137,40 +3145,112 @@
     ],
     "scores": [
       {
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 48,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 66,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 71,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 60,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 81,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 77,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 72,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 80,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 67,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 85,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 84,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 61,
+        "date": "2026-04-01"
+      },
+      {
         "subject": "Chemistry",
-        "topic": "Solutions",
-        "marks": 58,
+        "topic": "Periodic Table",
+        "marks": 76,
         "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Atomic Structure",
-        "marks": 52,
-        "date": "2026-04-02"
+        "marks": 60,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Physics",
-        "topic": "Motion",
-        "marks": 52,
-        "date": "2026-04-03"
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 60,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Chemical Bonding",
-        "marks": 58,
-        "date": "2026-04-06"
-      },
-      {
-        "subject": "Math",
-        "topic": "Geometry",
-        "marks": 70,
-        "date": "2026-04-07"
+        "marks": 82,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Acids & Bases",
-        "marks": 61,
-        "date": "2026-04-08"
+        "marks": 65,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Solutions",
+        "marks": 80,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -2284,40 +3364,112 @@
     ],
     "scores": [
       {
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 41,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 60,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 60,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 46,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 54,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 54,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 61,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 61,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 60,
+        "date": "2026-04-01"
+      },
+      {
         "subject": "Physics",
         "topic": "Magnetism",
-        "marks": 56,
+        "marks": 65,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 64,
         "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Waves",
-        "marks": 76,
-        "date": "2026-04-02"
+        "marks": 57,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Physics",
-        "topic": "Mechanics",
-        "marks": 73,
-        "date": "2026-04-03"
-      },
-      {
-        "subject": "Math",
-        "topic": "Probability",
-        "marks": 78,
-        "date": "2026-04-06"
-      },
-      {
-        "subject": "Math",
-        "topic": "Geometry",
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
         "marks": 56,
-        "date": "2026-04-07"
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 61,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 64,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Chemical Bonding",
-        "marks": 84,
-        "date": "2026-04-08"
+        "marks": 60,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 56,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Solutions",
+        "marks": 43,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -2431,40 +3583,112 @@
     ],
     "scores": [
       {
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 92,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 92,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 94,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 84,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 90,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 90,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 80,
+        "date": "2026-04-01"
+      },
+      {
         "subject": "Physics",
         "topic": "Motion",
-        "marks": 77,
+        "marks": 84,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 92,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 89,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 81,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 81,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 90,
         "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Atomic Structure",
-        "marks": 81,
-        "date": "2026-04-02"
+        "marks": 89,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 82,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 77,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Acids & Bases",
-        "marks": 54,
-        "date": "2026-04-03"
-      },
-      {
-        "subject": "Math",
-        "topic": "Geometry",
-        "marks": 59,
-        "date": "2026-04-06"
-      },
-      {
-        "subject": "Math",
-        "topic": "Calculus",
-        "marks": 67,
-        "date": "2026-04-07"
+        "marks": 93,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Solutions",
-        "marks": 85,
-        "date": "2026-04-08"
+        "marks": 49,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -2579,39 +3803,111 @@
     "scores": [
       {
         "subject": "Math",
+        "topic": "Algebra",
+        "marks": 59,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 49,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 78,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 78,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
         "topic": "Geometry",
-        "marks": 64,
+        "marks": 62,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 63,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 79,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 79,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 74,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 69,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 78,
         "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Waves",
-        "marks": 85,
-        "date": "2026-04-02"
+        "marks": 67,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Math",
-        "topic": "Statistics",
-        "marks": 67,
-        "date": "2026-04-03"
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 74,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Math",
-        "topic": "Calculus",
-        "marks": 67,
-        "date": "2026-04-06"
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 84,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 40,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Chemical Bonding",
-        "marks": 71,
-        "date": "2026-04-07"
+        "marks": 62,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Physics",
-        "topic": "Mechanics",
-        "marks": 61,
-        "date": "2026-04-08"
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 72,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Solutions",
+        "marks": 72,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -2726,39 +4022,111 @@
     "scores": [
       {
         "subject": "Math",
+        "topic": "Algebra",
+        "marks": 74,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 67,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 76,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 65,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 66,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
         "topic": "Probability",
-        "marks": 52,
+        "marks": 77,
         "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Mechanics",
-        "marks": 79,
-        "date": "2026-04-02"
+        "marks": 57,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Math",
-        "topic": "Geometry",
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 74,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 69,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 76,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 68,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 72,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
         "marks": 77,
-        "date": "2026-04-03"
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 60,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 77,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 80,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Acids & Bases",
-        "marks": 76,
-        "date": "2026-04-06"
+        "marks": 82,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Physics",
-        "topic": "Mechanics",
-        "marks": 75,
-        "date": "2026-04-07"
-      },
-      {
-        "subject": "Math",
-        "topic": "Geometry",
-        "marks": 60,
-        "date": "2026-04-08"
+        "subject": "Chemistry",
+        "topic": "Solutions",
+        "marks": 59,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -2872,40 +4240,112 @@
     ],
     "scores": [
       {
-        "subject": "Chemistry",
-        "topic": "Atomic Structure",
-        "marks": 69,
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 64,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 50,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 58,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 67,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 73,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 60,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 78,
         "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Motion",
-        "marks": 52,
-        "date": "2026-04-02"
+        "marks": 79,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Math",
-        "topic": "Geometry",
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 79,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 79,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 57,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
         "marks": 68,
-        "date": "2026-04-03"
-      },
-      {
-        "subject": "Math",
-        "topic": "Trigonometry",
-        "marks": 55,
-        "date": "2026-04-06"
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Periodic Table",
-        "marks": 82,
-        "date": "2026-04-07"
+        "marks": 70,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Physics",
-        "topic": "Motion",
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 66,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 84,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 79,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
         "marks": 85,
-        "date": "2026-04-08"
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Solutions",
+        "marks": 60,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -3019,40 +4459,112 @@
     ],
     "scores": [
       {
-        "subject": "Chemistry",
-        "topic": "Chemical Bonding",
-        "marks": 51,
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 88,
         "date": "2026-04-01"
       },
       {
-        "subject": "Physics",
-        "topic": "Electricity",
-        "marks": 61,
-        "date": "2026-04-02"
-      },
-      {
         "subject": "Math",
-        "topic": "Geometry",
-        "marks": 81,
-        "date": "2026-04-03"
+        "topic": "Trigonometry",
+        "marks": 87,
+        "date": "2026-04-01"
       },
       {
         "subject": "Math",
         "topic": "Calculus",
-        "marks": 58,
-        "date": "2026-04-06"
-      },
-      {
-        "subject": "Math",
-        "topic": "Algebra",
-        "marks": 68,
-        "date": "2026-04-07"
+        "marks": 77,
+        "date": "2026-04-01"
       },
       {
         "subject": "Math",
         "topic": "Statistics",
         "marks": 84,
-        "date": "2026-04-08"
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 90,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 78,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 88,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 87,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 79,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 79,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 78,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 94,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 84,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 85,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 86,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 77,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 82,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Solutions",
+        "marks": 81,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -3166,40 +4678,112 @@
     ],
     "scores": [
       {
-        "subject": "Physics",
-        "topic": "Mechanics",
-        "marks": 76,
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 62,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 84,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 69,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 62,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 72,
         "date": "2026-04-01"
       },
       {
         "subject": "Math",
         "topic": "Probability",
-        "marks": 82,
-        "date": "2026-04-02"
+        "marks": 79,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 73,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 61,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 68,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 73,
+        "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Optics",
-        "marks": 74,
-        "date": "2026-04-03"
+        "marks": 80,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Math",
-        "topic": "Geometry",
+        "subject": "Physics",
+        "topic": "Waves",
         "marks": 64,
-        "date": "2026-04-06"
+        "date": "2026-04-01"
       },
       {
-        "subject": "Math",
-        "topic": "Geometry",
-        "marks": 56,
-        "date": "2026-04-07"
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 81,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 64,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 51,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 76,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 72,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Solutions",
-        "marks": 71,
-        "date": "2026-04-08"
+        "marks": 56,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -3313,40 +4897,112 @@
     ],
     "scores": [
       {
-        "subject": "Physics",
-        "topic": "Mechanics",
-        "marks": 72,
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 62,
         "date": "2026-04-01"
       },
       {
         "subject": "Math",
         "topic": "Trigonometry",
-        "marks": 56,
-        "date": "2026-04-02"
-      },
-      {
-        "subject": "Chemistry",
-        "topic": "Solutions",
-        "marks": 71,
-        "date": "2026-04-03"
+        "marks": 84,
+        "date": "2026-04-01"
       },
       {
         "subject": "Math",
-        "topic": "Algebra",
-        "marks": 72,
-        "date": "2026-04-06"
+        "topic": "Calculus",
+        "marks": 81,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 75,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 67,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 67,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 63,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 73,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 82,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 62,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 85,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 75,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 77,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 63,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 61,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Chemical Bonding",
-        "marks": 61,
-        "date": "2026-04-07"
+        "marks": 71,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Acids & Bases",
-        "marks": 80,
-        "date": "2026-04-08"
+        "marks": 74,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Solutions",
+        "marks": 40,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -3460,40 +5116,112 @@
     ],
     "scores": [
       {
-        "subject": "Physics",
-        "topic": "Magnetism",
-        "marks": 53,
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 79,
         "date": "2026-04-01"
       },
       {
         "subject": "Math",
         "topic": "Trigonometry",
-        "marks": 75,
-        "date": "2026-04-02"
+        "marks": 46,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 66,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 81,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 83,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 82,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 80,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 41,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 83,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 78,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 65,
+        "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Waves",
-        "marks": 60,
-        "date": "2026-04-03"
+        "marks": 82,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Math",
-        "topic": "Calculus",
-        "marks": 78,
-        "date": "2026-04-06"
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 82,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Math",
-        "topic": "Calculus",
-        "marks": 54,
-        "date": "2026-04-07"
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 65,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Math",
-        "topic": "Trigonometry",
-        "marks": 73,
-        "date": "2026-04-08"
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 85,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 80,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 82,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Solutions",
+        "marks": 72,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -3608,39 +5336,111 @@
     "scores": [
       {
         "subject": "Math",
+        "topic": "Algebra",
+        "marks": 93,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 95,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
         "topic": "Calculus",
-        "marks": 65,
+        "marks": 92,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 94,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 95,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 93,
         "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Mechanics",
-        "marks": 73,
-        "date": "2026-04-02"
-      },
-      {
-        "subject": "Chemistry",
-        "topic": "Periodic Table",
-        "marks": 73,
-        "date": "2026-04-03"
-      },
-      {
-        "subject": "Physics",
-        "topic": "Waves",
-        "marks": 58,
-        "date": "2026-04-06"
-      },
-      {
-        "subject": "Chemistry",
-        "topic": "Atomic Structure",
-        "marks": 54,
-        "date": "2026-04-07"
+        "marks": 85,
+        "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Motion",
-        "marks": 80,
-        "date": "2026-04-08"
+        "marks": 93,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 85,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 84,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 93,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 81,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 86,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 84,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 82,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 94,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 83,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Solutions",
+        "marks": 79,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -3754,40 +5554,112 @@
     ],
     "scores": [
       {
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 44,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 48,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 62,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 61,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 60,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 42,
+        "date": "2026-04-01"
+      },
+      {
         "subject": "Physics",
-        "topic": "Optics",
-        "marks": 75,
+        "topic": "Mechanics",
+        "marks": 45,
         "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Motion",
-        "marks": 54,
-        "date": "2026-04-02"
+        "marks": 64,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 60,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 43,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 65,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 62,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 65,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Atomic Structure",
         "marks": 60,
-        "date": "2026-04-03"
-      },
-      {
-        "subject": "Physics",
-        "topic": "Motion",
-        "marks": 80,
-        "date": "2026-04-06"
-      },
-      {
-        "subject": "Physics",
-        "topic": "Optics",
-        "marks": 71,
-        "date": "2026-04-07"
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Organic Chemistry",
-        "marks": 70,
-        "date": "2026-04-08"
+        "marks": 57,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 41,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 62,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Solutions",
+        "marks": 56,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -3901,40 +5773,112 @@
     ],
     "scores": [
       {
-        "subject": "Physics",
-        "topic": "Waves",
-        "marks": 78,
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 64,
         "date": "2026-04-01"
       },
       {
-        "subject": "Chemistry",
-        "topic": "Chemical Bonding",
-        "marks": 57,
-        "date": "2026-04-02"
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 72,
+        "date": "2026-04-01"
       },
       {
         "subject": "Math",
-        "topic": "Algebra",
-        "marks": 75,
-        "date": "2026-04-03"
+        "topic": "Calculus",
+        "marks": 64,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 67,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 60,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 70,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 72,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 52,
+        "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Electricity",
-        "marks": 85,
-        "date": "2026-04-06"
+        "marks": 84,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 60,
+        "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Optics",
         "marks": 62,
-        "date": "2026-04-07"
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 79,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Periodic Table",
-        "marks": 75,
-        "date": "2026-04-08"
+        "marks": 76,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 78,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 72,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 85,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 64,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Solutions",
+        "marks": 83,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -4048,40 +5992,112 @@
     ],
     "scores": [
       {
-        "subject": "Chemistry",
-        "topic": "Organic Chemistry",
-        "marks": 83,
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 70,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 65,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 62,
         "date": "2026-04-01"
       },
       {
         "subject": "Math",
         "topic": "Statistics",
-        "marks": 70,
-        "date": "2026-04-02"
+        "marks": 67,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Chemistry",
-        "topic": "Acids & Bases",
-        "marks": 83,
-        "date": "2026-04-03"
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 65,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 72,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 85,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 70,
+        "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Electricity",
-        "marks": 61,
-        "date": "2026-04-06"
+        "marks": 79,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 70,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 73,
+        "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Waves",
-        "marks": 71,
-        "date": "2026-04-07"
+        "marks": 69,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 67,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 73,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 76,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Chemical Bonding",
-        "marks": 66,
-        "date": "2026-04-08"
+        "marks": 72,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 59,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Solutions",
+        "marks": 83,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -4195,40 +6211,112 @@
     ],
     "scores": [
       {
-        "subject": "Chemistry",
-        "topic": "Organic Chemistry",
-        "marks": 68,
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 93,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 76,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 87,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 81,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 89,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 90,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 79,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 79,
         "date": "2026-04-01"
       },
       {
         "subject": "Physics",
         "topic": "Electricity",
-        "marks": 53,
-        "date": "2026-04-02"
+        "marks": 80,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Math",
-        "topic": "Trigonometry",
-        "marks": 64,
-        "date": "2026-04-03"
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 82,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 94,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 94,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Periodic Table",
+        "marks": 85,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 79,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Organic Chemistry",
+        "marks": 75,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 79,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 88,
+        "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Solutions",
-        "marks": 52,
-        "date": "2026-04-06"
-      },
-      {
-        "subject": "Math",
-        "topic": "Probability",
-        "marks": 61,
-        "date": "2026-04-07"
-      },
-      {
-        "subject": "Math",
-        "topic": "Probability",
-        "marks": 81,
-        "date": "2026-04-08"
+        "marks": 85,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
@@ -4342,40 +6430,112 @@
     ],
     "scores": [
       {
+        "subject": "Math",
+        "topic": "Algebra",
+        "marks": 85,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Trigonometry",
+        "marks": 69,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Calculus",
+        "marks": 70,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Statistics",
+        "marks": 77,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Geometry",
+        "marks": 63,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Math",
+        "topic": "Probability",
+        "marks": 62,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Mechanics",
+        "marks": 60,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Motion",
+        "marks": 66,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Electricity",
+        "marks": 74,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Magnetism",
+        "marks": 68,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Optics",
+        "marks": 67,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Physics",
+        "topic": "Waves",
+        "marks": 72,
+        "date": "2026-04-01"
+      },
+      {
         "subject": "Chemistry",
-        "topic": "Chemical Bonding",
-        "marks": 73,
+        "topic": "Periodic Table",
+        "marks": 77,
+        "date": "2026-04-01"
+      },
+      {
+        "subject": "Chemistry",
+        "topic": "Atomic Structure",
+        "marks": 77,
         "date": "2026-04-01"
       },
       {
         "subject": "Chemistry",
         "topic": "Organic Chemistry",
-        "marks": 64,
-        "date": "2026-04-02"
+        "marks": 60,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Math",
-        "topic": "Probability",
-        "marks": 59,
-        "date": "2026-04-03"
+        "subject": "Chemistry",
+        "topic": "Chemical Bonding",
+        "marks": 61,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Physics",
-        "topic": "Magnetism",
-        "marks": 73,
-        "date": "2026-04-06"
+        "subject": "Chemistry",
+        "topic": "Acids & Bases",
+        "marks": 56,
+        "date": "2026-04-01"
       },
       {
-        "subject": "Physics",
-        "topic": "Magnetism",
-        "marks": 85,
-        "date": "2026-04-07"
-      },
-      {
-        "subject": "Physics",
-        "topic": "Waves",
-        "marks": 63,
-        "date": "2026-04-08"
+        "subject": "Chemistry",
+        "topic": "Solutions",
+        "marks": 74,
+        "date": "2026-04-01"
       }
     ],
     "assignments": [
