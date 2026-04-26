@@ -7,7 +7,77 @@
     <title>TeacherFlow AI - Teacher Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="src/css/dashboard.css">
+    <style>
+    /* ── BASE STYLES (previously in src/css/dashboard.css) ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+        --primary: #d4af37;
+        --bg: #0f172a;
+        --sidebar-bg: #111827;
+        --card-bg: #ffffff;
+        --accent: #d4af37;
+        --success: #7cb518;
+        --danger: #d00000;
+        --warning: #ffb703;
+        --secondary: #e5e7eb;
+        --text-muted: #6b7280;
+        --border-color: #e5e7eb;
+        --radius: 14px;
+    }
+    body { font-family: 'Outfit', sans-serif; background: #f3f4f6; color: #1f2937; }
+    .app { display: flex; min-height: 100vh; }
+    aside.sidebar { width: 240px; background: var(--sidebar-bg); color: #fff; display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; }
+    .sidebar-header { padding: 24px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .sidebar-header h2 { font-size: 1rem; font-weight: 700; color: var(--primary); }
+    .sidebar-footer { padding: 16px 20px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: auto; }
+    .logout-btn { width: 100%; padding: 10px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #ccc; font-family: 'Outfit', sans-serif; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; }
+    .logout-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+    .nav-links { list-style: none; padding: 12px 0; flex: 1; overflow-y: auto; }
+    main.main { margin-left: 240px; flex: 1; padding: 32px; }
+    .dashboard-header { margin-bottom: 24px; }
+    .dashboard-header h1 { font-size: 1.8rem; font-weight: 700; color: #1f2937; }
+    .dashboard-header .subtitle { color: #888; font-size: 0.95rem; margin-top: 4px; }
+    .card { background: var(--card-bg); border-radius: var(--radius); padding: 20px 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 20px; }
+    .card h3 { font-size: 1rem; font-weight: 600; color: #374151; margin-bottom: 16px; }
+    .analytics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+    .dashboard-bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+    .chart-card { min-height: 200px; }
+    .student-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .student-table th { text-align: left; padding: 10px 12px; background: #f9fafb; color: #6b7280; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; border-bottom: 1px solid var(--secondary); }
+    .student-table td { padding: 12px 12px; border-bottom: 1px solid var(--secondary); vertical-align: middle; }
+    .student-table tr:hover td { background: #f9fafb; }
+    .sub-nav-tabs { display: flex; gap: 8px; margin-bottom: 24px; }
+    .sub-nav-tab { padding: 8px 18px; border-radius: 8px; border: 1px solid var(--secondary); background: #fff; font-family: 'Outfit', sans-serif; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; color: #6b7280; }
+    .sub-nav-tab:hover { border-color: var(--primary); color: var(--primary); }
+    .sub-nav-tab.active { background: var(--primary); border-color: var(--primary); color: #fff; font-weight: 600; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 500; display: none; align-items: center; justify-content: center; }
+    .modal-overlay.open { display: flex; }
+    .modal-card { background: #fff; border-radius: 20px; padding: 32px; max-width: 700px; width: 90%; max-height: 85vh; overflow-y: auto; position: relative; }
+    .close-btn { position: absolute; top: 16px; right: 20px; background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #888; }
+    .modal-header { margin-bottom: 24px; }
+    .modal-header h2 { font-size: 1.5rem; font-weight: 700; }
+    .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .stat-card .stat-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--secondary); font-size: 0.9rem; }
+    .topic-list { list-style: none; }
+    .ai-card { grid-column: 1 / -1; }
+    .ai-header h3 { color: #374151; }
+    .ai-content { font-size: 0.9rem; color: #555; line-height: 1.6; }
+    .ai-content p { margin-bottom: 8px; }
+    .ai-recommendation { margin-top: 12px; padding: 12px; background: #f0f6ff; border-radius: 10px; font-size: 0.88rem; }
+    .recent-alerts-list { display: flex; flex-direction: column; }
+    /* Form inputs */
+    input[type=text], input[type=date], select, textarea {
+        width: 100%; padding: 10px 14px; border: 1px solid var(--secondary); border-radius: 10px;
+        font-family: 'Outfit', sans-serif; font-size: 0.9rem; color: #374151; background: #f9fafb; outline: none;
+        transition: border-color 0.2s;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--primary); background: #fff; }
+    textarea { min-height: 90px; resize: vertical; }
+    .btn-primary { padding: 11px 24px; background: var(--primary); color: #fff; border: none; border-radius: 10px; font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-right: 10px; margin-top: 8px; }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-secondary { padding: 11px 24px; background: #f3f4f6; color: #374151; border: 1px solid var(--secondary); border-radius: 10px; font-family: 'Outfit', sans-serif; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
+    .btn-secondary:hover { background: #e5e7eb; }
+</style>
     <style>
         .page-section {
             display: none;
@@ -354,43 +424,70 @@
                 <h2>TeacherFlow AI</h2>
                 <p style="font-size: 0.75rem; color: #888; margin-top: 4px;">Dashboard Home</p>
             </div>
-                <li class="accordion-item active" id="acc-10-A">
-                    <div class="accordion-header" onclick="toggleAccordion('10-A')">
-                        <span>💻 Class 10-A</span>
+            <ul class="nav-links" id="navLinks">
+                <li class="accordion-item active" id="acc-cse">
+                    <div class="accordion-header" onclick="toggleAccordion('cse')">
+                        <span>💻 B.Tech CSE</span>
                         <span class="arrow">▶</span>
                     </div>
-                    <ul class="accordion-body" id="accordion-10-A">
-                        <li id="nav-10-A-dashboard" class="active"><a href="#" onclick="selectClass('10-A', 'dashboard'); return false;">Dashboard</a></li>
-                        <li id="nav-10-A-students"><a href="#" onclick="selectClass('10-A', 'students'); return false;">Students</a></li>
-                        <li id="nav-10-A-classes"><a href="#" onclick="selectClass('10-A', 'classes'); return false;">Classes</a></li>
-                        <li id="nav-10-A-weakness"><a href="#" onclick="selectClass('10-A', 'weakness'); return false;">Weakness Detection</a></li>
-                        <li id="nav-10-A-alerts"><a href="#" onclick="selectClass('10-A', 'alerts'); return false;">Alerts</a></li>
+                    <ul class="accordion-body" id="accordion-cse">
+                        <li id="nav-cse-dashboard" class="active"><a href="#" onclick="selectClass('cse', 'dashboard'); return false;">Dashboard</a></li>
+                        <li id="nav-cse-students"><a href="#" onclick="selectClass('cse', 'students'); return false;">Students</a></li>
+                        <li id="nav-cse-classes"><a href="#" onclick="selectClass('cse', 'classes'); return false;">Classes</a></li>
+                        <li id="nav-cse-weakness"><a href="#" onclick="selectClass('cse', 'weakness'); return false;">Weakness Detection</a></li>
+                        <li id="nav-cse-alerts"><a href="#" onclick="selectClass('cse', 'alerts'); return false;">Alerts</a></li>
                     </ul>
                 </li>
-                <li class="accordion-item" id="acc-10-B">
-                    <div class="accordion-header" onclick="toggleAccordion('10-B')">
-                        <span>📡 Class 10-B</span>
+                <li class="accordion-item" id="acc-ece">
+                    <div class="accordion-header" onclick="toggleAccordion('ece')">
+                        <span>📡 B.Tech ECE</span>
                         <span class="arrow">▶</span>
                     </div>
-                    <ul class="accordion-body" id="accordion-10-B">
-                        <li id="nav-10-B-dashboard"><a href="#" onclick="selectClass('10-B', 'dashboard'); return false;">Dashboard</a></li>
-                        <li id="nav-10-B-students"><a href="#" onclick="selectClass('10-B', 'students'); return false;">Students</a></li>
-                        <li id="nav-10-B-classes"><a href="#" onclick="selectClass('10-B', 'classes'); return false;">Classes</a></li>
-                        <li id="nav-10-B-weakness"><a href="#" onclick="selectClass('10-B', 'weakness'); return false;">Weakness Detection</a></li>
-                        <li id="nav-10-B-alerts"><a href="#" onclick="selectClass('10-B', 'alerts'); return false;">Alerts</a></li>
+                    <ul class="accordion-body" id="accordion-ece">
+                        <li id="nav-ece-dashboard"><a href="#" onclick="selectClass('ece', 'dashboard'); return false;">Dashboard</a></li>
+                        <li id="nav-ece-students"><a href="#" onclick="selectClass('ece', 'students'); return false;">Students</a></li>
+                        <li id="nav-ece-classes"><a href="#" onclick="selectClass('ece', 'classes'); return false;">Classes</a></li>
+                        <li id="nav-ece-weakness"><a href="#" onclick="selectClass('ece', 'weakness'); return false;">Weakness Detection</a></li>
+                        <li id="nav-ece-alerts"><a href="#" onclick="selectClass('ece', 'alerts'); return false;">Alerts</a></li>
                     </ul>
                 </li>
-                <li class="accordion-item" id="acc-10-C">
-                    <div class="accordion-header" onclick="toggleAccordion('10-C')">
-                        <span>🤖 Class 10-C</span>
+                <li class="accordion-item" id="acc-aiml">
+                    <div class="accordion-header" onclick="toggleAccordion('aiml')">
+                        <span>🤖 B.Tech AIML</span>
                         <span class="arrow">▶</span>
                     </div>
-                    <ul class="accordion-body" id="accordion-10-C">
-                        <li id="nav-10-C-dashboard"><a href="#" onclick="selectClass('10-C', 'dashboard'); return false;">Dashboard</a></li>
-                        <li id="nav-10-C-students"><a href="#" onclick="selectClass('10-C', 'students'); return false;">Students</a></li>
-                        <li id="nav-10-C-classes"><a href="#" onclick="selectClass('10-C', 'classes'); return false;">Classes</a></li>
-                        <li id="nav-10-C-weakness"><a href="#" onclick="selectClass('10-C', 'weakness'); return false;">Weakness Detection</a></li>
-                        <li id="nav-10-C-alerts"><a href="#" onclick="selectClass('10-C', 'alerts'); return false;">Alerts</a></li>
+                    <ul class="accordion-body" id="accordion-aiml">
+                        <li id="nav-aiml-dashboard"><a href="#" onclick="selectClass('aiml', 'dashboard'); return false;">Dashboard</a></li>
+                        <li id="nav-aiml-students"><a href="#" onclick="selectClass('aiml', 'students'); return false;">Students</a></li>
+                        <li id="nav-aiml-classes"><a href="#" onclick="selectClass('aiml', 'classes'); return false;">Classes</a></li>
+                        <li id="nav-aiml-weakness"><a href="#" onclick="selectClass('aiml', 'weakness'); return false;">Weakness Detection</a></li>
+                        <li id="nav-aiml-alerts"><a href="#" onclick="selectClass('aiml', 'alerts'); return false;">Alerts</a></li>
+                    </ul>
+                </li>
+                <li class="accordion-item" id="acc-me">
+                    <div class="accordion-header" onclick="toggleAccordion('me')">
+                        <span>⚙️ B.Tech ME</span>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <ul class="accordion-body" id="accordion-me">
+                        <li id="nav-me-dashboard"><a href="#" onclick="selectClass('me', 'dashboard'); return false;">Dashboard</a></li>
+                        <li id="nav-me-students"><a href="#" onclick="selectClass('me', 'students'); return false;">Students</a></li>
+                        <li id="nav-me-classes"><a href="#" onclick="selectClass('me', 'classes'); return false;">Classes</a></li>
+                        <li id="nav-me-weakness"><a href="#" onclick="selectClass('me', 'weakness'); return false;">Weakness Detection</a></li>
+                        <li id="nav-me-alerts"><a href="#" onclick="selectClass('me', 'alerts'); return false;">Alerts</a></li>
+                    </ul>
+                </li>
+                <li class="accordion-item" id="acc-ce">
+                    <div class="accordion-header" onclick="toggleAccordion('ce')">
+                        <span>🏗️ B.Tech CE</span>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <ul class="accordion-body" id="accordion-ce">
+                        <li id="nav-ce-dashboard"><a href="#" onclick="selectClass('ce', 'dashboard'); return false;">Dashboard</a></li>
+                        <li id="nav-ce-students"><a href="#" onclick="selectClass('ce', 'students'); return false;">Students</a></li>
+                        <li id="nav-ce-classes"><a href="#" onclick="selectClass('ce', 'classes'); return false;">Classes</a></li>
+                        <li id="nav-ce-weakness"><a href="#" onclick="selectClass('ce', 'weakness'); return false;">Weakness Detection</a></li>
+                        <li id="nav-ce-alerts"><a href="#" onclick="selectClass('ce', 'alerts'); return false;">Alerts</a></li>
                     </ul>
                 </li>
             </ul>
@@ -750,13 +847,13 @@
 
     <div class="toast" id="toast"></div>
 
-    <script src="src/js/teacher.js"></script>
+    
     <script>
-        let currentClassType = '10-A';
+        let currentClassType = 'cse';
         let navHistory = [];
 
         function goToTeacherHome() {
-            selectClass('10-A', 'dashboard');
+            selectClass('cse', 'dashboard');
         }
 
         function goBack() {
@@ -780,7 +877,12 @@
         function selectClass(className, sectionName, isBacking = false) {
             if (currentClassType !== className || !students.length) {
                 currentClassType = className;
-                let classTitle = 'Class ' + className;
+                let classTitle = '';
+                if (className === 'cse') classTitle = 'B.Tech CSE - 2nd Year';
+                else if (className === 'ece') classTitle = 'B.Tech ECE - 3rd Year';
+                else if (className === 'aiml') classTitle = 'B.Tech AIML - 1st Year';
+                else if (className === 'me') classTitle = 'B.Tech ME - 2nd Year';
+                else if (className === 'ce') classTitle = 'B.Tech CE - 4th Year';
 
                 if (typeof openClass === 'function') {
                     openClass(classTitle, className);
@@ -896,6 +998,170 @@
             document.getElementById('classDate').value = new Date().toISOString().split('T')[0];
         });
     </script>
+<script>
+/* ── teacher.js inlined ── */
+let students = [];
+let currentClassId = 'cse';
+
+const studentPool = [
+  { name:'Arjun Mehta',   roll:'CSE101', attendance:92, avgScore:82, effort:'high',   trend:'up',     weakTopic:'Calculus',   topics:[{n:'Algebra',s:78},{n:'Calculus',s:55},{n:'Trigonometry',s:90},{n:'Geometry',s:82}] },
+  { name:'Priya Das',     roll:'CSE102', attendance:53, avgScore:29, effort:'low',    trend:'down',   weakTopic:'All Topics', topics:[{n:'Algebra',s:22},{n:'Calculus',s:18},{n:'Trigonometry',s:30},{n:'Geometry',s:28}] },
+  { name:'Rahul Sharma',  roll:'CSE103', attendance:88, avgScore:58, effort:'medium', trend:'stable', weakTopic:'Calculus',   topics:[{n:'Algebra',s:65},{n:'Calculus',s:38},{n:'Trigonometry',s:70},{n:'Geometry',s:62}] },
+  { name:'Neha Bose',     roll:'CSE104', attendance:78, avgScore:44, effort:'low',    trend:'down',   weakTopic:'Multiple',   topics:[{n:'Algebra',s:35},{n:'Calculus',s:42},{n:'Trigonometry',s:48},{n:'Geometry',s:40}] },
+  { name:'Amit Kumar',    roll:'CSE105', attendance:85, avgScore:63, effort:'medium', trend:'up',     weakTopic:'Algebra',    topics:[{n:'Algebra',s:28},{n:'Calculus',s:72},{n:'Trigonometry',s:65},{n:'Geometry',s:70}] },
+  { name:'Vikram Nair',   roll:'CSE106', attendance:96, avgScore:78, effort:'high',   trend:'up',     weakTopic:'',          topics:[{n:'Algebra',s:80},{n:'Calculus',s:72},{n:'Trigonometry',s:82},{n:'Geometry',s:75}] },
+  { name:'Anjali Verma',  roll:'CSE107', attendance:50, avgScore:24, effort:'low',    trend:'down',   weakTopic:'All Topics', topics:[{n:'Algebra',s:20},{n:'Calculus',s:15},{n:'Trigonometry',s:28},{n:'Geometry',s:22}] },
+  { name:'Karan Singh',   roll:'CSE108', attendance:96, avgScore:90, effort:'high',   trend:'up',     weakTopic:'',          topics:[{n:'Algebra',s:92},{n:'Calculus',s:88},{n:'Trigonometry',s:95},{n:'Geometry',s:90}] },
+  { name:'Sanya Gupta',   roll:'CSE109', attendance:74, avgScore:55, effort:'medium', trend:'stable', weakTopic:'Calculus',   topics:[{n:'Algebra',s:60},{n:'Calculus',s:40},{n:'Trigonometry',s:58},{n:'Geometry',s:62}] },
+  { name:'Dev Malhotra',  roll:'CSE110', attendance:82, avgScore:68, effort:'medium', trend:'up',     weakTopic:'Algebra',    topics:[{n:'Algebra',s:50},{n:'Calculus',s:75},{n:'Trigonometry',s:72},{n:'Geometry',s:68}] },
+];
+
+function openClass(title, classId) {
+  currentClassId = classId;
+  students = studentPool.map(s => ({...s, roll: s.roll.replace('CSE', classId.toUpperCase())}));
+  const h1 = document.querySelector('.dashboard-header h1');
+  const sub = document.querySelector('.dashboard-header .subtitle');
+  if (h1) h1.textContent = 'Teacher Dashboard';
+  if (sub) sub.textContent = title + ' — Mathematics';
+  renderStudentTable();
+  renderNeedsAttention();
+  renderLearningGaps();
+  renderAlerts();
+  renderCharts();
+}
+
+function riskBadge(score) {
+  if (score >= 70) return '<span style="color:#22c55e;font-weight:700">Low</span>';
+  if (score >= 50) return '<span style="color:#f59e0b;font-weight:700">Medium</span>';
+  return '<span style="color:#ef4444;font-weight:700">High</span>';
+}
+
+function renderStudentTable() {
+  const tbody = document.getElementById('studentTableBody');
+  if (!tbody) return;
+  tbody.innerHTML = students.map(s => `
+    <tr onclick="openStudentDetail('${s.name}')" style="cursor:pointer;">
+      <td><strong>${s.name}</strong><br><small style="color:#888">${s.roll}</small></td>
+      <td>${s.attendance}%</td>
+      <td style="color:${s.avgScore>=70?'#22c55e':s.avgScore>=50?'#f59e0b':'#ef4444'}">${s.avgScore}%</td>
+      <td>${riskBadge(s.avgScore)}</td>
+      <td style="font-size:0.85rem;color:#555">${s.avgScore>=70?'Performing well':'Needs attention'}</td>
+    </tr>`).join('');
+}
+
+function renderNeedsAttention() {
+  const tbody = document.getElementById('needsAttentionTableBody');
+  if (!tbody) return;
+  const atRisk = students.filter(s => s.avgScore < 60).sort((a,b) => a.avgScore - b.avgScore).slice(0,5);
+  tbody.innerHTML = atRisk.map(s => `
+    <tr onclick="openStudentDetail('${s.name}')" style="cursor:pointer;">
+      <td><strong>${s.name}</strong></td>
+      <td>${s.roll}</td>
+      <td style="color:${s.avgScore<50?'#ef4444':'#f59e0b'}">${s.avgScore}%</td>
+      <td>${s.trend==='down'?'📉':s.trend==='up'?'📈':'➡️'}</td>
+      <td style="color:#ef4444;font-size:0.85rem">${s.weakTopic||'—'}</td>
+    </tr>`).join('');
+}
+
+function renderLearningGaps() {
+  const tbody = document.getElementById('learningGapsTableBody');
+  if (!tbody) return;
+  const topics = ['Algebra','Calculus','Trigonometry','Geometry'];
+  const gaps = topics.map(topic => {
+    const scores = students.map(s => { const t = s.topics.find(t => t.n === topic); return t ? t.s : 0; });
+    const avg = Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
+    const affected = scores.filter(s => s < 50).length;
+    const sev = avg<40?'<span style="color:#ef4444;font-weight:700">Critical</span>':avg<60?'<span style="color:#f59e0b;font-weight:700">High</span>':'<span style="color:#22c55e;font-weight:700">Moderate</span>';
+    return {topic, avg, affected, sev};
+  }).sort((a,b) => a.avg - b.avg);
+  tbody.innerHTML = gaps.map(g => `
+    <tr>
+      <td><strong>${g.topic}</strong></td>
+      <td>Mathematics</td>
+      <td>${g.affected} student${g.affected!==1?'s':''}</td>
+      <td style="color:${g.avg<50?'#ef4444':g.avg<70?'#f59e0b':'#22c55e'}">${g.avg}%</td>
+      <td>${g.sev}</td>
+    </tr>`).join('');
+}
+
+function renderAlerts() {
+  const el = document.getElementById('recentAlertsList');
+  if (!el) return;
+  const atRisk = students.filter(s => s.avgScore < 50);
+  el.innerHTML = atRisk.map(s => `
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #e5e7eb;">
+      <span style="font-size:1.2rem">⚠️</span>
+      <div>
+        <div style="font-size:0.9rem;font-weight:600">${s.name} — Low Performance</div>
+        <div style="font-size:0.8rem;color:#888">Avg: ${s.avgScore}% · Attendance: ${s.attendance}%</div>
+      </div>
+    </div>`).join('') || '<p style="color:#888;font-size:0.9rem;padding:12px 0;">No critical alerts.</p>';
+}
+
+let perfChart = null, trendChart = null, weakChart = null;
+
+function renderCharts() {
+  const topicLabels = ['Algebra','Calculus','Trigonometry','Geometry'];
+  const topicAvgs = topicLabels.map(topic => {
+    const scores = students.map(s => { const t = s.topics.find(t=>t.n===topic); return t?t.s:0; });
+    return Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
+  });
+
+  const pCtx = document.getElementById('performanceChart');
+  if (pCtx) {
+    if (perfChart) perfChart.destroy();
+    perfChart = new Chart(pCtx, {
+      type:'bar',
+      data:{ labels:topicLabels, datasets:[{ label:'Avg Score (%)', data:topicAvgs, backgroundColor:['rgba(212,175,55,0.75)','rgba(59,130,246,0.75)','rgba(16,185,129,0.75)','rgba(239,68,68,0.75)'], borderRadius:8 }] },
+      options:{ plugins:{legend:{display:false}}, scales:{ y:{beginAtZero:true,max:100}, x:{grid:{display:false}} } }
+    });
+  }
+  const tCtx = document.getElementById('trendChart');
+  if (tCtx) {
+    if (trendChart) trendChart.destroy();
+    trendChart = new Chart(tCtx, {
+      type:'line',
+      data:{ labels:['Jan','Feb','Mar','Apr'], datasets:[{ label:'Class Avg', data:[58,62,60,65], borderColor:'#d4af37', backgroundColor:'rgba(212,175,55,0.1)', tension:0.4, fill:true, pointBackgroundColor:'#d4af37' }] },
+      options:{ plugins:{legend:{display:false}}, scales:{ y:{min:40,max:100}, x:{grid:{display:false}} } }
+    });
+  }
+  const wCtx = document.getElementById('weaknessChart');
+  if (wCtx) {
+    if (weakChart) weakChart.destroy();
+    weakChart = new Chart(wCtx, {
+      type:'bar',
+      data:{ labels:topicLabels, datasets:[{ label:'Students Below 50%', data:topicLabels.map(topic=>students.filter(s=>{const t=s.topics.find(t=>t.n===topic);return t&&t.s<50;}).length), backgroundColor:'rgba(239,68,68,0.7)', borderRadius:8 }] },
+      options:{ plugins:{legend:{display:false}}, scales:{ y:{beginAtZero:true,ticks:{stepSize:1}}, x:{grid:{display:false}} } }
+    });
+  }
+}
+
+function openStudentDetail(name) {
+  const s = students.find(s => s.name === name);
+  if (!s) return;
+  document.getElementById('modalStudentName').textContent = s.name;
+  document.getElementById('modalAttendance').textContent = s.attendance + '%';
+  document.getElementById('modalAssignments').textContent = Math.round(s.avgScore/10) + '/10';
+  document.getElementById('modalAvgScore').textContent = s.avgScore + '%';
+  document.getElementById('modalTopicList').innerHTML = s.topics.map(t =>
+    `<li style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:0.9rem"><span>${t.n}</span><strong style="color:${t.s>=70?'#22c55e':t.s>=50?'#f59e0b':'#ef4444'}">${t.s}%</strong></li>`).join('');
+  const weakTopics = s.topics.filter(t=>t.s<50).map(t=>t.n);
+  document.getElementById('aiWeakAreas').textContent = weakTopics.length ? weakTopics.join(', ') : 'None';
+  document.getElementById('aiRootCause').textContent = s.effort==='low' ? 'Low engagement and attendance' : s.attendance<70 ? 'Frequent absences' : 'Conceptual gaps in foundational topics';
+  document.getElementById('aiRiskLevel').innerHTML = riskBadge(s.avgScore);
+  document.getElementById('aiActionPlan').textContent = s.avgScore<50 ? 'Urgent remedial sessions required' : s.avgScore<70 ? 'Targeted practice on weak areas' : 'Enrichment activities';
+  document.getElementById('aiRecommendation').textContent = s.avgScore>=70 ? 'Excellent. Encourage peer mentoring.' : s.avgScore>=50 ? 'Schedule weekly check-ins and assign focused practice.' : 'Immediate parent communication and remedial support required.';
+  document.getElementById('studentModal').classList.add('open');
+}
+
+function closeStudentDetail() {
+  document.getElementById('studentModal').classList.remove('open');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  openClass('B.Tech CSE — 2nd Year', 'cse');
+});
+</script>
 </body>
 
 </html>
