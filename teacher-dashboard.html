@@ -352,9 +352,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 16px;
+            padding: 14px 16px;
             color: #ccc;
-            font-weight: 500;
+            font-weight: 700;
+            font-size: 15px;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
@@ -373,11 +374,12 @@
 
         .accordion-body {
             list-style: none;
-            padding-left: 20px;
-            margin-top: 4px;
+            padding-left: 18px;
+            margin: 6px 0 10px 16px;
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
             display: none;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
         }
 
         .accordion-item.active .accordion-body {
@@ -386,12 +388,13 @@
 
         .accordion-body li a {
             display: block;
-            padding: 8px 16px;
+            padding: 8px 12px;
             color: #aaa;
             text-decoration: none;
             border-radius: 6px;
             transition: all 0.2s;
-            font-size: 0.9rem;
+            font-size: 13px;
+            font-weight: 500;
         }
 
         .accordion-body li a:hover {
@@ -406,12 +409,8 @@
         }
         
         .arrow {
-            font-size: 0.7rem;
-            transition: transform 0.3s;
-        }
-        
-        .accordion-item.active .arrow {
-            transform: rotate(90deg);
+            font-size: 0.8rem;
+            color: #9ca3af;
         }
     </style>
 </head>
@@ -424,11 +423,7 @@
                 <h2>TeacherFlow AI</h2>
                 <p style="font-size: 0.75rem; color: #888; margin-top: 4px;">Dashboard Home</p>
             </div>
-            <ul class="nav-links" id="navLinks">
-                <li onclick="selectClass('10-A')">Class 10-A</li>
-                <li onclick="selectClass('10-B')">Class 10-B</li>
-                <li onclick="selectClass('10-C')">Class 10-C</li>
-            </ul>
+            <ul class="nav-links" id="navLinks"></ul>
             <div class="sidebar-footer">
                 <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
@@ -444,12 +439,6 @@
                         <p class="subtitle" id="teacher-subject">Class 10 - Mathematics</p>
                     </div>
                 </header>
-
-                <div class="sub-nav-tabs">
-                    <button class="sub-nav-tab active" onclick="selectClass(currentClassId || (teacherData.classes && teacherData.classes[0]), 'dashboard')">Dashboard</button>
-                    <button class="sub-nav-tab" onclick="selectClass(currentClassId || (teacherData.classes && teacherData.classes[0]), 'weakness')">Weakness Detection</button>
-                    <button class="sub-nav-tab" onclick="selectClass(currentClassId || (teacherData.classes && teacherData.classes[0]), 'students')">Students</button>
-                </div>
 
                 <section class="analytics-grid">
                     <div class="card chart-card">
@@ -638,107 +627,8 @@
             <div id="section-alerts" class="page-section">
                 <button onclick="goBack()" style="background:none; border:none; color:var(--primary); font-weight:600; font-size:1rem; cursor:pointer; margin-bottom:20px; display:flex; align-items:center; gap:5px;">← Back</button>
                 <div class="alerts-page">
-                    <h2>Alerts & Messages</h2>
-                    <p class="page-sub">Student help requests, performance warnings, and system notifications.</p>
-
-                    <div class="alert-section-title">🔴 Critical — Requires Attention</div>
-                    <div class="alert-messages-list">
-                        <div class="alert-msg msg-danger">
-                            <div class="alert-msg-icon">⚠️</div>
-                            <div class="alert-msg-body">
-                                <div class="alert-msg-title">Anjali Verma — Very Low Performance <span
-                                        class="alert-msg-tag tag-danger">Critical</span></div>
-                                <div class="alert-msg-detail">Anjali scored 24% overall with only 50% attendance. She
-                                    has completed just 1 of 10 assignments. Immediate intervention recommended — contact
-                                    parents and schedule a counseling session.</div>
-                                <div class="alert-msg-meta">Triggered automatically · Today, 9:00 AM</div>
-                            </div>
-                        </div>
-                        <div class="alert-msg msg-danger">
-                            <div class="alert-msg-icon">📉</div>
-                            <div class="alert-msg-body">
-                                <div class="alert-msg-title">Priya Das — At Risk <span
-                                        class="alert-msg-tag tag-danger">At Risk</span></div>
-                                <div class="alert-msg-detail">Priya's attendance dropped to 53% this month and her
-                                    average score is 29%. She has missed 7 of 10 assignments. Low effort level detected
-                                    across all topics.</div>
-                                <div class="alert-msg-meta">Triggered automatically · Today, 9:00 AM</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="alert-section-title">💬 Student Help Requests</div>
-                    <div class="alert-messages-list">
-                        <div class="alert-msg msg-warning">
-                            <div class="alert-msg-icon">🙋</div>
-                            <div class="alert-msg-body">
-                                <div class="alert-msg-title">Rahul Sharma needs help with Calculus <span
-                                        class="alert-msg-tag tag-warning">Help Request</span></div>
-                                <div class="alert-msg-detail">"Sir, I've been attending all classes but I still can't
-                                    understand derivatives. Can we have an extra session or practice problems? I'm
-                                    trying hard but it's not clicking."</div>
-                                <div class="alert-msg-meta">Sent by Rahul Sharma (CSE101) · Today, 8:32 AM</div>
-                            </div>
-                        </div>
-                        <div class="alert-msg msg-warning">
-                            <div class="alert-msg-icon">🙋</div>
-                            <div class="alert-msg-body">
-                                <div class="alert-msg-title">Neha Bose marked all topics as "Need Help" <span
-                                        class="alert-msg-tag tag-warning">Help Request</span></div>
-                                <div class="alert-msg-detail">"I'm really struggling with everything — Algebra,
-                                    Calculus, Trig, and Geometry. I feel like I've missed some basics. Please help me
-                                    understand where to start."</div>
-                                <div class="alert-msg-meta">Sent by Neha Bose (CSE110) · Yesterday, 6:15 PM</div>
-                            </div>
-                        </div>
-                        <div class="alert-msg msg-warning">
-                            <div class="alert-msg-icon">🙋</div>
-                            <div class="alert-msg-body">
-                                <div class="alert-msg-title">Amit Kumar — Algebra doubt <span
-                                        class="alert-msg-tag tag-warning">Help Request</span></div>
-                                <div class="alert-msg-detail">"I got 28% in Algebra but 65% in Trigonometry. I think I
-                                    need more practice with algebraic expressions. Could you share some extra
-                                    worksheets?"</div>
-                                <div class="alert-msg-meta">Sent by Amit Kumar (CSE105) · Yesterday, 4:45 PM</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="alert-section-title">📢 Notifications</div>
-                    <div class="alert-messages-list">
-                        <div class="alert-msg msg-info">
-                            <div class="alert-msg-icon">📋</div>
-                            <div class="alert-msg-body">
-                                <div class="alert-msg-title">3 Students marked Trigonometry as "Understood" <span
-                                        class="alert-msg-tag tag-info">Update</span></div>
-                                <div class="alert-msg-detail">Arjun Mehta, Vikram Nair, and Karan Singh have marked last
-                                    week's Trigonometry topic as understood from their student portals.</div>
-                                <div class="alert-msg-meta">System notification · Apr 22, 2026, 3:00 PM</div>
-                            </div>
-                        </div>
-                        <div class="alert-msg msg-success">
-                            <div class="alert-msg-icon">🏆</div>
-                            <div class="alert-msg-body">
-                                <div class="alert-msg-title">Karan Singh — Top Performer <span
-                                        class="alert-msg-tag tag-success">Achievement</span></div>
-                                <div class="alert-msg-detail">Karan scored 90% overall with 96% attendance and 10/10
-                                    assignments completed. He is the top performer in Class 10-A this term. Consider
-                                    nominating him for a merit award.</div>
-                                <div class="alert-msg-meta">System notification · Apr 21, 2026, 11:00 AM</div>
-                            </div>
-                        </div>
-                        <div class="alert-msg msg-info">
-                            <div class="alert-msg-icon">📅</div>
-                            <div class="alert-msg-body">
-                                <div class="alert-msg-title">Upcoming: Test 3 scheduled for Apr 28 <span
-                                        class="alert-msg-tag tag-info">Reminder</span></div>
-                                <div class="alert-msg-detail">Test 3 covering Calculus and Algebra is scheduled for
-                                    April 28, 2026. Based on current performance data, 65% of students may need
-                                    additional preparation for Calculus.</div>
-                                <div class="alert-msg-meta">System reminder · Apr 20, 2026, 9:00 AM</div>
-                            </div>
-                        </div>
-                    </div>
+                    <h2>Alerts</h2>
+                    <p class="page-sub">Coming soon.</p>
                 </div>
             </div>
 
@@ -807,17 +697,41 @@
             document.getElementById('teacher-name').textContent = teacherData.name;
             document.getElementById('teacher-subject').textContent = teacherData.subject;
 
-            const navLinks = document.getElementById('navLinks');
             if (teacherData.classes && teacherData.classes.length > 0) {
-                navLinks.innerHTML = teacherData.classes.map(c => 
-                    `<li onclick="selectClass('${c}')">Class ${c}</li>`
-                ).join('');
-                selectClass(teacherData.classes[0]);
+                buildSidebarAccordion(teacherData.classes);
+                document.getElementById(`acc-${teacherData.classes[0]}`)?.classList.add('active');
+                updateAccordionArrow(teacherData.classes[0], true);
+                selectClass(teacherData.classes[0], 'dashboard');
             }
         });
 
         let currentClassType = null;
         let navHistory = [];
+
+        function buildSidebarAccordion(classes) {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.innerHTML = classes.map((className) => `
+                <li class="accordion-item" id="acc-${className}">
+                    <div class="accordion-header" onclick="toggleAccordion('${className}')">
+                        <span>Class ${className}</span>
+                        <span class="arrow" id="arrow-${className}">▶</span>
+                    </div>
+                    <ul class="accordion-body">
+                        <li id="nav-${className}-dashboard"><a href="javascript:void(0)" onclick="selectClass('${className}', 'dashboard')">Dashboard</a></li>
+                        <li id="nav-${className}-students"><a href="javascript:void(0)" onclick="selectClass('${className}', 'students')">Students</a></li>
+                        <li id="nav-${className}-weakness"><a href="javascript:void(0)" onclick="selectClass('${className}', 'weakness')">Weakness Detection</a></li>
+                        <li id="nav-${className}-alerts"><a href="javascript:void(0)" onclick="selectClass('${className}', 'alerts')">Alerts</a></li>
+                    </ul>
+                </li>
+            `).join('');
+        }
+
+        function updateAccordionArrow(className, isExpanded) {
+            const arrow = document.getElementById(`arrow-${className}`);
+            if (arrow) {
+                arrow.textContent = isExpanded ? '▼' : '▶';
+            }
+        }
 
         function goToTeacherHome() {
             if (teacherData.classes && teacherData.classes.length > 0) {
@@ -834,13 +748,11 @@
         }
 
         function toggleAccordion(className) {
-            const isCurrentlyActive = document.getElementById('acc-' + className).classList.contains('active');
-            document.querySelectorAll('.accordion-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            if (!isCurrentlyActive) {
-                document.getElementById('acc-' + className).classList.add('active');
-            }
+            const item = document.getElementById(`acc-${className}`);
+            if (!item) return;
+            const willExpand = !item.classList.contains('active');
+            item.classList.toggle('active');
+            updateAccordionArrow(className, willExpand);
         }
 
         function selectClass(className, sectionName = 'dashboard', isBacking = false) {
@@ -854,37 +766,20 @@
                 }
             }
             showSection(sectionName);
-            updateClassTabHighlight(className);
 
             document.querySelectorAll('.accordion-body li').forEach(li => li.classList.remove('active'));
             const activeNav = document.getElementById(`nav-${className}-${sectionName}`);
             if (activeNav) activeNav.classList.add('active');
-
-            document.querySelectorAll('.accordion-item').forEach(item => item.classList.remove('active'));
             const acc = document.getElementById('acc-' + className);
-            if (acc) acc.classList.add('active');
+            if (acc && !acc.classList.contains('active')) {
+                acc.classList.add('active');
+                updateAccordionArrow(className, true);
+            }
 
             if (!isBacking) {
                 navHistory.push({ classType: className, section: sectionName });
                 history.pushState({ classType: className, section: sectionName }, "", `#${className}-${sectionName}`);
             }
-        }
-
-        function updateClassTabHighlight(className) {
-            const navItems = document.querySelectorAll('#navLinks li');
-            navItems.forEach((li) => {
-                li.classList.remove('active');
-                li.style.background = '';
-                li.style.color = '';
-                li.style.fontWeight = '';
-                if (li.textContent.trim() === `Class ${className}`) {
-                    li.classList.add('active');
-                    li.style.background = 'rgba(212, 175, 55, 0.2)';
-                    li.style.color = '#fff';
-                    li.style.fontWeight = '600';
-                    li.style.borderRadius = '8px';
-                }
-            });
         }
 
         window.addEventListener('popstate', function(event) {

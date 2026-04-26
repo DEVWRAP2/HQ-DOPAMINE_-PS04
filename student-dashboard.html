@@ -26,7 +26,7 @@
       --danger: #ef4444;
       --success: #10b981;
       --warn: #f59e0b;
-      --sidebar-w: 220px;
+      --sidebar-w: 260px;
     }
 
     body {
@@ -343,6 +343,15 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
+    }
+
+    .dashboard-top-row {
+      grid-template-columns: 1fr;
+    }
+
+    .compact-assignment-card {
+      align-self: start;
+      height: fit-content;
     }
 
     .dashboard-layout {
@@ -1213,23 +1222,15 @@
         </div>
         <div class="dashboard-layout">
           <div class="dashboard-main-col">
-            <div class="grid-2">
+            <div class="grid-2 dashboard-top-row">
               <div class="card">
                 <div class="card-title">📈 Overall Performance</div>
                 <div id="dash-performance"></div>
-              </div>
-              <div class="card">
-                <div class="card-title">📋 Assignments &amp; Effort</div>
-                <div id="dash-assignments"></div>
               </div>
             </div>
             <div class="card">
               <div class="card-title">🤖 AI Insights</div>
               <div class="insight-grid" id="dash-insights"></div>
-            </div>
-            <div class="card">
-              <div class="card-title">📘 Topic-wise Performance</div>
-              <div id="dash-topics"></div>
             </div>
             <div class="card">
               <div class="card-title">📝 Test History</div>
@@ -1243,6 +1244,10 @@
             </div>
             <div class="quick-glance-title" style="margin-top: 10px;">⚡ Quick Glance</div>
             <div class="quick-stats-grid" id="dash-stats"></div>
+            <div class="card compact-assignment-card" style="margin-top:12px;">
+              <div class="card-title">📋 Assignments &amp; Effort</div>
+              <div id="dash-assignments"></div>
+            </div>
           </aside>
         </div>
       </div>
@@ -1547,17 +1552,6 @@
     <div class="insight-item">
       <div class="insight-item-label">${i.label}</div>
       <div class="insight-item-value">${i.value}</div>
-    </div>`).join('');
-
-      // Topics list
-      document.getElementById('dash-topics').innerHTML = s.topics.map(t => `
-    <div class="topic-row">
-      <div class="topic-name">${t.name}</div>
-      <div class="mini-bar-wrap" style="flex:2;">
-        <div class="mini-bar"><div class="mini-bar-fill ${fillClass(t.score)}" style="width:${t.score}%"></div></div>
-        <div class="mini-score-text" style="color:${t.score >= 70 ? 'var(--success)' : t.score >= 50 ? 'var(--warn)' : 'var(--danger)'}">${t.score}</div>
-      </div>
-      <span class="topic-score-tag ${scoreClass(t.score)}">${t.score >= 70 ? 'Good' : t.score >= 50 ? 'Average' : 'Weak'}</span>
     </div>`).join('');
 
       // Tests
