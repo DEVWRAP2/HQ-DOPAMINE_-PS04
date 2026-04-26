@@ -1163,10 +1163,10 @@
     <span>Loading your dashboard...</span>
   </div>
 
-  <!-- ERROR (not logged in / student not found) -->
+  <!-- ERROR (fallback only) -->
   <div id="error-screen">
-    <h2>Access Denied</h2>
-    <p>You are not logged in or your account was not found.<br />Please log in again.</p>
+    <h2>Something went wrong</h2>
+    <p>Unable to load your dashboard. Please try again.</p>
     <button class="btn btn-primary" onclick="window.location.href='index.html'">← Back to Login</button>
   </div>
 
@@ -1365,46 +1365,56 @@
     }
 
     // ════════════════════════════════
-    // BOOT — check login, load JSON
+    // BOOT — no auth required, works with any login
     // ════════════════════════════════
     let currentStudent = null;
 
-    window.onload = async function () {
-      const roll = localStorage.getItem('studentRoll');
-      const role = localStorage.getItem('userRole');
+    // Mock student data — loaded regardless of credentials
+    const mockStudentData = {
+      name: "Arjun Mehta",
+      rollNo: "CSE2024-101",
+      class: "B.Tech CSE — 2nd Year",
+      subject: "Mathematics",
+      overallScore: 72,
+      attendance: 88,
+      effortLevel: "high",
+      understandingLevel: "medium",
+      assignments: { completed: 8, total: 10 },
+      needHelpTopics: ["Calculus", "Geometry"],
+      topics: [
+        { name: "Algebra",       score: 78, maxScore: 100 },
+        { name: "Calculus",      score: 52, maxScore: 100 },
+        { name: "Trigonometry",  score: 85, maxScore: 100 },
+        { name: "Geometry",      score: 61, maxScore: 100 },
+        { name: "Statistics",    score: 74, maxScore: 100 }
+      ],
+      tests: [
+        { name: "Test 1 — Algebra & Trig",     score: 80, topicsWeak: [] },
+        { name: "Test 2 — Calculus",           score: 54, topicsWeak: ["Calculus"] },
+        { name: "Test 3 — Geometry & Stats",   score: 68, topicsWeak: ["Geometry"] }
+      ],
+      attendanceDays: {
+        present: [2,3,5,6,9,10,11,13,16,17,18,19,20,23,24,25,27,30],
+        absent:  [4,12,26]
+      }
+    };
 
-      // Guard: must be logged in as student
-      if (!roll || role !== 'student') {
-        showError();
-        return;
+    window.onload = function () {
+      // Use name from login if stored, otherwise default
+      const storedName = sessionStorage.getItem('tf_username') || localStorage.getItem('tf_username');
+      if (storedName && storedName.trim()) {
+        // Derive a display name from whatever email/text they typed
+        const displayName = storedName.includes('@')
+          ? storedName.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+          : storedName.trim().replace(/\b\w/g, c => c.toUpperCase());
+        mockStudentData.name = displayName;
       }
 
-      try {
-        const res = await fetch(`http://localhost:3001/student/${roll}`);
-        const found = res.ok ? await res.json() : null;
-        console.log('Fetched student data from backend:', found);
-        if (!found) { showError(); return; }
-
-        // Build attendanceDays if not in JSON (generate realistic data)
-        if (!found.attendanceDays) {
-          const presentDays = [];
-          const absentDays = [];
-          const totalSchoolDays = [2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 16, 17, 18, 19, 20, 23, 24, 25, 26, 27, 30];
-          const absentCount = Math.round(totalSchoolDays.length * (1 - found.attendance / 100));
-          totalSchoolDays.forEach((d, i) => {
-            if (i < absentCount) absentDays.push(d);
-            else presentDays.push(d);
-          });
-          found.attendanceDays = { present: presentDays, absent: absentDays };
-        }
-
-        currentStudent = found;
-        initPortal(found);
-
-      } catch (e) {
-        console.error(e);
-        showError();
-      }
+      // Small simulated loading delay for UX polish
+      setTimeout(() => {
+        currentStudent = mockStudentData;
+        initPortal(mockStudentData);
+      }, 800);
     };
 
     function showError() {
