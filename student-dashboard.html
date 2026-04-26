@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TeacherFlow AI — Student Portal</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     *,
     *::before,
@@ -347,6 +348,37 @@
 
     .dashboard-top-row {
       grid-template-columns: 1fr;
+    }
+
+    .overall-performance-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .trend-panel {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .trend-panel-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    #studentTrendChart {
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 300px;
     }
 
     .compact-assignment-card {
@@ -1133,7 +1165,8 @@
       .insight-grid,
       .subject-grid,
       .dashboard-layout,
-      .quick-stats-grid {
+      .quick-stats-grid,
+      .overall-performance-split {
         grid-template-columns: 1fr;
       }
 
@@ -1200,8 +1233,6 @@
             class="nav-icon">📊</span><span>Dashboard</span></button>
         <button class="nav-item" onclick="showSection('subjects',this)"><span
             class="nav-icon">📚</span><span>Subjects</span></button>
-        <button class="nav-item" onclick="showSection('classes',this)"><span
-            class="nav-icon">🎥</span><span>Classes</span></button>
       </nav>
       <div class="sidebar-footer">
         <a class="logout-link" onclick="logout()">🚪 Logout</a>
@@ -1225,7 +1256,17 @@
             <div class="grid-2 dashboard-top-row">
               <div class="card">
                 <div class="card-title">📈 Overall Performance</div>
-                <div id="dash-performance"></div>
+                <div style="display: flex; gap: 20px; align-items: flex-start;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div id="dash-performance"></div>
+                  </div>
+                  <div style="flex: 1; min-width: 0;">
+                    <div class="trend-panel-title">My Score Trend</div>
+                    <div style="position: relative; height: 300px; width: 100%;">
+                      <canvas id="studentTrendChart"></canvas>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="card">
@@ -1364,6 +1405,7 @@
     const API_BASE = "https://hq-dopamine-ps-04-undt.vercel.app";
 
     let currentStudent = null;
+    let studentTrendChart = null;
 
     async function fetchWithRetry(url, retries = 3) {
         for (let i = 0; i < retries; i++) {
@@ -1518,6 +1560,8 @@
       <div class="progress-bar"><div class="progress-fill ${fillClass(t.score)}" style="width:${t.score}%"></div></div>
     </div>`).join('');
 
+      renderStudentTrendChart(s);
+
       // Assignment ring
       const pct = Math.round(s.assignments.completed / s.assignments.total * 100);
       const circ = 2 * Math.PI * 32;
@@ -1565,6 +1609,54 @@
       </div>
       <div class="test-score" style="color:${t.score >= 70 ? 'var(--success)' : t.score >= 50 ? 'var(--warn)' : 'var(--danger)'}">${t.score}%</div>
     </div>`).join('');
+    }
+
+    function renderStudentTrendChart(student) {
+      const trendCanvas = document.getElementById('studentTrendChart');
+      if (!trendCanvas) return;
+      if (studentTrendChart) {
+        studentTrendChart.destroy();
+        studentTrendChart = null;
+      }
+
+      const weekDates = [
+        ['2026-04-01', '2026-04-02'],
+        ['2026-04-07', '2026-04-08'],
+        ['2026-04-14'],
+        ['2026-04-21']
+      ];
+
+      const weeklyAverages = weekDates.map((dates) => {
+        const marks = (student.scores || [])
+          .filter((score) => dates.includes(score.date))
+          .map((score) => score.marks);
+        if (!marks.length) return 0;
+        return Math.round(marks.reduce((a, b) => a + b, 0) / marks.length);
+      });
+
+      studentTrendChart = new Chart(trendCanvas.getContext('2d'), {
+        type: 'line',
+        data: {
+          labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+          datasets: [{
+            label: 'My Score Trend',
+            data: weeklyAverages,
+            borderColor: '#d4af37',
+            backgroundColor: 'rgba(212, 175, 55, 0.2)',
+            fill: true,
+            tension: 0.35,
+            pointBackgroundColor: '#d4af37',
+            pointBorderColor: '#0f172a',
+            pointRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: { y: { beginAtZero: false, min: 40, max: 100 } },
+          plugins: { legend: { display: false } }
+        }
+      });
     }
 
     function buildInsights(s) {

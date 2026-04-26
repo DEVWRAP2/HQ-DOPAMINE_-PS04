@@ -70,6 +70,7 @@ async function selectClass(className) {
         currentClassLabel = 'Class ' + className;
         renderDashboardSection();
         populateTable();
+        renderAlertsSection();
     } catch (err) {
         console.error('Failed to fetch class data:', err);
     }
@@ -135,59 +136,83 @@ function getTrendClass(icon) {
     return 'trend-stable';
 }
 
-function buildNotifications() {
-    const alerts = [];
-    const lowScore = students.filter((s) => s.overallScore < 60).length;
-    if (lowScore > 0) {
-        alerts.push({
-            type: 'warning',
-            title: 'Low score alert',
-            detail: `${lowScore} students are currently below 60% overall score.`
-        });
-    }
-
-    const highRisk = students.filter((s) => s.overallScore < 50 && s.attendance < 70).length;
-    if (highRisk > 0) {
-        alerts.push({
-            type: 'danger',
-            title: 'At-risk students',
-            detail: `${highRisk} students have both low score and low attendance.`
-        });
-    }
-
-    const topPerformer = [...students].sort((a, b) => b.overallScore - a.overallScore)[0];
-    if (topPerformer) {
-        alerts.push({
-            type: 'info',
-            title: 'Top performer update',
-            detail: `${topPerformer.name} is leading the class at ${topPerformer.overallScore}%.`
-        });
-    }
-
-    const calcWeakCount = students.filter((s) => (s.topics.Calculus || 0) < 60).length;
-    if (calcWeakCount > 0) {
-        alerts.push({
-            type: 'warning',
-            title: 'Calculus weakness',
-            detail: `${calcWeakCount} students are struggling in Calculus.`
-        });
-    }
-
-    return alerts.slice(0, 3);
-}
-
 function renderRecentAlerts() {
     const list = document.getElementById('recentAlertsList');
     if (!list) return;
-    const notifications = buildNotifications();
-    list.innerHTML = notifications.map((n) => `
-        <div class="recent-alert-item ${n.type}">
+    const atRisk = students
+        .filter((student) => student.overallScore < 60)
+        .sort((a, b) => a.overallScore - b.overallScore)
+        .slice(0, 3);
+
+    list.innerHTML = atRisk.map((student) => `
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #e5e7eb;">
+            <span style="font-size:1.2rem">⚠️</span>
             <div>
-                <h4>${escapeHtml(n.title)}</h4>
-                <p>${escapeHtml(n.detail)}</p>
+                <div style="font-size:0.9rem;font-weight:600">${escapeHtml(student.name)} — ${student.overallScore}%</div>
+                <div style="font-size:0.8rem;color:#888">This week</div>
             </div>
         </div>
+    `).join('') || '<p style="color:#888;font-size:0.9rem;padding:12px 0;">No critical alerts.</p>';
+}
+
+function getDismissedAlerts() {
+    try {
+        return JSON.parse(localStorage.getItem('dismissedAlerts') || '[]');
+    } catch (err) {
+        return [];
+    }
+}
+
+function saveDismissedAlerts(ids) {
+    localStorage.setItem('dismissedAlerts', JSON.stringify(ids));
+}
+
+function dismissAlert(studentId) {
+    const dismissed = getDismissedAlerts();
+    if (!dismissed.includes(studentId)) {
+        dismissed.push(studentId);
+        saveDismissedAlerts(dismissed);
+    }
+
+    const card = document.getElementById(`alert-card-${studentId}`);
+    if (card) {
+        card.style.transition = 'opacity 0.25s ease';
+        card.style.opacity = '0';
+        setTimeout(() => {
+            renderAlertsSection();
+        }, 250);
+    } else {
+        renderAlertsSection();
+    }
+}
+
+function renderAlertsSection() {
+    const section = document.getElementById('section-alerts');
+    if (!section) return;
+
+    const dismissed = getDismissedAlerts();
+    const filtered = students
+        .filter((student) => student.overallScore < 60)
+        .filter((student) => !dismissed.includes(student.id));
+
+    const cardsHtml = filtered.map((student) => `
+        <div id="alert-card-${student.id}" style="background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+            <div>
+                <div style="font-weight:700;color:#1f2937;">${escapeHtml(student.name)}</div>
+                <div style="font-size:0.85rem;color:#6b7280;">Class ${escapeHtml(student.className)} · ${escapeHtml(teacherData.subject)} · ${student.overallScore}%</div>
+            </div>
+            <button style="background:#d4af37;color:#fff;border:none;border-radius:8px;padding:8px 12px;cursor:pointer;font-weight:600;" onclick="dismissAlert('${student.id}')">Mark as Done</button>
+        </div>
     `).join('');
+
+    section.innerHTML = `
+        <button onclick="goBack()" style="background:none; border:none; color:var(--primary); font-weight:600; font-size:1rem; cursor:pointer; margin-bottom:20px; display:flex; align-items:center; gap:5px;">← Back</button>
+        <div class="alerts-page">
+            <h2>Alerts</h2>
+            <p class="page-sub">${filtered.length ? 'Students needing attention' : 'No alerts at this time. All students are above 60%.'}</p>
+            ${cardsHtml}
+        </div>
+    `;
 }
 
 function renderNeedsAttention() {
@@ -401,40 +426,34 @@ function initChart() {
 function initTrendChart() {
     const trendCanvas = document.getElementById('trendChart');
     if (!trendCanvas) return;
+    if (trendChartInstance) { trendChartInstance.destroy(); trendChartInstance = null; }
 
-    if (trendChartInstance) {
-        trendChartInstance.destroy();
-    }
+    const subjectMatch = { 'Math': 'Math', 'Chemistry': 'Chemistry', 'Physics': 'Physics' };
+    const targetSubject = subjectMatch[teacherData.subject] || teacherData.subject;
 
-    const subjectMap = {
-        Math: 'Math',
-        Chemistry: 'Chemistry',
-        Physics: 'Physics',
-        Mathematics: 'Math'
-    };
-    const targetSubject = subjectMap[teacherData.subject] || teacherData.subject;
-    const weekDateGroups = [
+    const weekDates = [
         ['2026-04-01', '2026-04-02'],
         ['2026-04-07', '2026-04-08'],
         ['2026-04-14'],
         ['2026-04-21']
     ];
-    const weeklyAverages = weekDateGroups.map((weekDates) => {
-        const weekMarks = [];
+
+    const weeklyAverages = weekDates.map(dates => {
+        const allMarks = [];
         students.forEach((student) => {
-            (student.rawScores || []).forEach((score) => {
-                if (
-                    weekDates.includes(score.date) &&
-                    score.subject === targetSubject
-                ) {
-                    weekMarks.push(score.marks);
+            if (!student.rawScores) return;
+            student.rawScores.forEach(score => {
+                if (dates.includes(score.date) && score.subject === targetSubject) {
+                    allMarks.push(score.marks);
                 }
             });
         });
-        if (!weekMarks.length) return 0;
-        const avg = weekMarks.reduce((sum, mark) => sum + mark, 0) / weekMarks.length;
-        return Math.round(avg * 10) / 10;
+        if (allMarks.length === 0) return 0;
+        return Math.round(allMarks.reduce((a, b) => a + b, 0) / allMarks.length);
     });
+
+    console.log('Trend weeklyAverages:', weeklyAverages);
+    console.log('Students with rawScores:', students.filter(s => s.rawScores && s.rawScores.length > 0).length);
 
     trendChartInstance = new Chart(trendCanvas.getContext('2d'), {
         type: 'line',
@@ -455,19 +474,8 @@ function initTrendChart() {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100,
-                    ticks: { color: '#cbd5e1' },
-                    grid: { color: 'rgba(255, 255, 255, 0.08)' }
-                },
-                x: {
-                    ticks: { color: '#cbd5e1' },
-                    grid: { color: 'rgba(255, 255, 255, 0.06)' }
-                }
-            },
-            plugins: { legend: { labels: { color: '#f8fafc' } } }
+            scales: { y: { beginAtZero: false, min: 40, max: 100 } },
+            plugins: { legend: { display: true } }
         }
     });
 }

@@ -443,11 +443,15 @@
                 <section class="analytics-grid">
                     <div class="card chart-card">
                         <h3>Average Performance by Topic</h3>
-                        <canvas id="performanceChart"></canvas>
+                        <div style="position: relative; height: 300px; width: 100%;">
+                            <canvas id="performanceChart"></canvas>
+                        </div>
                     </div>
                     <div class="card chart-card">
-                        <h3>Weekly Attendance Trend — April</h3>
-                        <canvas id="trendChart"></canvas>
+                        <h3>Class Performance Trend</h3>
+                        <div style="position: relative; height: 300px; width: 100%;">
+                            <canvas id="trendChart"></canvas>
+                        </div>
                     </div>
                 </section>
 
@@ -489,7 +493,9 @@
                 <div class="analytics-grid" style="grid-template-columns: 1fr;">
                     <div class="card chart-card" style="margin-bottom: 20px;">
                         <h3>Top Weakness Heatmap</h3>
-                        <canvas id="weaknessChart" style="max-height: 300px;"></canvas>
+                        <div style="position: relative; height: 300px; width: 100%;">
+                            <canvas id="weaknessChart"></canvas>
+                        </div>
                     </div>
                 </div>
 
@@ -690,6 +696,7 @@
         function logout() {
             localStorage.removeItem('userRole');
             localStorage.removeItem('teacherData');
+            localStorage.removeItem('dismissedAlerts');
             window.location.href = 'index.html';
         }
 
@@ -794,6 +801,7 @@
             const sec = document.getElementById('section-' + name);
             if (sec) sec.classList.add('active');
             if (name === 'classes') renderClassesList();
+            if (name === 'alerts') renderAlertsSection();
         }
 
         // ════════ CLASSES DATA ════════
@@ -930,6 +938,7 @@ async function openClass(title, classId) {
         weakTopic: weakestTopic,
         topics: filteredTopics.map((topic) => ({ n: topic.name, s: topic.score })),
         topicsObj,
+        rawScores: student.scores || [],
         rawAttendance: getRawAttendance(student)
       };
     });
@@ -1008,15 +1017,69 @@ function renderLearningGaps() {
 function renderAlerts() {
   const el = document.getElementById('recentAlertsList');
   if (!el) return;
-  const atRisk = students.filter(s => s.overallScore < 50);
+  const atRisk = students.filter(s => s.overallScore < 60).sort((a, b) => a.overallScore - b.overallScore).slice(0, 3);
   el.innerHTML = atRisk.map(s => `
     <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #e5e7eb;">
       <span style="font-size:1.2rem">⚠️</span>
       <div>
-        <div style="font-size:0.9rem;font-weight:600">${s.name} — Low Performance</div>
-        <div style="font-size:0.8rem;color:#888">Avg: ${s.overallScore}% · Attendance: ${s.attendance}%</div>
+        <div style="font-size:0.9rem;font-weight:600">${s.name} — ${s.overallScore}%</div>
+        <div style="font-size:0.8rem;color:#888">This week</div>
       </div>
     </div>`).join('') || '<p style="color:#888;font-size:0.9rem;padding:12px 0;">No critical alerts.</p>';
+}
+
+function getDismissedAlerts() {
+  try {
+    return JSON.parse(localStorage.getItem('dismissedAlerts') || '[]');
+  } catch (err) {
+    return [];
+  }
+}
+
+function saveDismissedAlerts(ids) {
+  localStorage.setItem('dismissedAlerts', JSON.stringify(ids));
+}
+
+function dismissAlert(studentId) {
+  const dismissed = getDismissedAlerts();
+  if (!dismissed.includes(studentId)) {
+    dismissed.push(studentId);
+    saveDismissedAlerts(dismissed);
+  }
+  const card = document.getElementById(`alert-card-${studentId}`);
+  if (card) {
+    card.style.transition = 'opacity 0.25s ease';
+    card.style.opacity = '0';
+    setTimeout(() => renderAlertsSection(), 250);
+    return;
+  }
+  renderAlertsSection();
+}
+
+function renderAlertsSection() {
+  const section = document.getElementById('section-alerts');
+  if (!section) return;
+  const dismissed = getDismissedAlerts();
+  const alertStudents = students
+    .filter((s) => s.overallScore < 60)
+    .filter((s) => !dismissed.includes(s.roll));
+
+  section.innerHTML = `
+    <button onclick="goBack()" style="background:none; border:none; color:var(--primary); font-weight:600; font-size:1rem; cursor:pointer; margin-bottom:20px; display:flex; align-items:center; gap:5px;">← Back</button>
+    <div class="alerts-page">
+      <h2>Alerts</h2>
+      <p class="page-sub">${alertStudents.length ? 'Students needing attention' : 'No alerts at this time. All students are above 60%.'}</p>
+      ${alertStudents.map((s) => `
+        <div id="alert-card-${s.roll}" class="alert-msg msg-warning" style="display:flex;justify-content:space-between;align-items:center;">
+          <div class="alert-msg-body">
+            <div class="alert-msg-title">${s.name}</div>
+            <div class="alert-msg-detail">Class ${s.className} · ${teacherData.subject} · ${s.overallScore}%</div>
+          </div>
+          <button class="btn-secondary" style="margin:0;" onclick="dismissAlert('${s.roll}')">Mark as Done</button>
+        </div>
+      `).join('')}
+    </div>
+  `;
 }
 
 let perfChart = null, trendChart = null, weakChart = null;
@@ -1034,33 +1097,32 @@ function initChart() {
     perfChart = new Chart(pCtx, {
       type:'bar',
       data:{ labels:topicLabels, datasets:[{ label:'Avg Score (%)', data:topicAvgs, backgroundColor:['rgba(212,175,55,0.75)','rgba(59,130,246,0.75)','rgba(16,185,129,0.75)','rgba(239,68,68,0.75)'], borderRadius:8 }] },
-      options:{ plugins:{legend:{display:false}}, scales:{ y:{beginAtZero:true,max:100}, x:{grid:{display:false}} } }
+      options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ y:{beginAtZero:true,max:100}, x:{grid:{display:false}} } }
     });
   }
 }
 
 function initTrendChart() {
-  const weeklyRanges = [
-    ['2026-04-01', '2026-04-02', '2026-04-03'],
-    ['2026-04-06', '2026-04-07', '2026-04-08', '2026-04-09', '2026-04-10'],
-    ['2026-04-13', '2026-04-14', '2026-04-15', '2026-04-16', '2026-04-17'],
-    ['2026-04-20', '2026-04-21', '2026-04-22', '2026-04-23', '2026-04-24']
+  const subjectMatch = { 'Math': 'Math', 'Chemistry': 'Chemistry', 'Physics': 'Physics' };
+  const targetSubject = subjectMatch[teacherData.subject] || teacherData.subject;
+  const weekDates = [
+    ['2026-04-01', '2026-04-02'],
+    ['2026-04-07', '2026-04-08'],
+    ['2026-04-14'],
+    ['2026-04-21']
   ];
-  const weeklyAttendance = weeklyRanges.map((weekDates) => {
-    let presentCount = 0;
-    let totalCount = 0;
+  const weeklyAverages = weekDates.map((dates) => {
+    const allMarks = [];
     students.forEach((student) => {
-      (student.rawAttendance || []).forEach((entry) => {
-        if (weekDates.some((date) => String(entry.date || '').startsWith(date))) {
-          totalCount += 1;
-          if (entry.status === 'present') {
-            presentCount += 1;
-          }
+      if (!student.rawScores) return;
+      student.rawScores.forEach((score) => {
+        if (dates.includes(score.date) && score.subject === targetSubject) {
+          allMarks.push(score.marks);
         }
       });
     });
-    if (!totalCount) return 0;
-    return Math.round(((presentCount / totalCount) * 100) * 10) / 10;
+    if (!allMarks.length) return 0;
+    return Math.round(allMarks.reduce((a, b) => a + b, 0) / allMarks.length);
   });
 
   const tCtx = document.getElementById('trendChart');
@@ -1068,8 +1130,8 @@ function initTrendChart() {
     if (trendChart) trendChart.destroy();
     trendChart = new Chart(tCtx, {
       type:'line',
-      data:{ labels:['Week 1','Week 2','Week 3','Week 4'], datasets:[{ label:'Weekly Attendance Trend — April', data:weeklyAttendance, borderColor:'#d4af37', backgroundColor:'rgba(212,175,55,0.1)', tension:0.4, fill:true, pointBackgroundColor:'#d4af37' }] },
-      options:{ plugins:{legend:{display:false}}, scales:{ y:{min:40,max:100}, x:{grid:{display:false}} } }
+      data:{ labels:['Week 1','Week 2','Week 3','Week 4'], datasets:[{ label:'Weekly Avg Score — April', data:weeklyAverages, borderColor:'#d4af37', backgroundColor:'rgba(212,175,55,0.1)', tension:0.4, fill:true, pointBackgroundColor:'#d4af37' }] },
+      options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:true}}, scales:{ y:{beginAtZero:false,min:40,max:100}, x:{grid:{display:false}} } }
     });
   }
 }
@@ -1082,7 +1144,7 @@ function renderCharts() {
     weakChart = new Chart(wCtx, {
       type:'bar',
       data:{ labels:topicLabels, datasets:[{ label:'Students Below 50%', data:topicLabels.map(topic=>students.filter(s=>{const t=s.topics.find(t=>t.n===topic);return t&&t.s<50;}).length), backgroundColor:'rgba(239,68,68,0.7)', borderRadius:8 }] },
-      options:{ plugins:{legend:{display:false}}, scales:{ y:{beginAtZero:true,ticks:{stepSize:1}}, x:{grid:{display:false}} } }
+      options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ y:{beginAtZero:true,ticks:{stepSize:1}}, x:{grid:{display:false}} } }
     });
   }
   initChart();
@@ -1093,6 +1155,7 @@ function renderDashboardSection() {
   renderNeedsAttention();
   renderAlerts();
   renderCharts();
+  renderAlertsSection();
 }
 
 function populateTable() {
