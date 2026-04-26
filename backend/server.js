@@ -69,17 +69,17 @@ app.post('/login', (req, res) => {
     console.log(`Login attempt for email: ${email}`);
 
     const dataPath = path.join(__dirname, 'data', 'students.json');
-    
+
     fs.readFile(dataPath, 'utf8', (err, data) => {
         if (err) {
             console.error("Error reading file:", err);
             return res.status(500).json({ success: false, message: "Internal server error" });
         }
-        
+
         try {
             const students = JSON.parse(data);
             const student = students.find(s => s.email === email);
-            
+
             if (student) {
                 console.log(`Student found: ${student.name}`);
                 res.json({ success: true, student: transformStudentData(student) });
@@ -98,13 +98,13 @@ app.post('/login', (req, res) => {
 app.get('/students', (req, res) => {
     // Read the students.json file
     const dataPath = path.join(__dirname, 'data', 'students.json');
-    
+
     fs.readFile(dataPath, 'utf8', (err, data) => {
         if (err) {
             console.error("Error reading file:", err);
             return res.status(500).json({ error: "Failed to read data" });
         }
-        
+
         try {
             // Parse the JSON data, transform it, and send it as the response
             const students = JSON.parse(data);
@@ -120,17 +120,17 @@ app.get('/students', (req, res) => {
 // Define the /student/:rollNo endpoint
 app.get('/student/:rollNo', (req, res) => {
     const dataPath = path.join(__dirname, 'data', 'students.json');
-    
+
     fs.readFile(dataPath, 'utf8', (err, data) => {
         if (err) {
             console.error("Error reading file:", err);
             return res.status(500).json({ error: "Internal server error" });
         }
-        
+
         try {
             const students = JSON.parse(data);
             const student = students.find(s => s.rollNo === req.params.rollNo);
-            
+
             if (student) {
                 res.json(transformStudentData(student));
             } else {
@@ -144,7 +144,9 @@ app.get('/student/:rollNo', (req, res) => {
 });
 
 // Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-    console.log(`View students data at: http://localhost:${PORT}/students`);
-});
+// app.listen(PORT, () => {
+//     console.log(`Server is running on http://localhost:${PORT}`);
+//     console.log(`View students data at: http://localhost:${PORT}/students`);
+// });
+
+module.exports = app;
