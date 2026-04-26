@@ -1,21 +1,441 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TeacherFlow AI - Enter</title>
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="src/css/styles.css" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --gold: #d4af37;
+            --gold-dim: rgba(212, 175, 55, 0.15);
+            --slate: #64748b;
+            --bg-dark: #0f172a;
+            --bg-panel: rgba(15, 23, 42, 0.92);
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1);
+            --radius: 18px;
+        }
+
+        html,
+        body {
+            height: 100%;
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            overflow: hidden;
+        }
+
+        /* Particle canvas */
+        #particleCanvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Layout */
+        .split-layout {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* LEFT: Hero */
+        .hero-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-right: 1px solid var(--border);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 480px;
+            width: 100%;
+        }
+
+        .brand-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+
+        .typing-container {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--text-muted);
+            min-height: 2em;
+            margin-bottom: 40px;
+        }
+
+        .cursor {
+            animation: blink 1s step-end infinite;
+            color: var(--gold);
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Carousel */
+        .hero-carousel {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-slide {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        /* RIGHT: Action */
+        .action-section {
+            width: 480px;
+            flex-shrink: 0;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-panel);
+            backdrop-filter: blur(24px);
+        }
+
+        .admin-login {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .admin-login:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* PANELS */
+        .panel {
+            width: 100%;
+            padding: 48px 40px;
+            display: none;
+        }
+
+        .panel.visible {
+            display: block;
+        }
+
+        /* Selection Panel */
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 32px;
+            color: var(--text);
+        }
+
+        .roles-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .role-card {
+            flex: 1;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .role-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .teacher-theme:hover {
+            border-color: var(--gold);
+        }
+
+        .student-theme:hover {
+            border-color: var(--slate);
+        }
+
+        .role-image-container {
+            width: 100%;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+        }
+
+        .role-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .role-card:hover .role-image {
+            transform: scale(1.05);
+        }
+
+        .role-card h3,
+        .role-card p {
+            padding: 0 16px;
+        }
+
+        .role-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 16px;
+            margin-bottom: 6px;
+        }
+
+        .role-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        /* Login Panel */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 36px;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 0;
+            margin-bottom: 28px;
+            display: block;
+            transition: color 0.2s;
+        }
+
+        .back-btn:hover {
+            color: var(--text);
+        }
+
+        .login-header {
+            margin-bottom: 32px;
+        }
+
+        .login-header h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .login-header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .input-group input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 13px 16px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--gold);
+        }
+
+        .input-group input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 24px;
+        }
+
+        .forgot-password {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .forgot-password:hover {
+            color: var(--gold);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--gold);
+            color: #0f172a;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 0.3px;
+        }
+
+        .login-btn:hover {
+            background: #e4c14a;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Coming Soon Overlay */
+        .coming-soon-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .coming-soon-overlay.is-open {
+            display: flex;
+        }
+
+        .coming-soon-dialog {
+            background: #1e293b;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .coming-soon-dialog h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+            color: var(--gold);
+        }
+
+        .coming-soon-dialog p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .coming-soon-btn {
+            padding: 11px 32px;
+            background: var(--gold);
+            color: #0f172a;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .coming-soon-btn:hover {
+            background: #e4c14a;
+        }
+
+        @media (max-width: 900px) {
+            .split-layout {
+                flex-direction: column;
+                overflow-y: auto;
+            }
+
+            .hero-section {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                min-height: 40vh;
+            }
+
+            .action-section {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <!-- Full-screen particle canvas -->
     <canvas id="particleCanvas"></canvas>
 
     <div class="split-layout">
-        <!-- Left Hero Section -->
+        <!-- Left Hero -->
         <div class="hero-section">
             <div class="hero-content">
                 <div class="hero-branding">
@@ -24,259 +444,225 @@
                         <span id="typing-text"></span><span class="cursor">|</span>
                     </div>
                 </div>
-
                 <div class="hero-carousel">
-                    <img class="carousel-slide" src="https://images.unsplash.com/photo-1620712943543-bcc4638d9f8d?q=80&w=800" alt="Slide 1">
-                    <img class="carousel-slide" src="https://images.unsplash.com/photo-1551288049-bbda4833effb?q=80&w=800" alt="Slide 2">
-                    <img class="carousel-slide" src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=800" alt="Slide 3">
+                    <!-- <img class="carousel-slide"
+                        src="https://images.unsplash.com/photo-1620712943543-bcc4638d9f8d?q=80&w=800"
+                        alt="AI Analytics">
+                    <img class="carousel-slide"
+                        src="https://images.unsplash.com/photo-1551288049-bbda4833effb?q=80&w=800" alt="Data Dashboard"> -->
+                    <img class="carousel-slide"
+                        src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=800" alt="Learning">
                 </div>
             </div>
         </div>
 
-        <!-- Right Action Section -->
+        <!-- Right Action -->
         <div class="action-section">
             <button type="button" class="admin-login" onclick="showComingSoon()">Admin Enter</button>
 
-            <!-- Selection Panel -->
-            <div class="panel selection-panel" id="selectionPanel">
-                <div class="selection-content">
-                    <h2 class="section-title">Select your role</h2>
-                    
-                    <div class="roles-container">
-                        <div class="role-card teacher-theme" id="teacherCard" onclick="selectRole('teacher')" onmouseenter="startParticles(event, '#d4af37')" onmouseleave="stopParticles()">
-                            <div class="role-image-container">
-                                <img src="https://images.unsplash.com/photo-1544717297-fa154daaf76e?auto=format&fit=crop&q=80&w=400" alt="Teacher" class="role-image">
-                            </div>
-                            <h3>Teacher</h3>
-                            <p>Access class insights and analytics</p>
+            <!-- Role Selection -->
+            <div class="panel visible" id="selectionPanel">
+                <h2 class="section-title">Select your role</h2>
+                <div class="roles-container">
+                    <div class="role-card teacher-theme" onclick="selectRole('teacher')"
+                        onmouseenter="startParticles(event,'#d4af37')" onmouseleave="stopParticles()">
+                        <div class="role-image-container">
+                            <img src="https://www.dreamstime.com/photos-images/teaching-programming-classroom-engaging-teacher.html"
+                                onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=400&q=80'"
+                                alt="Teacher" class="role-image">
                         </div>
-
-                        <div class="role-card student-theme" id="studentCard" onclick="selectRole('student')" onmouseenter="startParticles(event, '#64748b')" onmouseleave="stopParticles()">
-                            <div class="role-image-container">
-                                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=400" alt="Student" class="role-image">
-                            </div>
-                            <h3>Student</h3>
-                            <p>Track your learning and performance</p>
+                        <h3>Teacher</h3>
+                        <p>Access class insights and analytics</p>
+                    </div>
+                    <div class="role-card student-theme" onclick="selectRole('student')"
+                        onmouseenter="startParticles(event,'#64748b')" onmouseleave="stopParticles()">
+                        <div class="role-image-container">
+                            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=400"
+                                alt="Student" class="role-image">
                         </div>
+                        <h3>Student</h3>
+                        <p>Track your learning and performance</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Login Panel (Overlays Right Side) -->
-            <div class="panel login-panel" id="enterPanel">
+            <!-- Login Panel -->
+            <div class="panel" id="enterPanel">
                 <div class="glass-panel">
                     <button class="back-btn" onclick="resetSelection()">← Back</button>
                     <div class="login-header">
                         <h2 id="enterTitle">Welcome</h2>
                         <p id="enterSubtitle">Please enter your details</p>
                     </div>
-
                     <div class="login-form">
                         <div class="input-group">
                             <span class="input-label">Identifier</span>
-                            <input type="text" id="emailInput" autocomplete="off" spellcheck="false" placeholder="e.g. aarav.sharma@gmail.com" />
+                            <input type="text" id="emailInput" autocomplete="off" spellcheck="false"
+                                placeholder="hello@teacherflow.ai" />
                         </div>
                         <div class="input-group">
                             <span class="input-label">Passcode</span>
-                            <input type="text" autocomplete="off" spellcheck="false" placeholder="••••••••" style="-webkit-text-security: disc;" />
+                            <input type="text" autocomplete="off" spellcheck="false" placeholder="••••••••"
+                                style="-webkit-text-security: disc;" />
                         </div>
-                        
                         <div class="form-actions">
                             <a href="#" class="forgot-password">Forgot Passcode?</a>
                         </div>
-
-                        <button type="button" class="login-btn" id="enterBtn" onclick="handleLogin(event)">Enter</button>
-                        <p id="loginError" style="color: #ef4444; text-align: center; margin-top: 1rem; font-size: 0.9rem; min-height: 1.2rem;"></p>
+                        <button type="button" class="login-btn" id="enterBtn"
+                            onclick="handleLogin(event)">Enter</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="comingSoonOverlay" class="coming-soon-overlay" role="dialog" aria-modal="true" aria-labelledby="comingSoonTitle" onclick="if (event.target === this) hideComingSoon()">
+    <!-- Coming Soon Modal -->
+    <div id="comingSoonOverlay" class="coming-soon-overlay" onclick="if(event.target===this)hideComingSoon()">
         <div class="coming-soon-dialog" onclick="event.stopPropagation()">
-            <h3 id="comingSoonTitle">Coming soon</h3>
+            <h3>Coming soon</h3>
             <p>This section will be added in the future when the website is built as a full-stack application.</p>
             <button type="button" class="coming-soon-btn" onclick="hideComingSoon()">OK</button>
         </div>
     </div>
 
-    <script src="src/js/main.js"></script>
     <script>
+        // ── ROLE SELECTION ──
+        let selectedRole = null;
+
+        function selectRole(role) {
+            selectedRole = role;
+            document.getElementById('selectionPanel').classList.remove('visible');
+            document.getElementById('enterPanel').classList.add('visible');
+            document.getElementById('enterTitle').textContent = role === 'teacher' ? 'Teacher Login' : 'Student Login';
+            document.getElementById('enterSubtitle').textContent = role === 'teacher'
+                ? 'Access your class dashboard'
+                : 'View your performance portal';
+            document.getElementById('emailInput').placeholder = role === 'teacher'
+                ? 'teacher@school.edu'
+                : 'student@school.edu';
+        }
+
+        function resetSelection() {
+            selectedRole = null;
+            document.getElementById('enterPanel').classList.remove('visible');
+            document.getElementById('selectionPanel').classList.add('visible');
+        }
+
+        function handleLogin(e) {
+            const identifier = document.getElementById('emailInput').value.trim();
+            if (!identifier) {
+                document.getElementById('emailInput').focus();
+                return;
+            }
+            const btn = document.getElementById('enterBtn');
+            btn.textContent = 'Entering…';
+            btn.style.opacity = '0.75';
+            btn.disabled = true;
+            setTimeout(() => {
+                // Store identifier so dashboards can personalise the greeting
+                sessionStorage.setItem('tf_username', identifier);
+                localStorage.setItem('tf_username', identifier);
+                if (selectedRole === 'teacher') {
+                    window.location.href = 'teacherdashboard.html';
+                } else if (selectedRole === 'student') {
+                    window.location.href = 'studentdashboard.html';
+                }
+            }, 800);
+        }
+
+        // ── COMING SOON ──
         function showComingSoon() {
             document.getElementById('comingSoonOverlay').classList.add('is-open');
         }
-
         function hideComingSoon() {
             document.getElementById('comingSoonOverlay').classList.remove('is-open');
         }
 
         // ── TYPING EFFECT ──
         const phrases = [
-            "Catching Learning Gaps Early", 
-            "Empowering Educators", 
-            "AI-Powered Analytics", 
+            "Catching Learning Gaps Early",
+            "Empowering Educators",
+            "AI-Powered Analytics",
             "Preventing Fragmented Knowledge"
         ];
-        let currentPhraseIdx = 0;
-        let currentCharIdx = 0;
-        let isDeleting = false;
-        const typingTextEl = document.getElementById('typing-text');
-        
+        let phraseIdx = 0, charIdx = 0, isDeleting = false;
+        const typingEl = document.getElementById('typing-text');
+
         function typeEffect() {
-            const currentPhrase = phrases[currentPhraseIdx];
-            
-            if (isDeleting) {
-                typingTextEl.textContent = currentPhrase.substring(0, currentCharIdx - 1);
-                currentCharIdx--;
-            } else {
-                typingTextEl.textContent = currentPhrase.substring(0, currentCharIdx + 1);
-                currentCharIdx++;
-            }
+            const phrase = phrases[phraseIdx];
+            typingEl.textContent = isDeleting
+                ? phrase.substring(0, charIdx - 1)
+                : phrase.substring(0, charIdx + 1);
+            isDeleting ? charIdx-- : charIdx++;
 
-            let typeSpeed = isDeleting ? 40 : 80;
-
-            if (!isDeleting && currentCharIdx === currentPhrase.length) {
-                typeSpeed = 2000; // Pause at end of word
-                isDeleting = true;
-            } else if (isDeleting && currentCharIdx === 0) {
+            let speed = isDeleting ? 40 : 80;
+            if (!isDeleting && charIdx === phrase.length) {
+                speed = 2000; isDeleting = true;
+            } else if (isDeleting && charIdx === 0) {
                 isDeleting = false;
-                currentPhraseIdx = (currentPhraseIdx + 1) % phrases.length;
-                typeSpeed = 400; // Pause before typing new word
+                phraseIdx = (phraseIdx + 1) % phrases.length;
+                speed = 400;
             }
-
-            setTimeout(typeEffect, typeSpeed);
+            setTimeout(typeEffect, speed);
         }
-        
-        // ── CAROUSEL EFFECT ──
+        typeEffect();
+
+        // ── CAROUSEL ──
         let currentSlide = 0;
         const slides = Array.from(document.querySelectorAll('.carousel-slide'));
-        const loadedSlides = new Set();
-
-        slides.forEach((slide, index) => {
-            if (slide.complete && slide.naturalWidth > 0) {
-                loadedSlides.add(index);
-            } else {
-                slide.addEventListener('load', () => {
-                    loadedSlides.add(index);
-                    if (!document.querySelector('.carousel-slide.active') && loadedSlides.has(0)) {
-                        currentSlide = 0;
-                        slides[0].classList.add('active');
-                    }
-                }, { once: true });
-
-                slide.addEventListener('error', () => {
-                    loadedSlides.add(index);
-                }, { once: true });
-            }
+        const loaded = new Set();
+        slides.forEach((s, i) => {
+            if (s.complete && s.naturalWidth > 0) { loaded.add(i); if (i === 0) s.classList.add('active'); }
+            else s.addEventListener('load', () => { loaded.add(i); if (i === 0 && !document.querySelector('.carousel-slide.active')) s.classList.add('active'); }, { once: true });
         });
-
-        if (loadedSlides.has(0)) {
-            slides[0].classList.add('active');
-        }
-
-        function nextSlide() {
-            if (!slides.length) return;
-            let attempts = 0;
-            let next = currentSlide;
-
-            do {
-                next = (next + 1) % slides.length;
-                attempts++;
-            } while (attempts <= slides.length && !loadedSlides.has(next));
-
-            if (!loadedSlides.has(next)) return;
-
+        if (loaded.has(0)) slides[0].classList.add('active');
+        setInterval(() => {
+            let next = currentSlide, tries = 0;
+            do { next = (next + 1) % slides.length; tries++; } while (tries <= slides.length && !loaded.has(next));
+            if (!loaded.has(next)) return;
             slides[currentSlide].classList.remove('active');
             currentSlide = next;
             slides[currentSlide].classList.add('active');
-        }
+        }, 4000);
 
-        setInterval(nextSlide, 4000);
-
-        // ── PARTICLE EFFECT ──
+        // ── PARTICLES ──
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
 
-        let particles = [];
-        let particleInterval;
-        let isHovering = false;
-        let hoverTarget = null;
-        let particleColor = '#ffffff';
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
+        let particles = [], hovering = false, hoverTarget = null, pColor = '#ffffff';
 
         class Particle {
             constructor(x, y, color) {
                 this.x = x + (Math.random() * 80 - 40);
                 this.y = y + (Math.random() * 80 - 40);
                 this.size = Math.random() * 3 + 1;
-                this.speedX = Math.random() * 2 - 1;
-                this.speedY = Math.random() * -2 - 1;
+                this.sx = Math.random() * 2 - 1;
+                this.sy = Math.random() * -2 - 1;
                 this.color = color;
                 this.life = 1;
             }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                this.life -= 0.02;
-                if (this.size > 0.1) this.size -= 0.05;
-            }
-            draw() {
-                ctx.globalAlpha = this.life;
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.globalAlpha = 1;
-            }
+            update() { this.x += this.sx; this.y += this.sy; this.life -= 0.02; if (this.size > 0.1) this.size -= 0.05; }
+            draw() { ctx.globalAlpha = this.life; ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1; }
         }
 
-        function startParticles(e, color) {
-            isHovering = true;
-            hoverTarget = e.currentTarget;
-            particleColor = color;
-            createParticles();
+        function startParticles(e, color) { hovering = true; hoverTarget = e.currentTarget; pColor = color; spawnParticles(); }
+        function stopParticles() { hovering = false; hoverTarget = null; }
+        function spawnParticles() {
+            if (!hovering || !hoverTarget) return;
+            const r = hoverTarget.getBoundingClientRect();
+            for (let i = 0; i < 3; i++) particles.push(new Particle(r.left + r.width / 2, r.top + r.height / 2, pColor));
+            setTimeout(spawnParticles, 50);
         }
-
-        function stopParticles() {
-            isHovering = false;
-            hoverTarget = null;
-        }
-
-        function createParticles() {
-            if (!isHovering || !hoverTarget) return;
-            const rect = hoverTarget.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            
-            for (let i = 0; i < 3; i++) {
-                particles.push(new Particle(centerX, centerY, particleColor));
-            }
-            setTimeout(createParticles, 50);
-        }
-
-        function animateParticles() {
+        function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-                if (particles[i].life <= 0) {
-                    particles.splice(i, 1);
-                    i--;
-                }
-            }
-            requestAnimationFrame(animateParticles);
+            particles.forEach((p, i) => { p.update(); p.draw(); if (p.life <= 0) particles.splice(i--, 1); });
+            requestAnimationFrame(animate);
         }
-
-        // Initialize Effects
-        typeEffect();
-        animateParticles();
+        animate();
     </script>
 </body>
+
 </html>
