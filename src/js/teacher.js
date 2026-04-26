@@ -67,6 +67,8 @@ async function selectClass(className) {
         const classData = await res.json();
         rawStudentsData = classData;
         students = mapClassData(Array.isArray(classData) ? classData : [], className);
+        console.log('First student rawScores count:', students[0]?.rawScores?.length);
+        console.log('First student rawScores sample:', students[0]?.rawScores?.[0]);
         currentClassLabel = 'Class ' + className;
         renderDashboardSection();
         populateTable();
@@ -424,6 +426,11 @@ function initChart() {
 }
 
 function initTrendChart() {
+    console.log('initTrendChart called');
+    console.log('students count:', students.length);
+    console.log('first student rawScores:', students[0]?.rawScores);
+    console.log('teacherData.subject:', teacherData.subject);
+
     const trendCanvas = document.getElementById('trendChart');
     if (!trendCanvas) return;
     if (trendChartInstance) { trendChartInstance.destroy(); trendChartInstance = null; }
